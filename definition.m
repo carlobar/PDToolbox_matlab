@@ -1,5 +1,6 @@
-% check if parameters where defined. If not assigned, assign default
+% check if parameters where defined. If not defined, then assign default
 % values.
+function G = definition(G)
 
 % check society size
 if isfield(G, 'P') == 0
@@ -12,8 +13,8 @@ end
 
 % check number of pure strategies
 if isfield(G,'n') ~= 0
-    if floor(n) > 1
-        G.S = ones(G.P, 1)*n;
+    if floor(G.n) > 1
+        G.S = ones(G.P, 1) * G.n;
     else
         exit('Invalid value of G.n.')
     end
@@ -49,8 +50,17 @@ if isfield(G, 'dynamics') == 0
     G.dynamics = 'rd';
 end
 
-if exist('options_ode') == 0 
-options_ode = odeset('RelTol', .0001, 'AbsTol', .0001);
+% simulation parameters
+if isfield(G, 'step') == 0
+    G.step = .0001;
+end
+
+if isfield(G, 'time') == 0
+    G.time = 30;
+end
+
+if isfield(G, 'options_ode') == 0 
+	G.options_ode = odeset('RelTol', G.step, 'AbsTol', G.step);
 end
 
 % check the fitness function
@@ -59,10 +69,10 @@ if isfield(G,'f') == 0
 end
 
 % define functions 
-G.run = @run;
+G.run = @run_game;
 G.graph = @graph_simplex;
-G.graph_state = @()graph_final_state();
-G.graph_evolution = @(p)graph_evolution(p);
+G.graph_state = @graph_final_state;
+G.graph_evolution = @graph_evolution;
 
 
     
