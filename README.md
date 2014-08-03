@@ -20,7 +20,7 @@ Add the path of the files
 path(path, '/home/carlos/git/PDToolbox_matlab')
 path(path, '/home/carlos/git/PDToolbox_matlab/dynamics')
 path(path, '/home/carlos/git/PDToolbox_matlab/graphs')
-
+path(path, '/home/carlos/git/PDToolbox_matlab/test')
 
 
 The path can be verified with the command 'path'
