@@ -53,7 +53,7 @@ end
 
 if length(G.dynamics) > 1
 	if isfield(G, 'gamma') == 0
-		G.gamma = ones(length(G.dynamics), 1) / length(G.dynamics);
+		G.gamma = ones(size(G.dynamics), 1) / size(G.dynamics);
 	elseif length(G.dynamics) ~= length(G.gamma)
 		exit('Size of G.gamma do not match the size do G.dynamics');
 	end

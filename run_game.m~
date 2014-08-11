@@ -5,7 +5,7 @@ if length(G.dynamics) == 1
 else
 	names = strcat(G.dynamics{1});
 	for i = 2: length(G.dynamics) 
-		names =	strcat(names, ', ', ' ', G.dynamics{i});
+		names =	strcat(names, ',', ' ', G.dynamics{i});
 	end
 	disp (['Running combination of ', names, ' dynamics']);
 	command = strcat( G.ode, '( @combined_dynamics, [0 G.time], G.x0, G.options_ode );');

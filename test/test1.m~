@@ -1,5 +1,3 @@
-% example of a game with one population and three strategies per population.
-
 % population games tool box
 clear
 

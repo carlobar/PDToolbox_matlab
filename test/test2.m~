@@ -1,29 +1,28 @@
-% example of a game with one population and three strategies per population.
-
 % population games tool box
 clear
 
+global G
+
 % number of populations
-P = 1;
+P = 2;
 
 % number of pure strategies per population
-n = 3;
+n = 2;
 
-% mass of the population
 m = 1;
+x0 = [0.1 0.9;  0.2 0.8]'; 
 
-% initial condition
-x0 = [0.2 .7 0.1 ]'; 
 
 % simulation parameters
-time = 5;
+time = 60;
 
 % structure with the parameters of the game
-G = struct('n', n, 'f', @fitness1, 'x0', x0, 'ode', 'ode113', 'time', time);
+G = struct('P', P, 'n', n, 'f', @fitness2, 'x0', x0, 'ode', 'ode45', 'time', time);
 
 % verify data of the game
 G = definition(G);
-G_ = definition(G);
+
+
 
 
 G.dynamics = 'rd';
@@ -59,8 +58,5 @@ G.run()
 G.graph()
 G.graph_state()
 G.graph_evolution()
-
-
-
 
 
