@@ -8,5 +8,3 @@ plot(G.X(:, 1), G.X(:, G.S(1)+1) )
 
 
 axis([0 1 0 1])
-
-title('Simplex')

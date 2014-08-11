@@ -15,5 +15,3 @@ for p = 1 : P
 end
 
 hold off
-
-title('Final State of the Society')

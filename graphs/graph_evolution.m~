@@ -22,10 +22,10 @@ for p = 1 : G.P
 
     subplot(G.P, 1 ,p);
     hold on
-    labels = cellstr('');
+    labels = zeros(G.S(p));
     for s = 1 : G.S(p)
         plot(G.T, G.X(:, (p-1)*n + s), 'color', cc(s, :));
-	labels(s) = cellstr([num2str(s), '-th strategy']);
+	labels(s) = [s, '-th strategy'];
     end
     ylim([0 1])
     hold off

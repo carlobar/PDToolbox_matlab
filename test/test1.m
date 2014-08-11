@@ -3,6 +3,8 @@
 % population games tool box
 clear
 
+global G
+
 % number of populations
 P = 1;
 
@@ -26,7 +28,7 @@ G = definition(G);
 G_ = definition(G);
 
 
-G.dynamics = 'rd';
+G.dynamics = {'rd'};
 G.run()
 G.graph()
 G.graph_state()
@@ -35,7 +37,7 @@ pause
 
 
 
-G.dynamics = 'bnn';
+G.dynamics = {'bnn'};
 G.run()
 G.graph()
 G.graph_state()
@@ -44,7 +46,7 @@ pause
 
 
 
-G.dynamics = 'smith';
+G.dynamics = {'smith'};
 G.run()
 G.graph()
 G.graph_state()
@@ -53,7 +55,7 @@ pause
 
 
 
-G.dynamics = 'logit';
+G.dynamics = {'logit'};
 G.eta = .02;
 G.run()
 G.graph()

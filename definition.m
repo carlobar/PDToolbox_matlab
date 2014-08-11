@@ -47,7 +47,7 @@ if isfield(G, 'ode') == 0
 end
 
 if isfield(G, 'dynamics') == 0
-    G.dynamics = 'rd';
+    G.dynamics = {'rd'};
 end
 
 
@@ -82,6 +82,7 @@ end
 % define functions 
 G.run = @run_game;
 G.graph = @graph_simplex;
+G.graph2p = @graph_multi_pop;
 G.graph_state = @graph_final_state;
 G.graph_evolution = @graph_evolution;
 
