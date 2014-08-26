@@ -22,12 +22,13 @@ for p = 1 : G.P
 
     subplot(G.P, 1 ,p);
     hold on
-    labels = zeros(G.S(p));
+    labels = cellstr('');
     for s = 1 : G.S(p)
         plot(G.T, G.X(:, (p-1)*n + s), 'color', cc(s, :));
-	labels(s) = [s, '-th strategy'];
+	labels(s) = cellstr([num2str(s), '-th strategy']);
     end
     ylim([0 1])
+    
     hold off
 
     title_i = ['Evolution of ', num2str(p), '-th Population'];
@@ -35,7 +36,7 @@ for p = 1 : G.P
 
     h = legend(labels);
     set(h, 'Interpreter', 'none')    
-
+    xlabel('time')
 end
 
 

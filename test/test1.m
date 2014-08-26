@@ -18,20 +18,20 @@ m = 1;
 x0 = [0.2 .7 0.1 ]'; 
 
 % simulation parameters
-time = 5;
+time = 30;
 
 % structure with the parameters of the game
 G = struct('n', n, 'f', @fitness1, 'x0', x0, 'ode', 'ode113', 'time', time);
 
 % verify data of the game
 G = definition(G);
-G_ = definition(G);
+%G_ = definition(G);
 
 
 G.dynamics = {'rd'};
 G.run()
 G.graph()
-G.graph_state()
+%G.graph_state()
 G.graph_evolution()
 pause
 
@@ -40,7 +40,7 @@ pause
 G.dynamics = {'bnn'};
 G.run()
 G.graph()
-G.graph_state()
+%G.graph_state()
 G.graph_evolution()
 pause
 
@@ -49,7 +49,7 @@ pause
 G.dynamics = {'smith'};
 G.run()
 G.graph()
-G.graph_state()
+%G.graph_state()
 G.graph_evolution()
 pause
 
@@ -59,7 +59,7 @@ G.dynamics = {'logit'};
 G.eta = .02;
 G.run()
 G.graph()
-G.graph_state()
+%G.graph_state()
 G.graph_evolution()
 
 

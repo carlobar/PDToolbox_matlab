@@ -30,7 +30,7 @@ G = definition(G);
 G.dynamics = {'rd'};
 G.run()
 G.graph2p()
-G.graph_state()
+%G.graph_state()
 G.graph_evolution()
 pause
 
@@ -39,7 +39,7 @@ pause
 G.dynamics = {'bnn'};
 G.run()
 G.graph2p()
-G.graph_state()
+%G.graph_state()
 G.graph_evolution()
 pause
 
@@ -48,7 +48,7 @@ pause
 G.dynamics = {'smith'};
 G.run()
 G.graph2p()
-G.graph_state()
+%G.graph_state()
 G.graph_evolution()
 pause
 
@@ -58,7 +58,7 @@ G.dynamics = {'logit'};
 G.eta = .02;
 G.run()
 G.graph2p()
-G.graph_state()
+%G.graph_state()
 G.graph_evolution()
 
 
