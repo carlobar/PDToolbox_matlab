@@ -289,13 +289,9 @@ The evolution might take place in days, months, years.
 Myopia means that agents determine their future actions according to the current bahavior of other agents as well as the expected payoff in the current state. This is assumed in contexts where the population state do not change fast.
 
 
-------------
 
-With a finite population the time specifies the number of iterations.
 
-There might be different populations!!!
 
-How do we define the state vector???
 
 
 \iffalse
