@@ -36,6 +36,15 @@ pause
 
 
 
+G.dynamics = {'maynard_rd'};
+G.ode = 'ode23s';
+G.run()
+G.graph2p()
+G.graph_evolution()
+pause
+
+
+
 G.dynamics = {'bnn'};
 G.run()
 G.graph2p()
