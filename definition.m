@@ -79,6 +79,12 @@ if isfield(G,'f') == 0
     G.f = @fitness;
 end
 
+
+if isfield(G, 'R') == 0
+    G.R = 1;
+end
+
+
 % define functions 
 G.run = @run_game;
 G.graph = @graph_simplex;
