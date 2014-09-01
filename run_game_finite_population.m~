@@ -8,7 +8,7 @@ global G
 P = 1;
 
 % number of agents
-N = 21;
+N = 1000;
 
 % number of pure strategies per population
 n = 3;
@@ -20,7 +20,7 @@ m = 1;
 x0 = [0.2 .7 0.1]'; 
 
 % simulation parameters
-time = 30;
+time = 300;
 
 % structure with the parameters of the game
 G = struct('N', N, 'n', n, 'f', @fitness1, 'x0', x0, 'ode', 'ode113', 'time', time);
@@ -31,7 +31,7 @@ G = definition(G);
 
 
 
-
+G.R = 1;
 
 
 % set initial state
@@ -52,40 +52,73 @@ if h ~= G.N
 	s(h + 1: G.N ) = unidrnd(G.S(1), 1, G.N - h);
 end
 
+
+
+
 % function to find the current distribution
 %state = @(u, S) sum(u == S);
 
 t_max = floor(G.time);
 
+
+T = 1:1:t_max;
+X = zeros( t_max, G.S(1) );
+
+
 % Number of agents that update their strategy at each time instant
 alarm = poissrnd( G.N * G.R, 1, t_max);
 
-for t = 1: G.time
+for t = 1: t_max
 
-	% find the current social state 
-	z = zeros(G.S(1), 1);
-	for i = 1: G.S(1)
-		z(i) = sum(s == i) / G.N;
-	end
+    
+    % update society state
+    z = state(s);
 
-	% find the current payoff of each strategy
-	F = zeros(G.S(1), 1) ;
-	for i = 1: G.S(1)
-		F(i) = G.f(z, 1, i);
-	end
+    
+    % find the current payoff of each strategy
+    F = zeros(G.S(1), 1) ;
 
+    for i = 1: G.S(1)
+        F(i) = G.f(z', 1, i);
+    end
+
+    
 	% select users to update their actions at random
 	update_agents = unidrnd(G.N, 1, alarm(t));
 	
-	% procedure to update the strategy of each agent
-	for i = 1: alarm(t)
-				
-		
-		
-	end
+    %compare_agent = unidrnd(G.N, 1, alarm(t));
+    
+	% procedure to update the strategy of each agent    
+    for k=1 : alarm(t)
+        i = update_agents(k);
+        
+        s_update = s;
+        
+        %s(i) = pairwise_comparison(F, z, s, i, 1);
+        %s(i) = comparison2average(F, z, s, i, 1);
+        s_update(i) = proportional_imitation(F, z, s, i, 1);
+        
+
+        % update society state
+        z = state(s);
+
+        % find the current payoff of each strategy
+        F = zeros(G.S(1), 1) ;
+        for i = 1: G.S(1)
+            F(i) = G.f(z', 1, i);
+        end
+        
+        
+        
+    end
+    
+    X(t, :) = z';
 
 
 end
 
+G.X = X;
+G.T = T;
 
-
+graph_simplex
+graph_evolution
