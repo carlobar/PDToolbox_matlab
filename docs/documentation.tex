@@ -15,12 +15,137 @@
 \usepackage{cite}
 \usepackage{algorithmic}
 
+
+\def\th{^{th}}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+
+
+
 \title{Population Dynamics}
 \author{Carlos Barreto}
 
 \begin{document}
 
 \maketitle
+
+
+
+
+
+
+
+Revision protocols:
+
+Each agent might have an opportunity to update its strategy (revision opportunity). The $i\th$ agent might compare the average profit of its strategy with the profit of other strategy. Then, might change its strategy with rate $\rho_{ij}$.
+
+\subsection{Pairwise Proportional Imitation}
+
+The $i\th$ agent observes an opponent $j$ at random. Then might change its strategy if  its opponent has a greater fitness. The rate change is 
+
+\begin{equation}
+\rho_{ij}(\pi, x) = \frac{x_j}{m} [\pi_j - \pi_i]_+
+\end{equation}
+
+In this case, $x_j$ need not be observed. 
+
+
+	
+
+\subsection{Comparison of the Average Payoff}
+
+The $i\th$ agent selects a strategy at random and might switch to it if that strategy has payoff above the average. The agent switch strategy with probability proportional to the excess payoff
+
+\begin{equation}
+\rho_{ij}(\pi, x) = \left[ \pi_j - \frac{1}{m} \sum_{k\in S} x_k \pi_k \right]_+
+\end{equation}
+
+
+
+\subsection{Pairwise Comparison}
+
+$i\th$ agent selects a strategy at random. If the opponent has a higher fitness, the the agent switch strategy with probability proportional to
+
+\begin{equation}
+\rho_{ij}(\pi, x) = \left[ \pi_j - \pi_i \right]_+
+\end{equation}
+
+
+
+
+
+\subsection{Logit Choice}
+
+The $i\th$ agent selects a strategy at random and change its strategy with a probability proportional to 
+
+\begin{equation}
+\rho_{ij}(\pi) = \frac{ \exp(\pi_j \eta^{-1} ) }{ \sum_{k \in S} \exp(\pi_k \eta^{-1} ) }
+\end{equation}
+
+
+
+
+
+
+
+
+
+\subsection{Evolutionary Dynamics} \label{sec:dynamics}
+
+We implement four evolutionary dynamics, namely \emph{logit dynamics} (Logit), \emph{replicator dynamics} (RD), \emph{Brown-von Neumann-Nash dynamics} (BNN), and \emph{Smith dynamics} (Smith) that belong to the families of \emph{perturbed optimization}, \emph{imitative dynamics}, \emph{excess payoff dynamics}, and \emph{pairwise comparison dynamics}, respectively \cite{hofbauer2001nash, sandholm_book}. 
+%
+%
+Each family uses different agent behavior models. A priori, it is difficult to know which dynamic is most convenient for a particular problem. 
+Now, let us denote the dynamics of a society by means of 
+%
+\begin{equation}
+\dot{ \bs{x} } = V_d( \bs{x} ),
+\end{equation}
+where $d\in \mathcal{D}=\{ Logit, RD, Smith, BNN \}$ denotes the dynamic used.
+The following differential equations describe the evolution in time of each strategy according to each evolutionary dynamic:
+%
+\subsubsection{Logit Dynamics}
+\begin{equation}\label{eq:logit}
+ \dot{x}_k^i = \frac{ \exp\left(\eta^{-1} F_k^i (\bs{x}) \right) }{ \sum_{\gamma \in S} \exp\left(\eta^{-1} F_\gamma^i (\bs{x}) \right) }, \, \, \eta>0,
+\end{equation}
+
+\subsubsection{Replicator Dynamics}
+\begin{equation}\label{eq:replicator}
+\dot{x}_k^i = x_k^i \, \hat{F}_k^i \left( \bs{x} \right).
+\end{equation}
+
+\subsubsection{Brown-von Neumann-Nash Dynamics (BNN)}
+\begin{equation}\label{eq:bnn}
+ \dot{x}_k^i = \left[ \hat{F}_k^i \left( \bs{x} \right) \right]_+ - x_k^i  \sum_{\gamma \in S} \left[ \hat{F}_\gamma^i \left( \bs{x} \right) \right]_+
+\end{equation}
+
+\subsubsection{Smith Dynamics}
+\begin{multline}
+\dot{x}_k^i  = \sum_{\gamma \in S} x_\gamma^i  \left[ F_k^i \left( \bs{x} \right) - F_\gamma^i \left( \bs{x} \right) \right]_+ 
+\\
+- x_k^i  \sum_{\gamma \in S} \left[ F_\gamma^i ( \bs{x}) - F_k^i( \bs{x} ) \right]_+.
+\label{eq:smith}
+\end{multline}
+
+
+
+These dynamics are defined in function of the excess payoff to strategy $k$ as $\hat{F}_k^i =  F_k^i(\bs{q}^k) - \bar{F}_k^i(\bs{q}^k)$,
+where $\bar{F}_k^i(\bs{q}^k)$ is the average payoff the population $i$.
+
+
+
+
+
+
+
+\subsection{Maynard Smith Replicator}
+
+\begin{equation}
+\dot{x}_i = \frac{ x_i F_i }{ \bar{F}(x) } - x_i
+\end{equation}
+
+
+
+
 
 
 \section{Examples}
