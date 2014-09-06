@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=latex 2013.7.26)  5 SEP 2014 01:10
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=latex 2013.7.26)  6 SEP 2014 01:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -513,15 +513,25 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 29.
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
 
-LaTeX Warning: Citation `hofbauer2001nash' on page 1 undefined on input line 94
-.
+LaTeX Warning: Citation `sandholm_book' on page 1 undefined on input line 53.
 
 
-LaTeX Warning: Citation `sandholm_book' on page 1 undefined on input line 94.
+LaTeX Warning: Citation `gal' on page 1 undefined on input line 54.
+
+
+LaTeX Warning: Citation `sandholm_book' on page 1 undefined on input line 65.
 
 [1
 
-] [2]
+]
+
+LaTeX Warning: Citation `hofbauer2001nash' on page 2 undefined on input line 13
+3.
+
+
+LaTeX Warning: Citation `sandholm_book' on page 2 undefined on input line 133.
+
+[2] [3]
 File: ./images/test1_simplex_rd.eps Graphic file (type eps)
  <./images/test1_simplex_rd.eps>
 File: ./images/test1_ev_rd.eps Graphic file (type eps)
@@ -540,7 +550,7 @@ File: ./images/test1_simplex_logit.eps Graphic file (type eps)
 
 <./images/test1_simplex_logit.eps>
 File: ./images/test1_ev_logit.eps Graphic file (type eps)
- <./images/test1_ev_logit.eps> [3] [4]
+ <./images/test1_ev_logit.eps> [4] [5]
 File: ./images/test2_simplex_rd.eps Graphic file (type eps)
 
 <./images/test2_simplex_rd.eps>
@@ -560,19 +570,19 @@ File: ./images/test2_simplex_logit.eps Graphic file (type eps)
 
 <./images/test2_simplex_logit.eps>
 File: ./images/test2_ev_logit.eps Graphic file (type eps)
- <./images/test2_ev_logit.eps> [5] [6]
-[7] (./documentation.aux)
+ <./images/test2_ev_logit.eps> [6] [7]
+[8] (./documentation.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 4275 strings out of 495060
- 59612 string characters out of 3182053
+ 4278 strings out of 495060
+ 59637 string characters out of 3182053
  120712 words of memory out of 3000000
- 7365 multiletter control sequences out of 15000+200000
+ 7368 multiletter control sequences out of 15000+200000
  14597 words of font info for 55 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  53i,13n,92p,824b,518s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on documentation.dvi (7 pages, 16164 bytes).
+Output written on documentation.dvi (8 pages, 21028 bytes).

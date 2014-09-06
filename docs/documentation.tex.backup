@@ -15,12 +15,176 @@
 \usepackage{cite}
 \usepackage{algorithmic}
 
+
+\def\th{^{th}}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+\newcommand{\pop}{\mathcal{P}}
+
+
 \title{Population Dynamics}
 \author{Carlos Barreto}
 
 \begin{document}
 
 \maketitle
+
+
+% notation
+
+Let us define a society of $\pop = \{ 1, \ldots, P\}$ composed by $P \geq 1$ populations. Each population is composed by a large number of agents, which conform a mass $m^p > 0$, with $p \in \pop$. 
+Let $S^p = \{ 1, \ldots, n^p \}$ be the set of actions (pure strategies) available for each agent of the $p\th$ population. 
+Each agent selects a pure strategy and the state of the population is the proportion of each strategy. The set of population states is defined as $X^p = \{ x^p \in \mathbb{R}_+^{n^p} : \sum_{i \in S^p} x_i^p = m^p \}$, where the $i\th$ component of the state, denoted by $x_i^p \in \mathbb{R}_+$, is the mass of players that select the $i\th$ strategy of the population $p$.
+
+Population games (or large games) capture some properties of the interactions of many economic agents:
+
+\begin{enumerate}
+\item large number of agents.
+\item Continuity: The actions of an agent has small impact on the payoff of other agents.
+\item Anonymity: means that the utility of each agent only depends on the aggregated actions of the other agents.
+\end{enumerate}
+
+
+Each agent might have an opportunity to update its strategy (revision opportunity). The $i\th$ agent might compare the average profit of its strategy with the profit of other strategy. Then, might change its strategy with rate $\rho_{ij}$.
+
+An agent decides whether to modify or not its strategy according to the available information. In this respect,  population behavior is considered to accomplish with both inertia and myopia properties. On the one hand, inertia 
+is the tendency to remain at the status-quo, unless there exists motives to do that.
+Also, this implies that the strategy adjustment events are rare events.
+On the other hand, myopia limits the information used to make decisions to the current state of the population, i.e., agents do not estimate future actions in
+order to make decisions. These two properties are based on the population games theoretical framework \cite{sandholm_book}
+and behavioral economics \cite{gal}.
+
+To accomplish the inertia property, the time between two successive updates of one 
+agent's strategy is modeled with an exponential distribution (this distribution is used to model the occurrence of rare events). 
+Thus, strategy actualization events could be characterized by means of stochastic alarm clocks.
+Particularly, a rate $R_i$ Poisson alarm clock produces time among rings described by
+a rate $R_i$ exponential distribution.
+%These probabilities distributions are widely used by their memory-less property in stochastic analysis \cite{boyd, acemoglu2010, sandholm_book}. Thus, when all the agents of the population are provided with a rate $R_i$ Poisson alarm clock,
+the whole actualization events in the population can be considered as a rate $R=\sum_{j\in \mathcal{V}} R_j$ Poisson alarm clock.
+Therefore, the average number of events in a given time interval is $R$ and the probability of selecting the $i^{th}$
+agent in a given time instant is
+ $\frac{R_i}{R}$ \cite{sandholm_book}.
+
+ 
+ A revision protocol defines the procedure used by each user to decide whether to change or not its strategy. The scalar $\rho_{ij} (\pi^p, x^p)$ is the \emph{conditional switch rate} from strategy $i$ to strategy $j$ in function of a given payoff vector $\pi$ and a population state $x^p$.
+ 
+ Using the law of large numbers we can approximate the evolution of the society's state to a dynamical equation defined by
+ \begin{equation}\label{eq:mean_dynamic}
+  \dot{x}_i^p = \sum_{j\in S^p} x_j^p \rho_{ij} (\pi^p, x^p) - x_i^p \sum_{j\in S^p} \rho(\pi^p, x^p)
+ \end{equation}
+
+
+
+Revision protocols:
+
+
+\subsection{Pairwise Proportional Imitation}
+
+The $i\th$ agent observes an opponent $j$ at random. Then might change its strategy if  its opponent has a greater fitness. The rate change is 
+
+\begin{equation}
+\rho_{ij}(\pi, x) = \frac{x_j}{m} [\pi_j - \pi_i]_+
+\end{equation}
+
+In this case, $x_j$ need not be observed. 
+
+
+	
+
+\subsection{Comparison of the Average Payoff}
+
+The $i\th$ agent selects a strategy at random and might switch to it if that strategy has payoff above the average. The agent switch strategy with probability proportional to the excess payoff
+
+\begin{equation}
+\rho_{ij}(\pi, x) = \left[ \pi_j - \frac{1}{m} \sum_{k\in S} x_k \pi_k \right]_+
+\end{equation}
+
+
+
+\subsection{Pairwise Comparison}
+
+$i\th$ agent selects a strategy at random. If the opponent has a higher fitness, the the agent switch strategy with probability proportional to
+
+\begin{equation}
+\rho_{ij}(\pi, x) = \left[ \pi_j - \pi_i \right]_+
+\end{equation}
+
+
+
+
+
+\subsection{Logit Choice}
+
+The $i\th$ agent selects a strategy at random and change its strategy with a probability proportional to 
+
+\begin{equation}
+\rho_{ij}(\pi) = \frac{ \exp(\pi_j \eta^{-1} ) }{ \sum_{k \in S} \exp(\pi_k \eta^{-1} ) }
+\end{equation}
+
+
+
+
+
+
+
+
+
+\subsection{Evolutionary Dynamics} \label{sec:dynamics}
+
+We implement four evolutionary dynamics, namely \emph{logit dynamics} (Logit), \emph{replicator dynamics} (RD), \emph{Brown-von Neumann-Nash dynamics} (BNN), and \emph{Smith dynamics} (Smith) that belong to the families of \emph{perturbed optimization}, \emph{imitative dynamics}, \emph{excess payoff dynamics}, and \emph{pairwise comparison dynamics}, respectively \cite{hofbauer2001nash, sandholm_book}. 
+%
+%
+Each family uses different agent behavior models. A priori, it is difficult to know which dynamic is most convenient for a particular problem. 
+Now, let us denote the dynamics of a society by means of 
+%
+\begin{equation}
+\dot{ \bs{x} } = V_d( \bs{x} ),
+\end{equation}
+where $d\in \mathcal{D}=\{ Logit, RD, Smith, BNN \}$ denotes the dynamic used.
+The following differential equations describe the evolution in time of each strategy according to each evolutionary dynamic:
+%
+\subsubsection{Logit Dynamics}
+\begin{equation}\label{eq:logit}
+ \dot{x}_k^i = \frac{ \exp\left(\eta^{-1} F_k^i (\bs{x}) \right) }{ \sum_{\gamma \in S} \exp\left(\eta^{-1} F_\gamma^i (\bs{x}) \right) }, \, \, \eta>0,
+\end{equation}
+
+\subsubsection{Replicator Dynamics}
+\begin{equation}\label{eq:replicator}
+\dot{x}_k^i = x_k^i \, \hat{F}_k^i \left( \bs{x} \right).
+\end{equation}
+
+\subsubsection{Brown-von Neumann-Nash Dynamics (BNN)}
+\begin{equation}\label{eq:bnn}
+ \dot{x}_k^i = \left[ \hat{F}_k^i \left( \bs{x} \right) \right]_+ - x_k^i  \sum_{\gamma \in S} \left[ \hat{F}_\gamma^i \left( \bs{x} \right) \right]_+
+\end{equation}
+
+\subsubsection{Smith Dynamics}
+\begin{multline}
+\dot{x}_k^i  = \sum_{\gamma \in S} x_\gamma^i  \left[ F_k^i \left( \bs{x} \right) - F_\gamma^i \left( \bs{x} \right) \right]_+ 
+\\
+- x_k^i  \sum_{\gamma \in S} \left[ F_\gamma^i ( \bs{x}) - F_k^i( \bs{x} ) \right]_+.
+\label{eq:smith}
+\end{multline}
+
+
+
+These dynamics are defined in function of the excess payoff to strategy $k$ as $\hat{F}_k^i =  F_k^i(\bs{q}^k) - \bar{F}_k^i(\bs{q}^k)$,
+where $\bar{F}_k^i(\bs{q}^k)$ is the average payoff the population $i$.
+
+
+
+
+
+
+
+\subsection{Maynard Smith Replicator}
+
+\begin{equation}
+\dot{x}_i = \frac{ x_i F_i }{ \bar{F}(x) } - x_i
+\end{equation}
+
+
+
+
 
 
 \section{Examples}
@@ -251,19 +415,21 @@ However, the cost of assigning the resource is $C(|x|)$ .
 The cost of assigning the resource might be distributed among the population. 
 
 Let us consider the following example:
-$$
-U_i(x_i) =   \alpha_i  log(1+x_i)
-$$
 
-$$
-C(z) = \beta z^2 + b z
-$$
+
+\begin{equation}
+U_i(x_i) =   \alpha_i  log(1+x_i) 
+\end{equation}
+
+\begin{equation}
+C(z) = \beta z^2 + b z 
+\end{equation}
 
 define fitness functions as 
 
-$$
-f_i(x_1, x_2) = \frac{\alpha_i}{1+x_i} - 2 \beta (x) - b
-$$
+\begin{equation}
+f_i(x_1, x_2) = \frac{\alpha_i}{1+x_i} - 2 \beta |x| - b 
+\end{equation}
 
 
 
@@ -275,8 +441,25 @@ $$
 
 
 
+\section{Finite time}
 
 
+The continuous dynamics are based on two assumptions, namely, myopia and inertia. 
+
+Inertia: agents do not reevaluate their actions continuously. They reevaluate their decisions at ramdom time stamps.
+
+The evolution might take place in days, months, years.
+
+Myopia means that agents determine their future actions according to the current bahavior of other agents as well as the expected payoff in the current state. This is assumed in contexts where the population state do not change fast.
+
+
+------------
+
+With a finite population the time specifies the number of iterations.
+
+There might be different populations!!!
+
+How do we define the state vector???
 
 
 \iffalse
