@@ -1,0 +1,77 @@
+Parameters of the dynamical evolution
+
+
+\begin{center}
+\begin{tabular}{lll}
+Field & Description & Default value\\
+P & Number of populations & 1 \\
+n & Number of pure strategies per population & - \\
+S $ Vector of pure strategies in each population & ones(G.P, 1) * G.n \\
+m & Vector with the mass of each population & ones(G.P, 1) \\
+x0 & Initial state of the society & random \\
+f & Funtion that returns the fitness of the population & - \\
+ode & ODE solver for the evolutionary dynamics & 'ode45' \\
+
+\end{tabular}
+\end{center}
+
+
+
+
+m & Vector with the mass of each population
+if m is not defined properly, then a unitary mass is assumed for each population.
+
+
+
+
+
+
+
+
+% initial condition
+x0 = [0.2 .7 0.1 ]'; 
+If the initial condition is not defined, then a random initial condition is set by default.
+
+
+% simulation parameters
+time = 30;
+
+'f', @fitness1, 
+
+
+ODE solver can be defined. By default is 'ode45', but can be adjusted.
+'ode', 'ode113',
+
+
+.dynamics = {'rd', 'maynard_rd',  'bnn', 'smith',  'logit'};
+'rd' by default.
+
+number of strategies per population
+S 
+
+S can be defined manually as a vector with the pure strategies of all populations. But by defining $n>1$, then by default all populations are configured with n pure strategies.
+
+m is a vector with the mass of each population
+if m is not defined properly, then a unitary mass is assumed for each population.
+
+
+
+It is possible to define multiple dynamics. The resulting dynamic is the combination of dynamics using the variable \gamma.
+
+\sum \gamma(f) V_f
+
+If \gamma is not defined, then the weight of each dynamic is the same, and satisfies $\sum \gamma(i) = 1$
+
+
+
+
+
+
+For the finite case we define the rate of the Poisson clock as  R
+
+
+
+
+revision_protocol = {'proportional_imitation'};
+
+comparison2average, pairwise_comparison, logit_choice, proportional_imitation.

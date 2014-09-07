@@ -10,7 +10,7 @@ global G
 P = 1;
 
 % number of agents
-N = 500;
+N = 200;
 
 % number of pure strategies per population
 n = 3;
@@ -22,7 +22,7 @@ m = 1;
 x0 = [0.2 .7 0.1]'; 
 
 % simulation parameters
-iterations = 1000;
+iterations = 10000;
 
 
 % structure with the parameters of the game
@@ -33,9 +33,35 @@ G.R = 1;
 % verify data of the game
 G = definition(G);
 
+% have to include the combination of protocols!!
+% have to include different tests for all the protocols.
+G.revision_protocol = @proportional_imitation;
 G.run_finite();
-
-
 G.graph()
 G.graph_evolution()
 graph_utility
+pause
+
+
+G.revision_protocol = @comparison2average;
+G.run_finite();
+G.graph()
+G.graph_evolution()
+graph_utility
+pause
+
+
+G.revision_protocol = @pairwise_comparison;
+G.run_finite();
+G.graph()
+G.graph_evolution()
+graph_utility
+pause
+
+
+G.revision_protocol = @logit_choice;
+G.run_finite();
+G.graph()
+G.graph_evolution()
+graph_utility
+pause

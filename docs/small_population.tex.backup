@@ -1,0 +1,105 @@
+\section{Small population of agents}
+
+
+The continuous dynamics are based on two assumptions, namely, myopia and inertia. 
+
+Inertia: agents do not reevaluate their actions continuously. They reevaluate their decisions at random time stamps.
+
+The evolution might take place in days, months, years.
+
+Myopia means that agents determine their future actions according to the current behavior of other agents as well as the expected payoff in the current state. This is assumed in contexts where the population state do not change fast.
+
+Simulations are made with $200$ agents and 10000 iterations.
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_proportional_imitation.eps}
+	  \caption{Simplex.}
+	  \label{fig:finite1_simplex}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.45\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_proportional_imitation_ev.eps}
+	  \caption{Evolution of the strategies in time.}
+	  \label{fig:finite1_ev}
+  \end{subfigure}
+  \caption{Rock-paper-scissors game with proportional imitation revision protocol.}
+  \label{fig:finite1}
+\end{figure}
+
+
+
+
+
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_comparison2average.eps}
+	  \caption{Simplex.}
+	  \label{fig:finite2_simplex}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.45\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_comparison2average_ev.eps}
+	  \caption{Evolution of the strategies in time.}
+	  \label{fig:finite2_ev}
+  \end{subfigure}
+  \caption{Rock-paper-scissors game with comparison to average revision protocol.}
+  \label{fig:finite2}
+\end{figure}
+
+
+
+
+
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_pairwise_comparison.eps}
+	  \caption{Simplex.}
+	  \label{fig:finite3_simplex}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.45\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_pairwise_comparison_ev.eps}
+	  \caption{Evolution of the strategies in time.}
+	  \label{fig:finite3_ev}
+  \end{subfigure}
+  \caption{Rock-paper-scissors game with pairwise comparison revision protocol.}
+  \label{fig:finite3}
+\end{figure}
+
+
+
+
+
+
+
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_logit_choice.eps}
+	  \caption{Simplex.}
+	  \label{fig:finite4_simplex}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.45\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_logit_choice_ev.eps}
+	  \caption{Evolution of the strategies in time.}
+	  \label{fig:finite4_ev}
+  \end{subfigure}
+  \caption{Rock-paper-scissors game with logit choice revision protocol.}
+  \label{fig:finite4}
+\end{figure}
+
+
+
+

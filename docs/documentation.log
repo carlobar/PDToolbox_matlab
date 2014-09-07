@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=latex 2013.7.26)  6 SEP 2014 01:26
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=latex 2013.7.26)  7 SEP 2014 02:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -487,102 +487,178 @@ Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
 \ALC@tlm=\skip50
 \algorithmicindent=\skip51
 )
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count116
+\lst@gtempboxa=\box32
+\lst@token=\toks29
+\lst@length=\count117
+\lst@currlwidth=\dimen161
+\lst@column=\count118
+\lst@pos=\count119
+\lst@lostspace=\dimen162
+\lst@width=\dimen163
+\lst@newlines=\count120
+\lst@lineno=\count121
+\lst@maxwidth=\dimen164
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+\c@lstnumber=\count122
+\lst@skipnumbers=\count123
+\lst@framebox=\box33
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2007/02/22 1.4 listings configuration
+))
+Package: listings 2007/02/22 1.4 (Carsten Heinz)
+
 (./documentation.aux)
 \openout1 = `documentation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for U+msa on input line 29.
+\c@lstlisting=\count124
+LaTeX Font Info:    Try loading font information for U+msa on input line 32.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 29.
+LaTeX Font Info:    Try loading font information for U+msb on input line 32.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
 
-LaTeX Warning: Citation `sandholm_book' on page 1 undefined on input line 53.
+LaTeX Warning: Citation `sandholm_book' on page 1 undefined on input line 72.
 
 
-LaTeX Warning: Citation `gal' on page 1 undefined on input line 54.
-
-
-LaTeX Warning: Citation `sandholm_book' on page 1 undefined on input line 65.
+LaTeX Warning: Citation `gal' on page 1 undefined on input line 73.
 
 [1
 
 ]
 
-LaTeX Warning: Citation `hofbauer2001nash' on page 2 undefined on input line 13
-3.
+LaTeX Warning: Citation `sandholm_book' on page 2 undefined on input line 84.
 
 
-LaTeX Warning: Citation `sandholm_book' on page 2 undefined on input line 133.
+LaTeX Warning: Citation `hofbauer2001nash' on page 2 undefined on input line 10
+1.
 
-[2] [3]
+
+LaTeX Warning: Citation `sandholm_book' on page 2 undefined on input line 101.
+
+[2]
+Overfull \hbox (20.82504pt too wide) in paragraph at lines 127--127
+[]\OT1/cmr/bx/n/12 Comparison to the Av-er-age Pay-off (Brown-von Neumann-
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 154
+ []$[]  [] \OT1/cmr/m/n/10 = [] \OML/cmm/m/it/10 x[] [][] \OMS/cmsy/m/n/10 ^^@ 
+\OML/cmm/m/it/10 x[] [] [][] :$ [][]  
+ []
+
+
+Underfull \hbox (badness 1902) in paragraph at lines 224--224
+\OT1/cmr/m/n/10 par-i-son2average, pair-wise[]comparison,
+ []
+
+
+Overfull \hbox (40.83383pt too wide) in paragraph at lines 220--226
+ [] 
+ []
+
+[3] [4]
+File: ./images/test_finite_proportional_imitation.eps Graphic file (type eps)
+ <./images/test_finite_proportional_imitation.eps>
 File: ./images/test1_simplex_rd.eps Graphic file (type eps)
- <./images/test1_simplex_rd.eps>
-File: ./images/test1_ev_rd.eps Graphic file (type eps)
- <./images/test1_ev_rd.eps>
+
+<./images/test1_simplex_rd.eps>
+File: ./images/test_finite_comparison2average.eps Graphic file (type eps)
+ <./images/test_finite_comparison2average.eps>
 File: ./images/test1_simplex_bnn.eps Graphic file (type eps)
 
 <./images/test1_simplex_bnn.eps>
-File: ./images/test1_ev_bnn.eps Graphic file (type eps)
- <./images/test1_ev_bnn.eps>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: ./images/test_finite_pairwise_comparison.eps Graphic file (type eps)
+<./images/test_finite_pairwise_comparison.eps>
 File: ./images/test1_simplex_smith.eps Graphic file (type eps)
 
 <./images/test1_simplex_smith.eps>
-File: ./images/test1_ev_smith.eps Graphic file (type eps)
- <./images/test1_ev_smith.eps>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: ./images/test_finite_logit_choice.eps Graphic file (type eps)
+<./images/test_finite_logit_choice.eps>
 File: ./images/test1_simplex_logit.eps Graphic file (type eps)
+ <./images/test1_simplex_logit.eps>
 
-<./images/test1_simplex_logit.eps>
-File: ./images/test1_ev_logit.eps Graphic file (type eps)
- <./images/test1_ev_logit.eps> [4] [5]
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[5]
 File: ./images/test2_simplex_rd.eps Graphic file (type eps)
-
-<./images/test2_simplex_rd.eps>
+ <./images/test2_simplex_rd.eps>
 File: ./images/test2_ev_rd.eps Graphic file (type eps)
  <./images/test2_ev_rd.eps>
-File: ./images/test2_simplex_bnn.eps Graphic file (type eps)
 
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: ./images/test2_simplex_maynard_rd.eps Graphic file (type eps)
+<./images/test2_simplex_maynard_rd.eps>
+File: ./images/test2_ev_maynard_rd.eps Graphic file (type eps)
+ <./images/test2_ev_maynard_rd.eps>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: ./images/test2_simplex_bnn.eps Graphic file (type eps)
 <./images/test2_simplex_bnn.eps>
 File: ./images/test2_ev_bnn.eps Graphic file (type eps)
  <./images/test2_ev_bnn.eps>
-File: ./images/test2_simplex_smith.eps Graphic file (type eps)
 
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: ./images/test2_simplex_smith.eps Graphic file (type eps)
 <./images/test2_simplex_smith.eps>
 File: ./images/test2_ev_smith.eps Graphic file (type eps)
  <./images/test2_ev_smith.eps>
-File: ./images/test2_simplex_logit.eps Graphic file (type eps)
 
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: ./images/test2_simplex_logit.eps Graphic file (type eps)
 <./images/test2_simplex_logit.eps>
 File: ./images/test2_ev_logit.eps Graphic file (type eps)
- <./images/test2_ev_logit.eps> [6] [7]
-[8] (./documentation.aux)
+ <./images/test2_ev_logit.eps>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[6] [7] [8] [9] (./documentation.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 4278 strings out of 495060
- 59637 string characters out of 3182053
- 120712 words of memory out of 3000000
- 7368 multiletter control sequences out of 15000+200000
- 14597 words of font info for 55 fonts, out of 3000000 for 9000
+ 5882 strings out of 495060
+ 80898 string characters out of 3182053
+ 164805 words of memory out of 3000000
+ 8956 multiletter control sequences out of 15000+200000
+ 15073 words of font info for 57 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 53i,13n,92p,824b,518s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,13n,92p,824b,985s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on documentation.dvi (8 pages, 21028 bytes).
+Output written on documentation.dvi (9 pages, 28768 bytes).

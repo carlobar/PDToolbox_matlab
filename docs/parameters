@@ -1,11 +1,42 @@
 Parameters of the dynamical evolution
 
 
-% number of populations
-P = 1;
+\begin{center}
+\begin{tabular}{lll}
+Field & Description & Default value\\
+P & Number of populations & 1 \\
+n & Number of pure strategies per population & - \\
+S $ Vector of pure strategies in each population & ones(G.P, 1) * G.n \\
+m & Vector with the mass of each population & ones(G.P, 1) \\
+x0 & Initial state of the society & random \\
+f & Funtion that returns the fitness of the population & - \\
+ode & ODE solver for the evolutionary dynamics & 'ode45' \\
+dynamics & Evolutionary dynamic. Current version support combinations of {'rd', 'maynard_rd',  'bnn', 'smith',  'logit'} & 'rd' \\
+gamma & Defines the weight given to each dynamic when using combined dynamics &  $\sum \gamma(i) = 1$ \\
 
-% number of pure strategies per population
-n = 3;
+
+\end{tabular}
+\end{center}
+
+
+\begin{center}
+\begin{tabular}{lll}
+Field & Description & Default value\\
+N & Number of agents
+R & Rate of the Poisson clock & 1 \\
+revision_protocol & Revision protocol. The current version support one of the following: comparison2average, pairwise_comparison, logit_choice, proportional_imitation. & 'proportional_imitation' \\
+\end{tabular}
+\end{center}
+
+m & Vector with the mass of each population
+if m is not defined properly, then a unitary mass is assumed for each population.
+
+
+
+
+
+
+
 
 % initial condition
 x0 = [0.2 .7 0.1 ]'; 
@@ -32,6 +63,10 @@ S can be defined manually as a vector with the pure strategies of all population
 
 m is a vector with the mass of each population
 if m is not defined properly, then a unitary mass is assumed for each population.
+
+
+
+
 
 
 

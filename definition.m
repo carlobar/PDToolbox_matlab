@@ -94,6 +94,9 @@ if isfield(G, 'R') == 0
     G.R = 1;
 end
 
+if isfield(G, 'N') == 0
+    G.R = 100;
+end
 
 % define functions 
 G.run = @run_game;
