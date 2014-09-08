@@ -36,38 +36,34 @@ G = definition(G);
 
 G.dynamics = {'rd'};
 G.run()
-G.graph()
-%G.graph_state()
-G.graph_evolution()
-pause
+% G.graph()
+% G.graph_evolution()
+% pause
 
 
 
 G.dynamics = {'maynard_rd'};
 G.ode = 'ode23s';
 G.run()
-G.graph()
-%G.graph_state()
-G.graph_evolution()
-pause
+% G.graph()
+% G.graph_evolution()
+% pause
 
 
 G.ode = 'ode113';
 G.dynamics = {'bnn'};
 G.run()
-G.graph()
-%G.graph_state()
-G.graph_evolution()
-pause
+% G.graph()
+% G.graph_evolution()
+% pause
 
 
 
 G.dynamics = {'smith'};
 G.run()
-G.graph()
-%G.graph_state()
-G.graph_evolution()
-pause
+% G.graph()
+% G.graph_evolution()
+% pause
 
 
 
@@ -75,7 +71,6 @@ G.dynamics = {'logit'};
 G.eta = .02;
 G.run()
 G.graph()
-%G.graph_state()
 G.graph_evolution()
 
 

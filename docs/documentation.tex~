@@ -262,6 +262,9 @@ The functions \verb|G.graph()| and \verb|G.graph_evolution()| are used to graph 
 
 
 
+\input{algorithms}
+
+
 
 
 \subsection{Examples}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=latex 2013.7.26)  7 SEP 2014 02:34
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=latex 2013.7.26)  7 SEP 2014 22:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -478,34 +478,82 @@ LaTeX Info: Redefining \cite on input line 302.
 LaTeX Info: Redefining \nocite on input line 373.
 Package: cite 2010/09/10  v 5.3
 )
-(/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithmic.sty
-Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
-\c@ALC@unique=\count112
-\c@ALC@line=\count113
-\c@ALC@rem=\count114
-\c@ALC@depth=\count115
-\ALC@tlm=\skip50
-\algorithmicindent=\skip51
+(/usr/share/texlive/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
+Package: algorithm2e 2008/00/00 v3.10 algorithms environments
+\c@AlgoLine=\count112
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2009/10/20 v1.13 Space after command names (DPC,MH)
 )
-(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+(/usr/share/texlive/texmf-dist/tex/latex/relsize/relsize.sty
+Package: relsize 2011/09/21 ver 4.0
+
+Examine \normalsize starts \@setfontsize size may be \@xpt. 
+Examine \small starts \@setfontsize size may be \@ixpt. 
+Examine \footnotesize starts \@setfontsize size may be \@viiipt. 
+Examine \large starts \@setfontsize size may be \@xiipt. 
+Examine \Large starts \@setfontsize size may be \@xivpt. 
+Examine \LARGE starts \@setfontsize size may be \@xviipt. 
+Examine \scriptsize starts \@setfontsize size may be \@viipt. 
+Examine \tiny starts \@setfontsize size may be \@vpt. 
+Examine \huge starts \@setfontsize size may be \@xxpt. 
+Examine \Huge starts \@setfontsize size may be \@xxvpt. )
+********************************************************
+Package `algorithm2e' Release 4.01 -- december 14 2009 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (fiorio@lirmm.fr)
+********************************************************
+\skiptotal=\skip50
+\skiplinenumber=\skip51
+\skiprule=\skip52
+\skiphlne=\skip53
+\skiptext=\skip54
+\skiplength=\skip55
+\algomargin=\skip56
+\skipalgocfslide=\skip57
+\algowidth=\dimen161
+\inoutsize=\dimen162
+\inoutline=\dimen163
+\interspacetitleruled=\dimen164
+\interspacealgoruled=\dimen165
+\interspacetitleboxruled=\dimen166
+\algocf@inoutbox=\box32
+\algocf@inputbox=\box33
+\AlCapSkip=\skip58
+\AlCapHSkip=\skip59
+\algocf@nlbox=\box34
+\algocf@hangingbox=\box35
+\algocf@capbox=\box36
+\algoheightruledefault=\skip60
+\algoheightrule=\skip61
+\algotitleheightruledefault=\skip62
+\algotitleheightrule=\skip63
+\c@algocfline=\count113
+\c@algocfproc=\count114
+\c@algocf=\count115
+\algocf@algoframe=\box37
+\algocf@algobox=\box38
+) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
 \lst@mode=\count116
-\lst@gtempboxa=\box32
+\lst@gtempboxa=\box39
 \lst@token=\toks29
 \lst@length=\count117
-\lst@currlwidth=\dimen161
+\lst@currlwidth=\dimen167
 \lst@column=\count118
 \lst@pos=\count119
-\lst@lostspace=\dimen162
-\lst@width=\dimen163
+\lst@lostspace=\dimen168
+\lst@width=\dimen169
 \lst@newlines=\count120
 \lst@lineno=\count121
-\lst@maxwidth=\dimen164
+\lst@maxwidth=\dimen170
 
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
 \c@lstnumber=\count122
 \lst@skipnumbers=\count123
-\lst@framebox=\box33
+\lst@framebox=\box40
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2007/02/22 1.4 listings configuration
@@ -515,73 +563,74 @@ Package: listings 2007/02/22 1.4 (Carsten Heinz)
 (./documentation.aux)
 \openout1 = `documentation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count124
-LaTeX Font Info:    Try loading font information for U+msa on input line 32.
+LaTeX Font Info:    Try loading font information for U+msa on input line 33.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 32.
+LaTeX Font Info:    Try loading font information for U+msb on input line 33.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
 
-LaTeX Warning: Citation `sandholm_book' on page 1 undefined on input line 72.
+LaTeX Warning: Citation `sandholm_book' on page 1 undefined on input line 73.
 
 
-LaTeX Warning: Citation `gal' on page 1 undefined on input line 73.
+LaTeX Warning: Citation `gal' on page 1 undefined on input line 74.
 
 [1
 
 ]
 
-LaTeX Warning: Citation `sandholm_book' on page 2 undefined on input line 84.
+LaTeX Warning: Citation `sandholm_book' on page 2 undefined on input line 85.
 
 
 LaTeX Warning: Citation `hofbauer2001nash' on page 2 undefined on input line 10
-1.
+2.
 
 
-LaTeX Warning: Citation `sandholm_book' on page 2 undefined on input line 101.
+LaTeX Warning: Citation `sandholm_book' on page 2 undefined on input line 102.
 
 [2]
-Overfull \hbox (20.82504pt too wide) in paragraph at lines 127--127
+Overfull \hbox (20.82504pt too wide) in paragraph at lines 128--128
 []\OT1/cmr/bx/n/12 Comparison to the Av-er-age Pay-off (Brown-von Neumann-
  []
 
 
-Underfull \hbox (badness 10000) detected at line 154
+Underfull \hbox (badness 10000) detected at line 155
  []$[]  [] \OT1/cmr/m/n/10 = [] \OML/cmm/m/it/10 x[] [][] \OMS/cmsy/m/n/10 ^^@ 
 \OML/cmm/m/it/10 x[] [] [][] :$ [][]  
  []
 
 
-Underfull \hbox (badness 1902) in paragraph at lines 224--224
+Underfull \hbox (badness 1902) in paragraph at lines 225--225
 \OT1/cmr/m/n/10 par-i-son2average, pair-wise[]comparison,
  []
 
 
-Overfull \hbox (40.83383pt too wide) in paragraph at lines 220--226
+Overfull \hbox (40.83383pt too wide) in paragraph at lines 221--227
  [] 
  []
 
-[3] [4]
+[3] [4] (./algorithms.tex [5]) [6]
 File: ./images/test_finite_proportional_imitation.eps Graphic file (type eps)
- <./images/test_finite_proportional_imitation.eps>
+
+<./images/test_finite_proportional_imitation.eps>
 File: ./images/test1_simplex_rd.eps Graphic file (type eps)
 
 <./images/test1_simplex_rd.eps>
@@ -608,10 +657,7 @@ File: ./images/test1_simplex_logit.eps Graphic file (type eps)
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[5]
+[7]
 File: ./images/test2_simplex_rd.eps Graphic file (type eps)
  <./images/test2_simplex_rd.eps>
 File: ./images/test2_ev_rd.eps Graphic file (type eps)
@@ -647,18 +693,18 @@ File: ./images/test2_ev_logit.eps Graphic file (type eps)
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[6] [7] [8] [9] (./documentation.aux)
+[8] [9] [10] [11] (./documentation.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 5882 strings out of 495060
- 80898 string characters out of 3182053
- 164805 words of memory out of 3000000
- 8956 multiletter control sequences out of 15000+200000
+ 6882 strings out of 495060
+ 94240 string characters out of 3182053
+ 196402 words of memory out of 3000000
+ 9947 multiletter control sequences out of 15000+200000
  15073 words of font info for 57 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 53i,13n,92p,824b,985s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,18n,92p,824b,985s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on documentation.dvi (9 pages, 28768 bytes).
+Output written on documentation.dvi (11 pages, 33944 bytes).

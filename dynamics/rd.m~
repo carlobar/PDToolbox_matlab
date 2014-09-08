@@ -5,6 +5,7 @@ global G
 n = max(G.S); 
 
 F = zeros(G.P, n);
+F_ = zeros(G.P, n);
 F_mean = zeros(G.P, 1);
 x_dot_v = zeros(G.P* n, 1);
 

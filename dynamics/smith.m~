@@ -53,8 +53,11 @@ for p = 1 : G.P
     
 
 
-    % calculate update in the strategy
-    x_dot_v( (p-1)*n + 1 : p*n) = F_excess_a(p, :) - F_excess_b(p, :) .* x_n(p, :);
+% calculate update in the strategy
+    x_dot_v( (p-1)*n + 1 : ) = F_excess_a(p, s) - F_excess_b(p,s) * x_n(p, s);
+%    for s = 1 : G.S(p)
+%        x_dot_v( (p-1)*n + s) = F_excess_a(p, s) - F_excess_b(p,s) * x_n(p, s);
+%    end
 end
 
 dz = [x_dot_v];

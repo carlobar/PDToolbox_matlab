@@ -1,0 +1,94 @@
+\section{Implementation}
+
+\subsection{Replicator Dynamics}
+
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+
+ \Input{Society's state $x$}
+ \Output{State update $\dot{x}$}
+ \BlankLine
+ 
+ \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
+  $ F^p \leftarrow fitness(x, p)$\;
+  $ \bar{F}^p \leftarrow \frac{1}{m^p} (F^p)^\top x^p$\;
+  $ \hat{F}^p \leftarrow F^p - \boldsymbol{1} \bar{F}^p$\;
+  $ \dot{x}^p \leftarrow \text{diag}(\hat{F}^p) x^p $\;
+ }
+\end{algorithm}
+
+
+The running time of the algorithm is $T_{rd}(n, P) = O( (n + T_{fitness}(n,P))P ) $, where $T_{fitness}(n,P)$ is the time required to calculate the fitness vector of the $p\th$ population.
+
+
+
+\subsection{BNN}
+
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+
+ \Input{Society's state $x$}
+ \Output{State update $\dot{x}$}
+ \BlankLine
+ 
+ \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
+  $ F^p \leftarrow fitness(x, p)$\;
+  $ \bar{F}^p \leftarrow \frac{1}{m^p} (F^p)^\top x^p$\;
+  $ \hat{F}^p \leftarrow \max\{F^p - \boldsymbol{1} \bar{F}^p, \boldsymbol{0}\}$\;
+  $ \Gamma \leftarrow \boldsymbol{1}^\top \hat{F}^p $\;
+  $ \dot{x}^p \leftarrow \hat{F}^p - \Gamma x^p $\;
+ }
+\end{algorithm}
+
+
+
+\subsection{Smith Dynamics}
+
+In this case we need to order the strategies first. 
+
+
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+
+ \Input{Society's state $x$}
+ \Output{State update $\dot{x}$}
+ \BlankLine
+ 
+ \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
+  $ F^p \leftarrow fitness(x, p)$\;
+  Order the strategies by their fitness in vector/list  \;
+  
+  \For{ $i \leftarrow 2$ \KwTo $n^p$}{
+    \For{ $j \leftarrow 1$ \KwTo $i-1$}{
+      $\alpha \leftarrow order^p_i$\;
+      $\beta \leftarrow order^p_j$\;
+      $\Delta_{ij}^p \leftarrow F_\alpha^p - F_\beta^p $\;
+    }
+  }
+  
+  \For{ $i \leftarrow n^p$ }{
+    $k \leftarrow order_i^p$\;
+    \For{ $g \leftarrow i-1$ }{
+      $\gamma = order_g^p$\;
+      
+    } 
+  }
+  
+  $ \bar{F}^p \leftarrow \frac{1}{m^p} (F^p)^\top x^p$\;
+  $ \hat{F}^p \leftarrow \max\{F^p - \boldsymbol{1} \bar{F}^p, \boldsymbol{0}\}$\;
+  $ \Gamma \leftarrow \boldsymbol{1}^\top \hat{F}^p $\;
+  $ \dot{x}^p \leftarrow \hat{F}^p - \Gamma x^p $\;
+ }
+\end{algorithm}
+
+
+
+
+
+
+\section{Combined Dynamics}
+
+\begin{equation}
+\dot{ \bs{x} } = V_d( \bs{x} ),
+\end{equation}
+where $d\in \mathcal{D}=\{ Logit, RD, Smith, BNN \}$ denotes the dynamic used

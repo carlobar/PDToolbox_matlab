@@ -13,41 +13,25 @@ for p = 1 : G.P
     x(p, :) = x_n(p, :) * G.m(p);
 end
 
-% calculate fitness of each strategy
-F_ = zeros(G.P, n);
 F_mean = zeros(G.P, 1);
-
-for p = 1 : G.P
-    for s = 1 : G.S(p)
-        F_(p, s) = G.f(x, p, s) ;
-        F_mean(p) = F_mean(p) + x_n(p, s) * F_(p, s);
-    end
-end
+F = zeros(G.P, n);
 
 F_excess = zeros(G.P, n);
-F_excess_mean = zeros(G.P, n);
+F_gamma = zeros(G.P, n);
 
-for p = 1 : G.P
-    for s = 1 : G.S(p)
-        F_excess(p, s) = max( F_(p, s) - F_mean(p), 0 ) ;
-        F_excess_mean(p) = F_excess_mean(p) + F_excess(p, s);
-    end
-end
-
-
-% calculate update in the strategy
 x_dot_v = zeros(G.P* n, 1);
-%x_dot = zeros(G.P, n);
+
 
 for p = 1 : G.P
-    for s = 1 : G.S(p)
-        %x_dot(p, s) = F_excess(p, s) - F_excess_mean(p) * x_n(p, s);
-        x_dot_v( (p-1)*n + s) = F_excess(p, s) - F_excess_mean(p) * x_n(p, s);
-    end
-end
+    F(p, :) = G.f(x, p);
+    F_mean(p) = F(p, :) * x_n(p, :)';
 
-%x_dot_ = x_dot';
-%x_dot_v = x_dot_(:);
+    F_excess(p,:) = max( F(p, :) - F_mean(p), 0 );
+    F_gamma(p) = sum( F_excess(p, :) );
+
+    x_dot_v( (p-1)*n + 1 : p*n ) = F_excess(p, :) - F_gamma(p) * x_n(p, :);
+
+end
 
 dz = [x_dot_v];
 
