@@ -1,4 +1,7 @@
 % set initial strategy of each agent to satisfy the initial condition
+disp (['Running a revision protocol']);
+tic
+
 s = zeros(G.N, G.P);
 
 h = 0;
@@ -33,9 +36,10 @@ for t = 1: t_max
     
     % find the current payoff of each strategy
     F = zeros(G.S(1), 1) ;
-    for i = 1: G.S(1)
-        F(i) = G.f(x, 1, i);
-    end
+    %for i = 1: G.S(1)
+    %    F(i) = G.f(x, 1, i);
+    %end
+    F = G.f(x, 1);
 
 	% select users to update their actions at random
 	update_agents = unidrnd(G.N, 1, alarm(t));
@@ -53,17 +57,24 @@ for t = 1: t_max
         %s_update(i) = proportional_imitation(F, x, s, i, 1);
         %s_update(i) = logit_choice(F, z, s, i, 1);
         
-% 
-%         % update society state
-%         z = state(s);
-% 
-%         % find the current payoff of each strategy
+
+        % update society state
+
+%         s = s_update;
+%         x = state(s);        
+%         F = G.f(x, 1);        
+        
+        
+        
+        
+        % find the current payoff of each strategy
+
 %         F = zeros(G.S(1), 1) ;
 %         for i = 1: G.S(1)
 %             F(i) = G.f(z', 1, i);
 %         end
         
-        
+
         
     end
     
@@ -74,6 +85,9 @@ for t = 1: t_max
 
 end
 
+toc
+
+disp([' '])
+
 G.X = X;
 G.T = T;
-
