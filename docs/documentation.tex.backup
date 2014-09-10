@@ -13,7 +13,8 @@
 \usepackage{subcaption}
 \usepackage{amsfonts}
 \usepackage{cite}
-\usepackage{algorithmic}
+%\usepackage{algorithmic}
+\usepackage[]{algorithm2e}
 
 \usepackage{listings}
 \lstset{breaklines=true} 
@@ -32,6 +33,7 @@
 \maketitle
 
 
+
 \begin{abstract}
  Toolbox for evolutionary dynamics with multiple populations. We consider finite and large populations. For finite populations we implement revision protocols and random interactions between agents. On the other hand, for large populations we use the approximation of dynamical equations. 
  
@@ -44,6 +46,10 @@
  
  
 \end{abstract}
+
+
+\tableofcontents
+
 
 
 \section{Introduction}
@@ -169,53 +175,96 @@ This protocol belong to target dynamics and result in the following dynamics
 \end{equation}
 known ad Logit dynamics. 
 
-%% include maynard rd
 
 
-\subsection{Parameters of the Implementation}
+\subsection{Maynard Smith Replicator}
 
-The toolbox uses a structure with all the parameters required to run the simulations. The following is an example to define a game with one population, three strategies per population. 
-
-\begin{lstlisting}
- G = struct('n', 3, 'f', @fitness1, 'x0',  [0.2 .7 0.1 ]', 'ode', 'ode113', 'time', 60);
-\end{lstlisting}
+\begin{equation}
+\dot{x}_i = \frac{ x_i F_i }{ \bar{F}(x) } - x_i
+\end{equation}
 
 
-Note that the number of populations and the mass of each population are defined by default to one. The parameters of the population game are defined in Table \ref{tab:req_a}.
 
-\begin{table}[h]
-\begin{center}
-\begin{tabular}{l | p{.5 \textwidth} | l}\hline
-Field & Description & Default value\\ \hline
-P & Number of populations & 1 \\
-n & Number of pure strategies per population & - \\
-S & Vector of pure strategies in each population & ones(G.P, 1) * G.n \\
-m & Vector with the mass of each population & ones(G.P, 1) \\
-x0 & Initial state of the society & random \\
-f & Funtion that returns the fitness of the population & - \\
-ode & ODE solver for the evolutionary dynamics & 'ode45' \\
-dynamics & Evolutionary dynamic. Current version support combinations of {'rd', 'maynard\_rd',  'bnn', 'smith',  'logit'} & 'rd' \\
-gamma & Defines the weight given to each dynamic when using combined dynamics &  $\sum \gamma(i) = 1$ \\ \hline
-\end{tabular}
-\end{center}
-\caption{Parameters of the dynamical implementation.}
-\label{tab:req_a}
-\end{table}
 
-\begin{table}[h]
-\begin{center}
-\begin{tabular}{l| p{.5 \textwidth} |l}\hline
-Field & Description & Default value \\ \hline
-N & Number of agents & 100 \\
-R & Rate of the Poisson clock & 1 \\
-revision\_protocol & Revision protocol. The current version support one of the following: comparison2average, pairwise\_comparison, logit\_choice, proportional\_imitation. & 'proportional\_imitation' \\ \hline
-\end{tabular}
-\end{center}
-\caption{Parameters of the revision protocol.}
-\label{tab:req_b}
-\end{table}
 
 \subsection{Examples}
+
+
+
+\begin{figure}[th]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_proportional_imitation.eps}
+	  \caption{Small population.}
+	  \label{fig:finite1_protocol}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test1_simplex_rd.eps}
+	  \caption{Large popultion.}
+	  \label{fig:finite1_dynamics}
+  \end{subfigure}
+  \caption{Rock-paper-scissors game with a) proportional imitation revision protocol and b) replicator dynamics.}
+  \label{fig:finite1}
+\end{figure}
+
+
+\begin{figure}[th]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_comparison2average.eps}
+	  \caption{Small population.}
+	  \label{fig:finite2_protocol}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test1_simplex_bnn.eps}
+	  \caption{Large popultion.}
+	  \label{fig:finite2_dynamics}
+  \end{subfigure}
+  \caption{Rock-paper-scissors game with a) comparison to average revision protocol and b) BNN dynamics.}
+  \label{fig:finite2}
+\end{figure}
+
+
+\begin{figure}[tbh]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_pairwise_comparison.eps}
+	  \caption{Small population.}
+	  \label{fig:finite3_protocol}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test1_simplex_smith.eps}
+	  \caption{Large popultion.}
+	  \label{fig:finite3_dynamics}
+  \end{subfigure}
+  \caption{Rock-paper-scissors game with a) pairwise comparison revision protocol and b) Smith dynamics.}
+  \label{fig:finite3}
+\end{figure}
+
+
+\begin{figure}[tbh]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_logit_choice.eps}
+	  \caption{Small population.}
+	  \label{fig:finite4_protocol}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test1_simplex_logit.eps}
+	  \caption{Large popultion.}
+	  \label{fig:finite4_dynamics}
+  \end{subfigure}
+  \caption{Rock-paper-scissors game with a) logit choice revision protocol and b) Logit dynamics with $\eta=0.02$.}
+  \label{fig:finite4}
+\end{figure}
+
+
+
+
 
 In this section, we implement rock-paper-scissors game with both revision protocols and evolutionary dynamics presented above, to observe the behavioral differences between a society with small number of agents and its approximation to a dynamical system.
 The game has only one population with three strategies, denoted $x = [x_1, x_2, x_3]^\top$. The fitness function is defined as $F(x)=Ax$, where A is equal to 
@@ -231,82 +280,7 @@ Fig. \ref{fig:finite1} to \ref{fig:finite4} show the evolution of the society wi
 30 time units.
 
 
-The evolution might take place in days, months, years.
-
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_finite_proportional_imitation.eps}
-	  \caption{Small population.}
-	  \label{fig:finite1_protocol}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_rd.eps}
-	  \caption{Large popultion.}
-	  \label{fig:finite1_dynamics}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with a) proportional imitation revision protocol and b) replicator dynamics.}
-  \label{fig:finite1}
-\end{figure}
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_finite_comparison2average.eps}
-	  \caption{Small population.}
-	  \label{fig:finite2_protocol}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_bnn.eps}
-	  \caption{Large popultion.}
-	  \label{fig:finite2_dynamics}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with a) comparison to average revision protocol and b) BNN dynamics.}
-  \label{fig:finite2}
-\end{figure}
-
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_finite_pairwise_comparison.eps}
-	  \caption{Small population.}
-	  \label{fig:finite3_protocol}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_smith.eps}
-	  \caption{Large popultion.}
-	  \label{fig:finite3_dynamics}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with a) pairwise comparison revision protocol and b) Smith dynamics.}
-  \label{fig:finite3}
-\end{figure}
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_finite_logit_choice.eps}
-	  \caption{Small population.}
-	  \label{fig:finite4_protocol}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_logit.eps}
-	  \caption{Large popultion.}
-	  \label{fig:finite4_dynamics}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with a) logit choice revision protocol and b) Logit dynamics with $\eta=0.02$.}
-  \label{fig:finite4}
-\end{figure}
-
+%The evolution might take place in days, months, years.
 
 
 
@@ -421,6 +395,60 @@ Fig.\ref{fig:rpc_game_rd} to \ref{fig:rpc_game_logit} show the evolution of the 
 \fi
 
 
+
+
+
+
+\section{Combined Dynamics}
+
+It is possible to define a set of dynamics to run a combination of the dynamics. The dynamics should be defined in a cell array, e.g., 
+\begin{lstlisting}
+dynamics = {'bnn', 'rd'};
+\end{lstlisting}
+The combination is made making a linear combination between each dynamic listed in the cell array. The weight assigned to each dynamic is defined in the vector \verb|gamma|. In this case we assign 
+\begin{lstlisting}
+gamma = [.25, .75]; 
+\end{lstlisting}
+
+Fig. \ref{fig:rps_combined} shows an example of the combined dynamics for the rock-paper-scissors game. Note that the evolution of the system is not confined to a limit cycle, as happened with the replicator dynamics in \ref{fig:finite1}.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_combined.eps}
+	  \caption{Simplex.}
+	  \label{fig:test_combined_simplex}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.45\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_combined_ev.eps}
+	  \caption{Evolution of the strategies in time.}
+	  \label{fig:test_combined_ev}
+  \end{subfigure}
+  \caption{Evolution of the combination of replicator dynamics and BNN dynamics.}
+  \label{fig:rps_combined}
+\end{figure}
+
+
+
+\begin{equation}
+\dot{ \bs{x} } = V_d( \bs{x} ),
+\end{equation}
+where $d\in \mathcal{D}=\{ Logit, RD, Smith, BNN \}$ denotes the dynamic used
+
+
+
+
+
+
+
+\newpage
+
+\section{Multi-population Games}
+
+
+
+\subsection{Examples}
 
 \subsubsection{Matching pennies}
 

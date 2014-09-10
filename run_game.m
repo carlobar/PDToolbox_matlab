@@ -8,8 +8,8 @@ else
 		names =	strcat(names, ', ', ' ', G.dynamics{i});
 	end
 	disp (['Running combination of ', names, ' dynamics']);
-	%command = strcat( G.ode, '( @combined_dynamics, G.step:G.step:G.time+G.step, G.x0, G.options_ode );');
-	command = strcat( G.ode, '( @heuristic_combined_dynamics, G.step:G.step:G.time+G.step, G.x0, G.options_ode );');
+	command = strcat( G.ode, '( @combined_dynamics, G.step:G.step:G.time+G.step, G.x0, G.options_ode );');
+	%command = strcat( G.ode, '( @heuristic_combined_dynamics, G.step:G.step:G.time+G.step, G.x0, G.options_ode );');
 end
 
 

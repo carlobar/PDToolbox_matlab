@@ -1,0 +1,13 @@
+\contentsline {section}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {2}Revision Protocols and Evolutionary Dynamics}{3}
+\contentsline {subsection}{\numberline {2.1}Pairwise Proportional Imitation (Replicator Dynamics)}{3}
+\contentsline {subsection}{\numberline {2.2}Comparison to the Average Payoff (Brown-von Neumann-Nash Dynamics (BNN))}{3}
+\contentsline {subsection}{\numberline {2.3}Pairwise Comparison (Smith Dynamics)}{3}
+\contentsline {subsection}{\numberline {2.4}Logit Choice}{4}
+\contentsline {subsection}{\numberline {2.5}Maynard Smith Replicator}{4}
+\contentsline {subsection}{\numberline {2.6}Examples}{4}
+\contentsline {section}{\numberline {3}Combined Dynamics}{5}
+\contentsline {section}{\numberline {4}Multi-population Games}{7}
+\contentsline {subsection}{\numberline {4.1}Examples}{7}
+\contentsline {subsubsection}{\numberline {4.1.1}Matching pennies}{7}
+\contentsline {section}{\numberline {5}Designing games}{7}

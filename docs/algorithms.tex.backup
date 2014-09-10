@@ -53,40 +53,70 @@ In this case we need to order the strategies first.
  \Input{Society's state $x$}
  \Output{State update $\dot{x}$}
  \BlankLine
- 
  \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
   $ F^p \leftarrow fitness(x, p)$\;
   Order the strategies by their fitness in vector/list  \;
   
-  \For{ $i \leftarrow 2$ \KwTo $n^p$}{
-    \For{ $j \leftarrow 1$ \KwTo $i-1$}{
+  \For{ $i \leftarrow 2$ \KwTo $n^p$ }{
+    \For{ $j \leftarrow 1$ \KwTo $i-1$ }{
       $\alpha \leftarrow order^p_i$\;
       $\beta \leftarrow order^p_j$\;
       $\Delta_{ij}^p \leftarrow F_\alpha^p - F_\beta^p $\;
     }
   }
-  
-  \For{ $i \leftarrow n^p$ }{
+  \For{ $i \leftarrow 1$ \KwTo $n^p$ }{
     $k \leftarrow order_i^p$\;
-    \For{ $g \leftarrow i-1$ }{
+    \For{ $g \leftarrow 1 $ \KwTo $i-1$ }{
       $\gamma = order_g^p$\;
-      
+      $\hat{F}_a^p \leftarrow \hat{F}_a^p + x_\gamma^p \Delta_{i,g}^p$\;
+    } 
+    
+    \For{ $g \leftarrow i+1$ \KwTo $n^p$ }{
+      $\gamma = order_g^p$\;
+      $\hat{F}_b^p \leftarrow \hat{F}_b^p + x_\gamma^p \Delta_{i,g}^p$\;
     } 
   }
-  
-  $ \bar{F}^p \leftarrow \frac{1}{m^p} (F^p)^\top x^p$\;
-  $ \hat{F}^p \leftarrow \max\{F^p - \boldsymbol{1} \bar{F}^p, \boldsymbol{0}\}$\;
-  $ \Gamma \leftarrow \boldsymbol{1}^\top \hat{F}^p $\;
-  $ \dot{x}^p \leftarrow \hat{F}^p - \Gamma x^p $\;
+  $ \dot{x}^p \leftarrow \hat{F}_a^p - \text{diag}(\hat{F}_a^p) x^p $\;
  }
 \end{algorithm}
 
 
 
 
+\section{Logit dynamics}
+
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+
+ \Input{Society's state $x$}
+ \Output{State update $\dot{x}$}
+ \BlankLine
+ 
+ \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
+  $ F^p \leftarrow fitness(x, p)$\;
+  $ \bar{F}^p \leftarrow \frac{1}{m^p} (F^p)^\top x^p$\;
+  $ \tilde{F}^p \leftarrow \exp( F^p \eta^{-1} )$\;
+  $ \Gamma \leftarrow \boldsymbol{1}^\top \tilde{F}^p $\;
+  $ \dot{x}^p \leftarrow \frac{\tilde{F}^p}{\Gamma} - x^p $\;
+ }
+\end{algorithm}
+
+
 
 
 \section{Combined Dynamics}
+
+It is possible to define a set of dynamics to run a combination of the dynamics. The dynamics should be defined in a cell array, e.g., 
+
+dynamics = {'bnn', 'rd'};
+\end{lstlisting}
+The combination is made making a linear combination between each dynamic listed in the cell array. The weight assigned to each dynamic is defined in the vector \verb|gamma|. In this case we assign 
+\begin{lstlisting}
+gamma = [.25, .75]; 
+\end{lstlisting}
+
+
+
 
 \begin{equation}
 \dot{ \bs{x} } = V_d( \bs{x} ),

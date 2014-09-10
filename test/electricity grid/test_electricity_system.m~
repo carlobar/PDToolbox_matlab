@@ -68,26 +68,29 @@ time = 30;
 
 
 % structure with the parameters of the game
-G = struct('P', P, 'n', n, 'f', @fitness3, 'ode', 'ode113', 'time', time, 'step', 0.000001);
+G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode15s', 'time', time, 'step', 0.00000001);
 
 % verify data of the game
 G = definition(G);
 
 
-G.step = .01;
+G.step = .001;
 
 
 % run different dynamics
-G.dynamics = {'rd'};
+G.dynamics = {'maynard_rd'};
 G.run()
 T_rd = G.T;
 X_rd = G.X;
+%pause
 
 G.dynamics = {'bnn'};
 G.run()
 T_bnn = G.T;
 X_bnn = G.X;
 
+%T_rd = T_bnn;
+%X_rd = X_bnn;
 
 G.dynamics = {'smith'};
 G.run()
@@ -95,13 +98,13 @@ T_smith = G.T;
 X_smith = G.X;
 
 
-G.eta = .005;
+G.eta = .02;
 G.dynamics = {'logit'};
 G.run()
 T_logit = G.T;
 X_logit = G.X;
 
-
+%pause
 graph_incentives_evolution
 
 %G.dynamics = dyn;

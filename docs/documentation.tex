@@ -33,6 +33,7 @@
 \maketitle
 
 
+
 \begin{abstract}
  Toolbox for evolutionary dynamics with multiple populations. We consider finite and large populations. For finite populations we implement revision protocols and random interactions between agents. On the other hand, for large populations we use the approximation of dynamical equations. 
  
@@ -45,6 +46,10 @@
  
  
 \end{abstract}
+
+
+\tableofcontents
+
 
 
 \section{Introduction}
@@ -172,9 +177,6 @@ known ad Logit dynamics.
 
 
 
-
-%% include maynard rd
-
 \subsection{Maynard Smith Replicator}
 
 \begin{equation}
@@ -185,90 +187,84 @@ known ad Logit dynamics.
 
 
 
-
-
-
-
-
-
-\subsection{Parameters of the Implementation}
-
-
-\begin{table}[tbh]
-\begin{center}
-\begin{tabular}{l | p{.5 \textwidth} | l}\hline
-Field & Description & Default value\\ \hline
-P & Number of populations & 1 \\
-n & Number of pure strategies per population & - \\
-S & Vector of pure strategies in each population & ones(G.P, 1) * G.n \\
-m & Vector with the mass of each population & ones(G.P, 1) \\
-x0 & Initial state of the society & random \\
-f & Funtion that returns the fitness of the population & - \\
-ode & ODE solver for the evolutionary dynamics & 'ode45' \\
-dynamics & Evolutionary dynamic. Current version support combinations of {'rd', 'maynard\_rd',  'bnn', 'smith',  'logit'} & 'rd' \\
-gamma & Defines the weight given to each dynamic when using combined dynamics &  $\sum \gamma(i) = 1$ \\ \hline
-\end{tabular}
-\end{center}
-\caption{Parameters of the dynamical implementation.}
-\label{tab:req_a}
-\end{table}
-
-
-
-
-\begin{table}[tbh]
-\begin{center}
-\begin{tabular}{l| p{.5 \textwidth} |l}\hline
-Field & Description & Default value \\ \hline
-N & Number of agents & 100 \\
-R & Rate of the Poisson clock & 1 \\
-revision\_protocol & Revision protocol. The current version support one of the following: comparison2average, pairwise\_comparison, logit\_choice, proportional\_imitation. & 'proportional\_imitation' \\ \hline
-\end{tabular}
-\end{center}
-\caption{Parameters of the revision protocol.}
-\label{tab:req_b}
-\end{table}
-
-
-
-
-The toolbox uses a structure with all the parameters required to run the simulations. The following is an example to define a game with one population, three strategies per population. 
-%
-\begin{lstlisting}
-G = struct('n', 3, 'f', @fitness1, 'x0',  [0.2 .7 0.1 ]', 'ode', 'ode113', 'time', 60);
-\end{lstlisting}
-%
-Note that the number of populations and the mass of each population are defined by default to one. The parameters of the population game are defined in Table \ref{tab:req_a}. The simulation can be started by executing
-%
-\begin{lstlisting}
- G.run()
-\end{lstlisting}
-
-
-
-
-The following structure is used to define a population game with small number of agents per population 
-%
-\begin{lstlisting}
-G = struct('N', 200, 'n', 3, 'f', @fitness1, 'x0',  [0.2 .7 0.1 ]', 'ode', 'ode113', 'time', 10000, 'eta', 0.02, 'revision_protocol', @proportional_imitation); 
-\end{lstlisting}
-%
-Table \ref{tab:req_b} contains the list of parameters required to run the revision protocol. The simulation of the revision protocol can be started by executing
-\begin{lstlisting}
- G.run_finite()
-\end{lstlisting}
-
-The functions \verb|G.graph()| and \verb|G.graph_evolution()| are used to graph the simplex and the state evolution of the society for both cases.
-
-
-
-
-\input{algorithms}
-
-
-
-
 \subsection{Examples}
+
+
+
+\begin{figure}[th]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_proportional_imitation.eps}
+	  \caption{Small population.}
+	  \label{fig:finite1_protocol}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test1_simplex_rd.eps}
+	  \caption{Large popultion.}
+	  \label{fig:finite1_dynamics}
+  \end{subfigure}
+  \caption{Rock-paper-scissors game with a) proportional imitation revision protocol and b) replicator dynamics.}
+  \label{fig:finite1}
+\end{figure}
+
+
+\begin{figure}[th]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_comparison2average.eps}
+	  \caption{Small population.}
+	  \label{fig:finite2_protocol}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test1_simplex_bnn.eps}
+	  \caption{Large popultion.}
+	  \label{fig:finite2_dynamics}
+  \end{subfigure}
+  \caption{Rock-paper-scissors game with a) comparison to average revision protocol and b) BNN dynamics.}
+  \label{fig:finite2}
+\end{figure}
+
+
+\begin{figure}[tbh]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_pairwise_comparison.eps}
+	  \caption{Small population.}
+	  \label{fig:finite3_protocol}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test1_simplex_smith.eps}
+	  \caption{Large popultion.}
+	  \label{fig:finite3_dynamics}
+  \end{subfigure}
+  \caption{Rock-paper-scissors game with a) pairwise comparison revision protocol and b) Smith dynamics.}
+  \label{fig:finite3}
+\end{figure}
+
+
+\begin{figure}[tbh]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_finite_logit_choice.eps}
+	  \caption{Small population.}
+	  \label{fig:finite4_protocol}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test1_simplex_logit.eps}
+	  \caption{Large popultion.}
+	  \label{fig:finite4_dynamics}
+  \end{subfigure}
+  \caption{Rock-paper-scissors game with a) logit choice revision protocol and b) Logit dynamics with $\eta=0.02$.}
+  \label{fig:finite4}
+\end{figure}
+
+
+
+
 
 In this section, we implement rock-paper-scissors game with both revision protocols and evolutionary dynamics presented above, to observe the behavioral differences between a society with small number of agents and its approximation to a dynamical system.
 The game has only one population with three strategies, denoted $x = [x_1, x_2, x_3]^\top$. The fitness function is defined as $F(x)=Ax$, where A is equal to 
@@ -284,82 +280,7 @@ Fig. \ref{fig:finite1} to \ref{fig:finite4} show the evolution of the society wi
 30 time units.
 
 
-The evolution might take place in days, months, years.
-
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_finite_proportional_imitation.eps}
-	  \caption{Small population.}
-	  \label{fig:finite1_protocol}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_rd.eps}
-	  \caption{Large popultion.}
-	  \label{fig:finite1_dynamics}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with a) proportional imitation revision protocol and b) replicator dynamics.}
-  \label{fig:finite1}
-\end{figure}
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_finite_comparison2average.eps}
-	  \caption{Small population.}
-	  \label{fig:finite2_protocol}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_bnn.eps}
-	  \caption{Large popultion.}
-	  \label{fig:finite2_dynamics}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with a) comparison to average revision protocol and b) BNN dynamics.}
-  \label{fig:finite2}
-\end{figure}
-
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_finite_pairwise_comparison.eps}
-	  \caption{Small population.}
-	  \label{fig:finite3_protocol}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_smith.eps}
-	  \caption{Large popultion.}
-	  \label{fig:finite3_dynamics}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with a) pairwise comparison revision protocol and b) Smith dynamics.}
-  \label{fig:finite3}
-\end{figure}
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_finite_logit_choice.eps}
-	  \caption{Small population.}
-	  \label{fig:finite4_protocol}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_logit.eps}
-	  \caption{Large popultion.}
-	  \label{fig:finite4_dynamics}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with a) logit choice revision protocol and b) Logit dynamics with $\eta=0.02$.}
-  \label{fig:finite4}
-\end{figure}
-
+%The evolution might take place in days, months, years.
 
 
 
@@ -474,6 +395,60 @@ Fig.\ref{fig:rpc_game_rd} to \ref{fig:rpc_game_logit} show the evolution of the 
 \fi
 
 
+
+
+
+
+\section{Combined Dynamics}
+
+It is possible to define a set of dynamics to run a combination of the dynamics. The dynamics should be defined in a cell array, e.g., 
+\begin{lstlisting}
+dynamics = {'bnn', 'rd'};
+\end{lstlisting}
+The combination is made making a linear combination between each dynamic listed in the cell array. The weight assigned to each dynamic is defined in the vector \verb|gamma|. In this case we assign 
+\begin{lstlisting}
+gamma = [.25, .75]; 
+\end{lstlisting}
+
+Fig. \ref{fig:rps_combined} shows an example of the combined dynamics for the rock-paper-scissors game. Note that the evolution of the system is not confined to a limit cycle, as happened with the replicator dynamics in \ref{fig:finite1}.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_combined.eps}
+	  \caption{Simplex.}
+	  \label{fig:test_combined_simplex}
+  \end{subfigure}
+  ~ 
+  \begin{subfigure}[b]{0.45\textwidth}
+	  \includegraphics[width=\textwidth]{./images/test_combined_ev.eps}
+	  \caption{Evolution of the strategies in time.}
+	  \label{fig:test_combined_ev}
+  \end{subfigure}
+  \caption{Evolution of the combination of replicator dynamics and BNN dynamics.}
+  \label{fig:rps_combined}
+\end{figure}
+
+
+
+\begin{equation}
+\dot{ \bs{x} } = V_d( \bs{x} ),
+\end{equation}
+where $d\in \mathcal{D}=\{ Logit, RD, Smith, BNN \}$ denotes the dynamic used
+
+
+
+
+
+
+
+\newpage
+
+\section{Multi-population Games}
+
+
+
+\subsection{Examples}
 
 \subsubsection{Matching pennies}
 
@@ -605,7 +580,84 @@ Fig. \ref{fig:mp_game_rd} to \ref{fig:mp_game_logit} show the evolution of the s
 
 
 
+\subsubsection{Demand response programs}
 
+
+
+We consider a population composed by $N$ consumers defined as $\mathcal{V} = {1,\ldots.N}$. Also, let us divide a period of 24 hours in a set of $T$ time intervals denoted $\tau = \{\tau_1,\ldots,\tau_T\}$.
+Formally, we define the set $\tau$ as a partition of $[0,24)$, where 
+ $\cup_{t\in\{1,\ldots,T\}} \tau_t = \tau$ and $\cap_{t\in\{1,\ldots,T\}} \tau_t = \varnothing$.
+%
+Let $q_i^t$ be the electricity consumption of the $i\th$ user in the $t\th$ time interval. 
+The daily electricity consumption of the $i\th$ user is represented by the vector $\bs{q}_i=[q_i^1,\ldots,q_i^T]^\top\in \Re_{\geq 0}^{T}$.
+The population consumption at a given time $t$ is defined by the vector $\bs{q}^t = [q_1^t,, q_2^t\ldots,q_N^t]^\top\in \Re_{\geq 0}^{N}$.
+On the other hand, the joint electricity consumption of the whole population is denoted by $\bs{q} = [\bs{q}_1^\top,
+\ldots, \bs{q}_N^\top]^\top$. 
+Without loss of generality, we assume that the electricity consumption of the $i\th$ user  satisfies $q_i^t\geq 0$,  in each time instant $t$.
+A \emph{valuation function} $v_i^t(q_i^t)$ models the \emph{valuation} that the $i\th$ user gives to an electricity consumption of $q_i^t$ units in the $t\th$ time interval. Finally, let $p(\cdot):\Re\rightarrow\Re$ be the price of electricity charged to consumers. The aggregated consumption at a given time $t$ is defined as $||\bs{q}^t||_1 = \sum_{j=1}^N q_j^t$.
+Moreover, a daily valuation is 
+$v_i(\bs{q}_i)=\sum_{t=1}^T v_i^t(q_i^t),$
+ where $t\in\{1,\ldots,T\}$.
+
+
+ 
+ 
+ 
+Now, assuming  that the electricity generation cost is  the same for all $t$, we can express the profit function of each individual as
+%
+\begin{equation}\label{eq:u_i_}
+ U_i(\bs{q}) = v_i(\bs{q}_i) - \sum_{t=1}^T q_i^t p\Big( \norm{\bs{q}^t}_1 \Big),
+\end{equation}
+%
+where 
+$p:\Re_+ \to \Re_+$ is the unitary proce function.
+The consumers welfare function is maximized by solving \cite{Johari09}
+%
+\begin{equation}\label{eq:opt_problem}
+\begin{aligned}
+& \underset{\bs{q}}{\text{maximize}}
+& &  \sum_{i=1}^N U_i(\bs{q}) =  \sum_{i=1}^N\left( v_i(\bs{q}_i) - \sum_{t=1}^T q_i^t p\left( \norm{\bs{q}^t}_1 \right) \right) \\
+& \text{subject to}
+& & q_i^t \geq 0,  i =\{1,\ldots,N\}, t =\{1,\ldots,T\}.
+\end{aligned}
+\end{equation}
+
+
+
+\subsection{Incentives}
+
+The solution of the optimization problem in Eq.~(\ref{eq:opt_problem}) is inefficient in a strategic environment, i.e., when individuals are rational and selfish \cite{barreto_cdc, Johari09}. In such cases, the analysis of strategic interactions among rational agents is made using game theory \cite{fudenberg98}.
+In particular, the Nash equilibrium (a solution concept in game theory)  is sub-optimal, however, we can show that if we consider an added incentive to the individual cost function of each player, the Nash equilibrium of the game with incentives can be made efficient in the sense of Pareto \cite{barreto_cdc}. 
+
+In particular, our DR scheme with incentives models the case when all agents keep their valuation of electricity to themselves, and have autonomous control their consumption. However, in order to incentive the agents to modify their behavior for the good of the population, the central entity sends them an incentive (e.g., a price signal or reward) to indirectly control their load.
+
+Consider the new cost function for the $i^{th}$ agent:
+\begin{equation}\label{eq:game2}
+W_i(q_i,\bs{q}_{-i}) 
+%=  W_i(\bs{q}) + I_i(\bs{q}) 
+= v_i(q_i) -  q_i p\left( \norm{\bs{q}^t}_1 \right) + I_i(\bs{q}) .
+%\vspace{-.3cm}
+\end{equation}
+where incentives are of the form:
+\begin{equation}\label{eq:I_i}
+I_i(\bs{q}) = \left( \norm{\bs{q}_{-i}^t}_1\right) \left( h_i(\norm{\bs{q}_{-i}})  - p\left( \norm{\bs{q}^t}_1 \right) \right).
+%\vspace{-.3cm}
+\end{equation}
+
+
+The form of this incentive is inspired in the 
+Vickrey-Clarke-Groves mechanism and the  Clarke pivot rule \cite{AlgorithmicG}.
+%
+We assign incentives according to the contribution made by an agent 
+to the society. In particular, the function $h_i:\Re \to \Re$ is a design parameter that estimates the externalities introduced by each individual.
+%\begin{equation}\label{eq:h}
+%h_i(\bs{\bs{q}}_{-i})=
+%p\Big( \sum\nolimits_{j\neq i} q_j + f(\bs{\bs{q}}_{-i}) \Big),
+%\end{equation}
+%were $f(\cdot)$ might be a linear function. 
+It can be shown that these incentives can lead to an optimal equilibrium in a streategic environment.
+In this DR approach we consider that the utility sends a two dimensional signal to each customer, namely $(q,I_i)$ and each customer responds with some consumption $q_i$. 
+Note that the incentives modify the price paid by each user according to their relative consumption. However, two different users receive different incentives as long as their consumption are different.
 
 
 

@@ -17,16 +17,19 @@ P = 1;
 % number of pure strategies per population
 n = 3;
 
+% Mass of the population 
 m = 1;
-%x0 = [0.1 0.9;  0.2 0.8]'; 
-x0 = [.2 .6 .2];
 
-dyn = {'smith', 'logit'};
-gamma = [.5, .5];
-gamma = [0, 1.0];
-gamma = [1, 0];
+% intial condition
+x0 = [.1 .75 .15];
+
+dyn = {'bnn', 'rd'};
+gamma = [.25, .75];
+%gamma = [0, 1.0];
+%gamma = [1, 0];
+
 % simulation parameters
-time = 60;
+time = 30;
 
 % structure with the parameters of the game
 G = struct('P', P, 'n', n, 'f', @fitness1, 'x0', x0, 'dynamics', {dyn}, 'gamma', gamma, 'ode', 'ode45', 'time', time);
@@ -37,12 +40,9 @@ G = definition(G);
 
 
 G.eta = .02;
-%G.dynamics = dyn;
-%G.gamma = gamma;
 G.run()
 G.graph()
-G.graph_state()
 G.graph_evolution()
-%pause
+
 
 
