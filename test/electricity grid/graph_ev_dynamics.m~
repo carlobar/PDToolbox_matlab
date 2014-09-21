@@ -135,7 +135,7 @@ for i=2:length(T)
     int_bnn(i) = int_bnn(i-1) + I_avg_bnn(i) * T_ * G.step;
     int_logit(i) = int_logit(i-1) + I_avg(i) * T_ * G.step;
     %int_avg(i) = (int_smith(i) + int_replicator(i) + int_bnn(i) + int_logit(i))/4;
-    int_avg(i) = int_smith(i);
+    %int_avg(i) = int_smith(i);
 end
 
 
@@ -160,7 +160,7 @@ p3=plot(T, int_bnn./int_avg, 'r-.');
 hold off
 
 xlim([T(1) T(end)])
-ylim([-.2 1.1])
+%ylim([-.2 1.1])
 title('Integrate Along the Time of the Incentives')
 %ylim([min(I_avg_s)-lim_*.1 max(I_avg_s)+lim_*.2])
 ylabel('Accumulated Incentives')

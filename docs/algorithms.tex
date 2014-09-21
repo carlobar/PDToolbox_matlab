@@ -1,6 +1,15 @@
-\section{Implementation}
 
-\subsection{Replicator Dynamics}
+\subsection{Algorithms}
+ In this section we introduce the algorithms used to implement each evolutionary dynamic, as well as some boundaries of their running time.
+
+ 
+ 
+ 
+ 
+
+\subsubsection{Replicator Dynamics}
+
+
 
 \begin{algorithm}[H]
 \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
@@ -16,13 +25,16 @@
   $ \dot{x}^p \leftarrow \text{diag}(\hat{F}^p) x^p $\;
  }
 \end{algorithm}
+%
+The running time of the algorithm is $T_{rd}(n, P) = O( P (  T_{f}(n,P) + n) ) $, where $T_{f}(n,P)$ is the time required to calculate the fitness vector of the $p\th$ population.
 
 
-The running time of the algorithm is $T_{rd}(n, P) = O( (n + T_{fitness}(n,P))P ) $, where $T_{fitness}(n,P)$ is the time required to calculate the fitness vector of the $p\th$ population.
 
 
 
-\subsection{BNN}
+
+
+\subsubsection{BNN}
 
 \begin{algorithm}[H]
 \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
@@ -35,16 +47,23 @@ The running time of the algorithm is $T_{rd}(n, P) = O( (n + T_{fitness}(n,P))P 
   $ F^p \leftarrow fitness(x, p)$\;
   $ \bar{F}^p \leftarrow \frac{1}{m^p} (F^p)^\top x^p$\;
   $ \hat{F}^p \leftarrow \max\{F^p - \boldsymbol{1} \bar{F}^p, \boldsymbol{0}\}$\;
-  $ \Gamma \leftarrow \boldsymbol{1}^\top \hat{F}^p $\;
-  $ \dot{x}^p \leftarrow \hat{F}^p - \Gamma x^p $\;
+  %$ \Gamma \leftarrow \boldsymbol{1}^\top \hat{F}^p $\;
+  $ \dot{x}^p \leftarrow \hat{F}^p - (\boldsymbol{1}^\top \hat{F}^p) x^p $\;
  }
 \end{algorithm}
+%
+The running time is $T_{BNN}(n,P) = O( P (  T_{f}(n,P) + n) ) $.
 
 
 
-\subsection{Smith Dynamics}
 
-In this case we need to order the strategies first. 
+
+
+
+
+\subsubsection{Smith Dynamics}
+
+In this case we need to order the strategies first and the calculate the difference between fitness functions in a matrix $\Delta_{ij} = [F_i^p(x) - F_j^p(x)]_+$. The running time of this algorithm is $T_{smith}(n,p) = O(P(T_f(n, P)+n^2 ))$.
 
 
 \begin{algorithm}[H]
@@ -55,35 +74,35 @@ In this case we need to order the strategies first.
  \BlankLine
  \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
   $ F^p \leftarrow fitness(x, p)$\;
-  Order the strategies by their fitness in vector/list  \;
+  $B \leftarrow$ Strategies ordered in ascending order by their fitness  \;
   
   \For{ $i \leftarrow 2$ \KwTo $n^p$ }{
     \For{ $j \leftarrow 1$ \KwTo $i-1$ }{
-      $\alpha \leftarrow order^p_i$\;
-      $\beta \leftarrow order^p_j$\;
-      $\Delta_{ij}^p \leftarrow F_\alpha^p - F_\beta^p $\;
+      $\alpha \leftarrow B[i]$\;
+      $\beta \leftarrow B[j]$\;
+      $\Delta_{ij} \leftarrow F_\alpha^p - F_\beta^p $\;
     }
   }
   \For{ $i \leftarrow 1$ \KwTo $n^p$ }{
-    $k \leftarrow order_i^p$\;
-    \For{ $g \leftarrow 1 $ \KwTo $i-1$ }{
-      $\gamma = order_g^p$\;
-      $\hat{F}_a^p \leftarrow \hat{F}_a^p + x_\gamma^p \Delta_{i,g}^p$\;
+    $\alpha \leftarrow B[i]$\;
+    \For{ $j \leftarrow 1 $ \KwTo $i-1$ }{
+      $\beta \leftarrow B[j]$\;
+      $\Gamma_a^p[\alpha] \leftarrow \Gamma_a^p[\alpha] + x_\beta^p \Delta_{ij}^p$\;
     } 
     
-    \For{ $g \leftarrow i+1$ \KwTo $n^p$ }{
-      $\gamma = order_g^p$\;
-      $\hat{F}_b^p \leftarrow \hat{F}_b^p + x_\gamma^p \Delta_{i,g}^p$\;
+    \For{ $j \leftarrow i+1$ \KwTo $n^p$ }{
+      %$\beta = B[j]$\;
+      $\Gamma_b^p[\alpha] \leftarrow \Gamma_b^p[\alpha] + \Delta_{ij}^p$\;
     } 
   }
-  $ \dot{x}^p \leftarrow \hat{F}_a^p - \text{diag}(\hat{F}_a^p) x^p $\;
+  $ \dot{x}^p \leftarrow \Gamma_a^p - \text{diag}(\Gamma_b^p) x^p $\;
  }
 \end{algorithm}
 
 
 
 
-\section{Logit dynamics}
+\subsubsection{Logit dynamics}
 
 \begin{algorithm}[H]
 \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
@@ -101,4 +120,4 @@ In this case we need to order the strategies first.
  }
 \end{algorithm}
 
-
+The running time is $T_{BNN}(n,P) = O( P (  T_{f}(n,P) + n) ) $.

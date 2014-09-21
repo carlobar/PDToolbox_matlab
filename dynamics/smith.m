@@ -41,13 +41,13 @@ for p = 1 : G.P
     
    for i=1:G.S(p)
        k = F_order(p, i);
-       for g = 1: i-1
-           gamma = F_order(p, g);
-           F_excess_a(p, k) = F_excess_a(p, k) + x(p, gamma) * diff(p, i, g);
+       for j = 1: i-1
+           gamma = F_order(p, j);
+           F_excess_a(p, k) = F_excess_a(p, k) + x(p, gamma) * diff(p, i, j);
        end
        
-       for g = i+1: G.S(p)
-           F_excess_b(p, k) = F_excess_b(p, k) + diff(p, g, i);
+       for j = i+1: G.S(p)
+           F_excess_b(p, k) = F_excess_b(p, k) + diff(p, j, i);
        end 
    end
     

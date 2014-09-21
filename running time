@@ -20,9 +20,7 @@ Elapsed time is 7.506868 seconds.
 
 
 
-
 ==================================================
-
 
 Test 2
 
@@ -41,3 +39,26 @@ Elapsed time is 10.139069 seconds.
  
 Running logit dynamics
 Elapsed time is 206.675281 seconds.
+
+
+
+
+=========================================================
+
+Test 3
+
+Running rd dynamics
+Elapsed time is 0.329095 seconds.
+ 
+Running bnn dynamics
+Elapsed time is 4.045217 seconds.
+ 
+Running smith dynamics
+Elapsed time is 9.148546 seconds.
+ 
+Running logit dynamics
+Elapsed time is 9.983908 seconds.
+
+
+
+

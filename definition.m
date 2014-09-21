@@ -39,8 +39,9 @@ if isfield(G, 'x0') == 0
     G.x0 = zeros( G.P, max(G.S) );
     for i=1:G.P
         x = rand(1, G.S(i));
-        G.x0( i, 1 : G.S(i) ) = x * G.m(i) / sum(x);
+        G.x0( i, 1 : G.S(i) ) = x / sum(x);
     end
+    G.x0 = G.x0';
 end
 
 % check parameters of the ODE

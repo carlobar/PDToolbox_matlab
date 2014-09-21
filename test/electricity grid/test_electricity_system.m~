@@ -65,24 +65,28 @@ gamma = [1, 0];
 % simulation parameters
 time = 30;
 
-
+pot_r = ones(N,T_+1)*mp/(T_+1);
+%zz = pot_r/mp';
+%x0 = zz(:);
+x0 = pot_r/mp;
+pause
 
 % structure with the parameters of the game
-G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode15s', 'time', time, 'step', 0.00000001);
+G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode15s', 'time', time, 'step', 0.00000001); %, 'x0', x0);
 
 % verify data of the game
 G = definition(G);
 
 
-G.step = .001;
+G.step = .01;
 
 
 % run different dynamics
-G.dynamics = {'maynard_rd'};
+G.dynamics = {'rd'};
 G.run()
 T_rd = G.T;
 X_rd = G.X;
-%pause
+pause
 
 G.dynamics = {'bnn'};
 G.run()

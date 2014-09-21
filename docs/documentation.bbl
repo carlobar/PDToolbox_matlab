@@ -1,0 +1,47 @@
+\begin{thebibliography}{1}
+
+\bibitem{barreto2013design}
+Carlos Barreto, Eduardo Mojica-Nava, and Nicanor Quijano.
+\newblock Design of mechanisms for demand response programs.
+\newblock In {\em Proceedings of the 2013 IEEE 52nd Annual Conference on
+  Decision and Control (CDC)}, pages 1828--1833, 2013.
+
+\bibitem{barreto2014incentives}
+Carlos Barreto, Eduardo Mojica-Nava, and Nicanor Quijano.
+\newblock Incentives-based mechanism for efficient demand response programs.
+\newblock {\em arXiv preprint arXiv:1408.5366}, 2014.
+
+\bibitem{fudenberg98}
+Drew Fudenberg and David~K. Levine.
+\newblock {\em The Theory of Learning in Games}, volume~1 of {\em MIT Press
+  Books}.
+\newblock The MIT Press, April 1998.
+
+\bibitem{gal}
+David Gal.
+\newblock A psychological law of inertia and the illusion of loss aversion.
+\newblock {\em Judgment and Decision Making}, 1(1):23--32, July 2006.
+
+\bibitem{hofbauer2001nash}
+Josef Hofbauer.
+\newblock From nash and brown to maynard smith: equilibria, dynamics and ess.
+\newblock {\em Selection}, 1(1):81--88, 2001.
+
+\bibitem{Johari09}
+Ramesh Johari and John~N. Tsitsiklis.
+\newblock Efficiency of scalar-parameterized mechanisms.
+\newblock {\em Oper. Res.}, 57(4):823--839, July 2009.
+
+\bibitem{AlgorithmicG}
+Noam Nisan, Tim Roughgarden, {\'E}va Tardos, and Vijay~V. Vazirani.
+\newblock {\em Algorithmic Game Theory}.
+\newblock Cambridge University Press, 32 Avenue of the Americas, New York, NY
+  10013-2473, USA, 2007.
+
+\bibitem{sandholm_book}
+William~H. Sandholm.
+\newblock {\em {Population Games and Evolutionary Dynamics (Economic Learning
+  and Social Evolution)}}.
+\newblock The MIT Press, 1 edition, January 2011.
+
+\end{thebibliography}

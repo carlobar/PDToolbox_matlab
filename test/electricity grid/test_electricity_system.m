@@ -65,10 +65,15 @@ gamma = [1, 0];
 % simulation parameters
 time = 30;
 
-
+pot_r = ones(N,T_+1)*mp/(T_+1);
+zz = pot_r'/mp;
+x0 = zz(:);
+%x0 = pot_r/mp;
+%pause
 
 % structure with the parameters of the game
-G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode15s', 'time', time, 'step', 0.00000001);
+%G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode113', 'time', time, 'step', 0.00001, 'x0', x0);
+G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode23s', 'time', time, 'step', 0.00001);%, 'x0', x0);
 
 % verify data of the game
 G = definition(G);
@@ -78,10 +83,11 @@ G.step = .01;
 
 
 % run different dynamics
-G.dynamics = {'maynard_rd'};
+G.dynamics = {'rd'};
 G.run()
 T_rd = G.T;
 X_rd = G.X;
+%size(T_rd)
 %pause
 
 G.dynamics = {'bnn'};
@@ -111,8 +117,8 @@ graph_incentives_evolution
 %G.gamma = gamma;
 
 %G.graph()
-%G.graph_state()
+G.graph_state()
 %G.graph_evolution()
-%pause
+pause
 
 
