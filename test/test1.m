@@ -1,10 +1,9 @@
 % example of a game with one population and three strategies per population.
 
-path(path, '/home/carlos/git/PDToolbox_matlab/revision_protocols')
-path(path, '/home/carlos/git/PDToolbox_matlab/graphs')
-path(path, '/home/carlos/git/PDToolbox_matlab/dynamics')
-path(path, '/home/carlos/git/PDToolbox_matlab')
-path(path, '/home/carlos/git/PDToolbox_matlab/test')
+path(path, '../revision_protocols')
+path(path, '../graphs')
+path(path, '../dynamics')
+path(path, '../')
 
 % population games tool box
 clear
@@ -39,7 +38,7 @@ G.run()
 G.graph()
 G.graph_evolution()
 
-disp (['Press any key to continue...']);
+disp (['Press any key to continue...', sprintf('\n') ]);
 pause
 
 
@@ -47,39 +46,39 @@ pause
 G.dynamics = {'maynard_rd'};
 G.ode = 'ode23s';
 G.run()
-% G.graph()
-% G.graph_evolution()
+G.graph()
+G.graph_evolution()
 
-% disp (['Press any key to continue...']);
-% pause
+disp (['Press any key to continue...', sprintf('\n') ]);
+pause
 
 
 G.ode = 'ode113';
 G.dynamics = {'bnn'};
 G.run()
-% G.graph()
-% G.graph_evolution()
+G.graph()
+G.graph_evolution()
 
-% disp (['Press any key to continue...']);
-% pause
+disp (['Press any key to continue...', sprintf('\n') ]);
+pause
 
 
 
 G.dynamics = {'smith'};
 G.run()
-% G.graph()
-% G.graph_evolution()
+G.graph()
+G.graph_evolution()
 
-% disp (['Press any key to continue...']);
-% pause
+disp (['Press any key to continue...', sprintf('\n') ]);
+pause
 
 
 
 G.dynamics = {'logit'};
 G.eta = .02;
 G.run()
-% G.graph()
-% G.graph_evolution()
+G.graph()
+G.graph_evolution()
 
 
 

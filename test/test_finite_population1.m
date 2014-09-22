@@ -1,9 +1,10 @@
 % test finite population
-path(path, '/home/carlos/git/PDToolbox_matlab/revision_protocols')
-path(path, '/home/carlos/git/PDToolbox_matlab/graphs')
-path(path, '/home/carlos/git/PDToolbox_matlab/dynamics')
-path(path, '/home/carlos/git/PDToolbox_matlab')
-path(path, '/home/carlos/git/PDToolbox_matlab/test')
+
+path(path, '../revision_protocols')
+path(path, '../graphs')
+path(path, '../dynamics')
+path(path, '../')
+
 % run game with a finite population
 % population games tool box
 clear
@@ -26,24 +27,26 @@ m = 1;
 x0 = [0.2 .7 0.1]'; 
 
 % simulation parameters
-iterations = 1000;
+iterations = 10000;
 
 
 % structure with the parameters of the game
 G = struct('N', N, 'n', n, 'f', @fitness1, 'x0', x0, 'ode', 'ode113', 'time', iterations, 'eta', 0.02, 'revision_protocol', @proportional_imitation);
 
-G.R = .5;
+G.R = 1;
 
 % verify data of the game
 G = definition(G);
 
 
-% G.revision_protocol = @proportional_imitation;
-% G.run_finite();
-% G.graph()
-% G.graph_evolution()
-% graph_utility
-% pause
+G.revision_protocol = @proportional_imitation;
+G.run_finite();
+G.graph()
+G.graph_evolution()
+graph_utility
+
+disp (['Press any key to continue... ', sprintf('\n') ] );
+pause
 
 
 G.revision_protocol = @comparison2average;
@@ -51,7 +54,8 @@ G.run_finite();
 G.graph()
 G.graph_evolution()
 graph_utility
-exit('stop');
+
+disp (['Press any key to continue...', sprintf('\n') ]);
 pause
 
 
@@ -60,12 +64,14 @@ G.run_finite();
 G.graph()
 G.graph_evolution()
 graph_utility
+
+disp (['Press any key to continue...', sprintf('\n') ]);
 pause
 
 
+G.eta = 0.02;
 G.revision_protocol = @logit_choice;
 G.run_finite();
 G.graph()
 G.graph_evolution()
 graph_utility
-pause

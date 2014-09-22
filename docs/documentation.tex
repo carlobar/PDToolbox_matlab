@@ -366,7 +366,7 @@ Fig. \ref{fig:rps_combined} shows an example of the combined dynamics for the ro
 
 We implement a matching pennies game defining a society $\pop = \{p_1, p_2\}$ with two populations and two strategies per population, namely \emph{heads} and \emph{tails}. First, note that the payoff of the game in normal form is
 %
-\begin{table}[h]
+\begin{table}[H]
 \centering
  \begin{tabular}{|c|c|} \hline
   2, 1 & 1, 2 \\ \hline
@@ -493,8 +493,22 @@ Fig. \ref{fig:mp_game_rd} to \ref{fig:mp_game_logit} show the evolution of the s
 \newpage
 \subsection{Demand response programs}
 
-This is an example of multiple populations used to implement demand response programs in smart grids. 
-This example is based on \cite{barreto2013design, barreto2014incentives}.
+This is an example of multiple populations used to implement demand response programs in smart grids \cite{barreto2013design, barreto2014incentives}. In this case, we assume that each user must decide how to distribute its electricity usage along a day. Particularly, 
+agents might have conflicting interests because they might impose externalities on the society through the price signals, i.e., the aggregated demand might affect the profit of agents. This conflict can be seen as a game between agents, in which each agent is selfish and  endeavors to maximize independently its own welfare. 
+
+In this problem we model the daily electricity allocation problem as a multi-population game with nonlinear fitness functions. Particularly, each agent can implement an evolutionary dynamic to find the best distribution of resources. Note that when implemented locally by each user, the evolutionary dynamics lead to the global efficient equilibrium.
+
+A particular feature of this problem is that the Nash equilibrium of the system is inefficient. Hence, 
+we introduce an incentives scheme (indirect revelation mechanism) to maximize the aggregated surplus of the population.
+The main feature of this mechanism is that it does not require private information from users, and employs a one dimensional message space to coordinate the demand profile of agents. These properties facilitate the distributed implementation of the mechanism. The mechanism entrusts the computation tasks among users, who should maximize its own utility function based the aggregated demand (that is calculated and broadcasted by a central agent). Thus, users avoid revelation of private information (e.g., preferences), but are required to report the aggregated consumption of their appliances during some time periods.
+
+
+
+
+
+
+
+\subsubsection{Problem Formulation}
 
 
 
@@ -572,6 +586,107 @@ to the society. In particular, the function $h_i:\Re \to \Re$ is a design parame
 It can be shown that these incentives can lead to an optimal equilibrium in a strategic environment.
 In this DR approach we consider that the utility sends a two dimensional signal to each customer, namely $(q,I_i)$ and each customer responds with some consumption $q_i$. 
 Note that the incentives modify the price paid by each user according to their relative consumption. However, two different users receive different incentives as long as their consumption are different.
+
+\subsubsection{Simulations}
+
+
+
+
+In this section, we illustrate some ideas of efficiency and the decentralized implementation of the incentives mechanism. We select some functions used previously in the literature. On the one hand, we define the family of valuation functions as 
+\begin{equation}\label{eq:valuation_sim}
+ v(\bs{q}^k,\alpha_i^k) = v_i^k (q_i^k) = \alpha_i^k \log(1+q_i^k)
+\end{equation}
+where $\alpha_i^k>0$ is the parameter that characterizes the valuation of the  $i\th$ agent at the $k\th$ time instant.
+On the other hand, the generation cost function is defined as 
+%
+\begin{equation}\label{eq:cost_sim}
+ C(\|\bs{q}\|_1) = \beta ({\|\bs{q}\|_1})^2 + b {\|\bs{q}\|_1},
+\end{equation}
+and the unitary price function is
+%
+\begin{equation}\label{eq:p_sim}
+ p(\|\bs{q}\|_1) = \frac{C(\|\bs{q}\|_1)}{\|\bs{q}\|_1} = \beta \|\bs{q}\|_1 + b.
+\end{equation}
+%
+Note that the generation cost only depends on the aggregated consumption, not on the time of the day. Furthermore, 
+%
+the fitness function of the system with incentives is
+%
+\begin{equation}\label{eq:fitness_without_i_sim}
+F_i^k( \bs{q}^k)  =  \frac{\alpha_i^k }{1+q_i^k}
+ - 2\beta \left( \sum_{j=1}^N q_j^k  \right).
+ \end{equation}
+
+
+The evolution of utility, demand, and incentives for different dynamics is shown in Figs.~\ref{fig:dynamics_u} and \ref{fig:dynamics_i}. Note that despite using the same initial condition, the evolution of the system is different with each dynamical model. In particular, BNN and Smith dynamics converge faster to the  optimum, in contrast with the Logit and replicator dynamics. 
+This is achieved by means of a fast decrease in the power consumption. 
+
+\begin{figure}[hbt]
+ \centering
+ \includegraphics[width=.75\textwidth]{./images/evolution_u.eps}
+ \caption{Evolution of profit and costs for four different dynamics.}
+ \label{fig:dynamics_u}
+\end{figure}
+
+
+\begin{figure}[hbt]
+ \centering
+ \includegraphics[width=.75\textwidth]{./images/evolution_i.eps}
+ \caption{Evolution of the incentives with four different dynamics.}
+ \label{fig:dynamics_i}
+\end{figure}
+
+
+
+Incentives in Fig.~\ref{fig:dynamics_i} show that, in the long run, all dynamics converge to the same level of incentives. Particularly, Smith dynamics requires more incentives during all time, except for logit dynamics, which has a sudden increase in the incentives close to the equilibrium point. 
+
+In Fig.~\ref{fig:dynamics_i} it is not clear which dynamical model moves the state of the system to the optimal equilibrium using less resources. To answer this question, we simulate the total amount of incentives used by each model.
+Thus, let us define the aggregated incentives in a society in a particular time $t$ as
+\begin{equation}
+ I_d (t) = \sum_{i\in\mathcal{P}} \frac{1}{|S|} \sum_{k\in S} I_i \left( \bs{q}^k (t) \right).
+\end{equation}
+Now, the total accumulated incentives from $t_0$ to $t$ is defined as 
+\begin{equation}
+ \varPhi_d (t) = \int_{t_0}^t I_d (\tau) d\tau.
+\end{equation}
+Thus, $\varPhi_d (t)$ gives a measurement of the total amount subsidies required by the system with dynamic $d$, in the time interval  $[t_0, t]$.
+In this case we do not have a reference to compare the subsidies requirements of each evolutionary dynamic. Hence, we compare the subsidies requirements with the average requirements of all the dynamics implemented. 
+%
+In order to see which dynamic requires more resources, we plot the cumulative resources required by each dynamic relative to the average.
+Hence, we define the cumulative incentives as 
+%
+\begin{equation}
+CI_d = \frac{ \varPhi_d (t) }{ \sum_{d\in \mathcal{D}} \varPhi_d (t) }.
+\end{equation}
+%
+Fig.~\ref{fig:integral} shows the results of the simulation of the relative subsidies required by each model of evolutionary dynamics.
+%
+
+
+
+Smith dynamics requires much more resources during all the time stamp, but is particularly high during the first stages, while logit has the lower incentives requirements. However, BNN has the lower incentives in long run.
+
+\begin{figure}[hbt]
+ \centering
+ \includegraphics[width=.75\textwidth]{./images/accumulated_i.eps}
+ \caption{Accumulated incentives during the evolution of the algorithm.}
+ \label{fig:integral}
+\end{figure}
+
+
+
+Fig. \ref{fig:final_state} shows the final demand profile of each agent. Note that the final state corresponds to the state of each population at the equilibrium.
+
+\begin{figure}[hbt]
+ \centering
+ \includegraphics[width=.75\textwidth]{./images/final_state.eps}
+ \caption{Final demand profile of each agent.}
+ \label{fig:final_state}
+\end{figure}
+
+
+
+
 
 
 \iffalse

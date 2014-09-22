@@ -1,5 +1,6 @@
 % set initial strategy of each agent to satisfy the initial condition
-disp (['Running a revision protocol']);
+protocol = func2str(G.revision_protocol);
+disp (['Running the ', protocol, ' revision protocol']);
 tic
 
 s = zeros(G.N, G.P);

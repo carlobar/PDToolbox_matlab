@@ -1,10 +1,9 @@
 % example of a game with one population, three strategies per population, and combined dynamics.
 
-path(path, '/home/carlos/git/PDToolbox_matlab/revision_protocols')
-path(path, '/home/carlos/git/PDToolbox_matlab/graphs')
-path(path, '/home/carlos/git/PDToolbox_matlab/dynamics')
-path(path, '/home/carlos/git/PDToolbox_matlab')
-path(path, '/home/carlos/git/PDToolbox_matlab/test')
+path(path, '../revision_protocols')
+path(path, '../graphs')
+path(path, '../dynamics')
+path(path, '../')
 
 % population games tool box
 clear

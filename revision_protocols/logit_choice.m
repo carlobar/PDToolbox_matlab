@@ -28,3 +28,6 @@ function s_i = logit_choice(F, z, s, i, p)
 		s_i = s(i);
     end
 
+if j == 3
+    h=1;
+end

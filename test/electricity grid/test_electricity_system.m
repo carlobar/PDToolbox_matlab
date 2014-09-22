@@ -1,5 +1,10 @@
 % example of a game with one population, three strategies per population, and combined dynamics.
 
+path(path, '../../revision_protocols')
+path(path, '../../graphs')
+path(path, '../../dynamics')
+path(path, '../../')
+
 
 % TODO:
 % review how are the transitions between dynamics
@@ -72,8 +77,10 @@ x0 = zz(:);
 %pause
 
 % structure with the parameters of the game
-%G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode113', 'time', time, 'step', 0.00001, 'x0', x0);
-G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode23s', 'time', time, 'step', 0.00001);%, 'x0', x0);
+G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode113', 'time', time, 'step', 0.00001, 'x0', x0);
+
+% random initial condition
+%G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode23s', 'time', time, 'step', 0.00001);
 
 % verify data of the game
 G = definition(G);
@@ -119,6 +126,6 @@ graph_incentives_evolution
 %G.graph()
 G.graph_state()
 %G.graph_evolution()
-pause
+%pause
 
 
