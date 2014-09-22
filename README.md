@@ -48,6 +48,7 @@ The following examples are included in the 'test' directory:
 	'test1.m' contains an example of a game with one population and three strategies per population.
 	'test2.m' example of a game with two population and two strategies per population.
 	'test3.m' example of a game with one population, three strategies per population, and combined dynamics.
+	'test_finite_population1.m' is an example of the evolution of a game with small number of agents per population.
 	'electricity grid/test_electricity_system.m' example of an application of population dynamics to the implementation of demand response programs.
 
 ## License
