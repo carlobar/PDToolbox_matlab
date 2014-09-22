@@ -21,8 +21,11 @@ Or download and extract the files directly from the following link:
 2. Open matlab and add the path of the following directories:
 
 	path(path, '[download directory]/PDToolbox_matlab')
+
 	path(path, '[download directory]/PDToolbox_matlab/dynamics')
+
 	path(path, '[download directory]/PDToolbox_matlab/graphs')
+
 	path(path, '[download directory]/PDToolbox_matlab/test')
 
 
