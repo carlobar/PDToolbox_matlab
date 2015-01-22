@@ -31,6 +31,8 @@ Or download and extract the files directly from the following link:
 
 The path can be verified with the command 'path'.
 
+The path can be added automatically by running 'add_path.m'.
+
 
 ## Running the toolbox
 

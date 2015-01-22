@@ -25,8 +25,9 @@ xlabel('Time')
 h = legend( 'Logit Dynamics', 'Replicator Dynamics', 'Smith Dynamics', 'BNN Dynamics',4);
 set(h,'Interpreter','none')
 
+
 set(gca, 'XScale', 'log')
-%set(gca, 'YScale', 'log')
+
 
 
 
@@ -48,8 +49,10 @@ ylabel('Power')
 %set(h,'Interpreter','none')
 xlabel('Time')
 xlim([T(1) T(end)])
+
+
 set(gca, 'XScale', 'log')
-%set(gca, 'YScale', 'log')
+
 
 
 
@@ -84,6 +87,8 @@ set(h,'Interpreter','none')
 title('Average Incentives of the Society')
 %set(h, 'FontSize', 20)
 xlim([T(1) T(end)])
+
+
 set(gca, 'XScale', 'log')
 
 

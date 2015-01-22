@@ -59,6 +59,7 @@ P = 5;
 n = 25;
 
 mp = 30;
+m = ones(P, 1) * mp;
 %x0 = [0.1 0.9;  0.2 0.8]'; 
 %x0 = [.2 .6 .2];
 
@@ -77,7 +78,7 @@ x0 = zz(:);
 %pause
 
 % structure with the parameters of the game
-G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode113', 'time', time, 'step', 0.00001, 'x0', x0);
+G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode113', 'time', time, 'step', 0.00001, 'x0', x0, 'm', m);
 
 % random initial condition
 %G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode23s', 'time', time, 'step', 0.00001);
@@ -88,14 +89,37 @@ G = definition(G);
 
 G.step = .01;
 
-
+G.eta = .02;
 % run different dynamics
 G.dynamics = {'rd'};
+%G.dynamics = {'rd', 'bnn', 'smith', 'logit'};
+%G.gamma = []
 G.run()
 T_rd = G.T;
 X_rd = G.X;
 %size(T_rd)
-%pause
+
+
+X_dyn = G.X;
+
+% extract matrix of strategies
+%n = max(G.S);
+x_n = vec2mat(X_dyn(end, :), n);
+x = zeros(G.P, n);
+
+for p = 1 : G.P
+    x(p, :) = x_n(p, :) * G.m(p);
+end
+
+U = utility(x);
+
+
+
+
+figure(3); plot(1:1:24, U(:, 1:24))
+figure(4); plot(1:1:24, x(:, 1:24))
+
+pause
 
 G.dynamics = {'bnn'};
 G.run()
@@ -111,7 +135,7 @@ T_smith = G.T;
 X_smith = G.X;
 
 
-G.eta = .02;
+
 G.dynamics = {'logit'};
 G.run()
 T_logit = G.T;

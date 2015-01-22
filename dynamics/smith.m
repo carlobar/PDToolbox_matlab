@@ -43,7 +43,7 @@ for p = 1 : G.P
        k = F_order(p, i);
        for j = 1: i-1
            gamma = F_order(p, j);
-           F_excess_a(p, k) = F_excess_a(p, k) + x(p, gamma) * diff(p, i, j);
+           F_excess_a(p, k) = F_excess_a(p, k) + x_n(p, gamma) * diff(p, i, j);
        end
        
        for j = i+1: G.S(p)

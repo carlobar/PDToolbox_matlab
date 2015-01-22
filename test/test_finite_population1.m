@@ -27,7 +27,7 @@ m = 1;
 x0 = [0.2 .7 0.1]'; 
 
 % simulation parameters
-iterations = 10000;
+iterations = 100000;
 
 
 % structure with the parameters of the game
@@ -39,34 +39,34 @@ G.R = 1;
 G = definition(G);
 
 
-G.revision_protocol = @proportional_imitation;
-G.run_finite();
-G.graph()
-G.graph_evolution()
-graph_utility
-
-disp (['Press any key to continue... ', sprintf('\n') ] );
-pause
-
-
-G.revision_protocol = @comparison2average;
-G.run_finite();
-G.graph()
-G.graph_evolution()
-graph_utility
-
-disp (['Press any key to continue...', sprintf('\n') ]);
-pause
-
-
-G.revision_protocol = @pairwise_comparison;
-G.run_finite();
-G.graph()
-G.graph_evolution()
-graph_utility
-
-disp (['Press any key to continue...', sprintf('\n') ]);
-pause
+% G.revision_protocol = @proportional_imitation;
+% G.run_finite();
+% G.graph()
+% G.graph_evolution()
+% graph_utility
+% 
+% disp (['Press any key to continue... ', sprintf('\n') ] );
+% pause
+% 
+% 
+% G.revision_protocol = @comparison2average;
+% G.run_finite();
+% G.graph()
+% G.graph_evolution()
+% graph_utility
+% 
+% disp (['Press any key to continue...', sprintf('\n') ]);
+% pause
+% 
+% 
+% G.revision_protocol = @pairwise_comparison;
+% G.run_finite();
+% G.graph()
+% G.graph_evolution()
+% graph_utility
+% 
+% disp (['Press any key to continue...', sprintf('\n') ]);
+% pause
 
 
 G.eta = 0.02;
