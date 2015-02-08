@@ -53,6 +53,15 @@ The following examples are included in the 'test' directory:
 	'test_finite_population1.m' is an example of the evolution of a game with small number of agents per population.
 	'electricity grid/test_electricity_system.m' example of an application of population dynamics to the implementation of demand response programs.
 
+
+## Documentation
+
+An introduction to evolutionary dynamics with some examples is available at:
+
+	https://github.com/carlobar/PDToolbox_matlab/blob/master/docs/documentation.pdf
+
+
+
 ## License
 
 
