@@ -1,0 +1,47 @@
+\section{Introduction} \label{sec:introduction}
+
+
+% notation
+
+Let us define a society of $\pop = \{ 1, \ldots, P\}$ composed by $P \geq 1$ populations. Each population consist of a large number of agents, which conform a mass $m^p > 0$, with $p \in \pop$. 
+Let $S^p = \{ 1, \ldots, n^p \}$ be the set of actions (or pure strategies) available for each agent of the $p\th$ population. 
+Each agent selects a pure strategy and the resulting state of the population is the usage proportion of each strategy. The set of population states is defined as $X^p = \{ x^p \in \mathbb{R}_+^{n^p} : \sum_{i \in S^p} x_i^p = m^p \}$, where the $i\th$ component of the state, denoted by $x_i^p \in \mathbb{R}_+$, is the mass of players that select the $i\th$ strategy of the population $p$.
+
+Population games (or large games) capture some properties of the interactions of many economic agents, e.g., 
+
+\begin{enumerate}
+\item large number of agents.
+\item Continuity: The actions of an agent has small impact on the payoff of other agents.
+\item Anonymity: means that the utility of each agent only depends on the aggregated actions of the other agents.
+\end{enumerate}
+
+Game theory is useful to model decision making of agents that are rational. In game theory rationality is the ability to adopt the best actions to achieve some particular goals. This implies that agents use all the information available to make decisions. Evolutionary games relax the rationality assumption by considering myopic behavior. Thus, we assume that agents choose that actions that seem to improve their fitness, however, these actions might not be optimal (as would be the case for rational agents). Thus, evolutionary games can be useful to analyze the behavior of agents in repeated games, where rationality assumptions cannot be made. 
+
+
+In particular, an economic agent decides whether to modify or not its strategy according to the available information. In this respect, we assume that the agent's behavior satisfies both inertia and myopia properties. On the one hand, inertia 
+is the tendency to remain at the status-quo, unless there exist motives to do that.
+Also, this implies that the strategy adjustment events are rare events.
+On the other hand, myopia means that the information used to make decisions is limited, e.g., each user makes decisions based on the current state of the population and do not estimate future actions. These two properties are based on the population games theoretical framework \cite{sandholm_book}
+and behavioral economics \cite{gal}.
+
+To accomplish the inertia property, the time between two successive updates of one 
+agent's strategy is modeled with an exponential distribution (this distribution is used to model the occurrence of rare events). 
+Thus, strategy actualization events could be characterized by means of stochastic alarm clocks.
+Particularly, a rate $R_i$ Poisson alarm clock produces time among rings described by
+a rate $R_i$ exponential distribution.
+The whole actualization events in the population can be considered as a rate $R=\sum_{j\in \mathcal{V}} R_j$ Poisson alarm clock.
+Therefore, the average number of events in a given time interval is $R$ and the probability of selecting the $i^{th}$
+agent in a given time instant is
+ $\frac{R_i}{R}$ \cite{sandholm_book}.
+
+At each update opportunity (revision opportunity), the $i\th$ agent might compare the average profit of its strategy with the average profit of other strategies. Particularly, an agent might change its strategy with rate $\rho_{ij}$.
+ 
+ The rate of change $\rho_{ij}$ is determined by a revision protocol, which defines the procedure used by each user to decide whether to change or not its strategy. The scalar $\rho_{ij} (\pi^p, x^p)$ is the \emph{conditional switch rate} from strategy $i$ to strategy $j$ in function of a given payoff vector $\pi$ and a population state $x^p$.
+ 
+ Using the law of large numbers we can approximate the evolution of the society's state to a dynamical equation defined by
+ \begin{equation}\label{eq:mean_dynamic}
+  \dot{x}_i^p = \sum_{j\in S^p} x_j^p \rho_{ji} (\pi^p, x^p) - x_i^p \sum_{j\in S^p} \rho_{ij}(\pi^p, x^p).
+ \end{equation}
+The previous equation is known as the \emph{mean dynamic}, which is used to define  some of the dynamics in the next section.
+
+ 

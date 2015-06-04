@@ -69,8 +69,12 @@ end
 
 
 % simulation parameters
+if isfield(G, 'tol') == 0
+    G.tol = .0001;
+end
+
 if isfield(G, 'step') == 0
-    G.step = .0001;
+    G.step = .01;
 end
 
 if isfield(G, 'time') == 0
@@ -82,7 +86,7 @@ end
 % end
 
 if isfield(G, 'options_ode') == 0 
-	G.options_ode = odeset('RelTol', G.step, 'AbsTol', G.step);
+	G.options_ode = odeset('RelTol', G.tol, 'AbsTol', G.step);
 end
 
 % check the fitness function

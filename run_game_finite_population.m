@@ -5,6 +5,7 @@ tic
 
 s = zeros(G.N, G.P);
 
+% calculate the intial strategy of each user given the proportions in x0
 h = 0;
 for i = 1: max(G.S(1))
 	p = floor(G.N * G.x0(i, 1));

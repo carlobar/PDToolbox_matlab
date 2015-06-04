@@ -13,8 +13,9 @@
 \usepackage{subcaption}
 \usepackage{amsfonts}
 \usepackage{cite}
-%\usepackage{algorithmic}
 \usepackage[]{algorithm2e}
+
+\usepackage{fullpage}
 
 \usepackage{listings}
 \lstset{breaklines=true} 
@@ -24,26 +25,37 @@
 \newcommand{\bs}[1]{\boldsymbol{#1}}
 \newcommand{\pop}{\mathcal{P}}
 
+\def\th{^{th}}
+\def\pd{\frac{\partial}{\partial q_i^k}}
+\newcommand{\mcf}[1]{p\Big( \norm{\bs{#1}^k}_1 \Big)}
+\def\pdy{\frac{\partial}{\partial y_i^k}}
+\def\pdq{\frac{\partial}{\partial q_i^k}}
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+%\newcommand{\bs}[1]{\boldsymbol{#1}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\newcommand{\normb}[1]{\left\lVert \bs{#1} \right\rVert_1}
+
+
+\usepackage{autonum}
+\usepackage{placeins}
 
 \title{Population Dynamics Toolbox}
 \author{Carlos Barreto}
 
 \begin{document}
-
+\lstset{language=Matlab} 
 \maketitle
 
 
 
 \begin{abstract}
- Toolbox for evolutionary dynamics with multiple populations. We consider finite and large populations. For finite populations we implement revision protocols and random interactions between agents. On the other hand, for large populations we use the approximation of dynamical equations. 
+ The \emph{population dynamics toolbox} (PDToolbox) contains a set of functions to implement evolutionary dynamics with multiple populations. We consider both small and large populations. For finite populations, we implement some revision protocols to model random interactions between agents. On the other hand, the evolution of a society with large populations is approximated by dynamical equations. 
  
- We make an efficient implementation of the algorithms to compute the dynamical evolution of the population state.
+ This toolbox is designed to facilitate the implementation of any game with different evolutionary dynamics or revision protocols.  In particular, our attempt is to make an efficient implementation of the algorithms to compute the dynamical evolution of the society. Also, the toolbox counts with some functions to plot the state of the system and the evolution of each strategy.
  
- The toolbox is designed to facilitate the implementation of any game, as well as the implementation of different evolutionary dynamics and/or revision protocols. The toolbox counts with some functions to plot the state of the system and the evolution of each strategy.
- 
- 
- 
- 
+ In Section \ref{sec:introduction} we start by introducing the notation used along the paper and we present some ideas of population games which lead to the \emph{mean dynamics} equation. In Section \ref{sec:protocols} we introduce some well known revision protocols and evolutionary dynamics. In Section \ref{sec:implementation} we introduce some details of the implementation of games with the toolbox and show an example of the implementation of the rock-paper-scissors game.
+ Sections \ref{sec:combined} and \ref{sec:multi-pop} contain examples of the implementation of \emph{combined dynamics} and \emph{multi-population games}.
  
 \end{abstract}
 
@@ -52,539 +64,106 @@
 
 
 
-\section{Introduction}
-
-
-% notation
-
-Let us define a society of $\pop = \{ 1, \ldots, P\}$ composed by $P \geq 1$ populations. Each population is composed by a large number of agents, which conform a mass $m^p > 0$, with $p \in \pop$. 
-Let $S^p = \{ 1, \ldots, n^p \}$ be the set of actions (pure strategies) available for each agent of the $p\th$ population. 
-Each agent selects a pure strategy and the state of the population is the proportion of each strategy. The set of population states is defined as $X^p = \{ x^p \in \mathbb{R}_+^{n^p} : \sum_{i \in S^p} x_i^p = m^p \}$, where the $i\th$ component of the state, denoted by $x_i^p \in \mathbb{R}_+$, is the mass of players that select the $i\th$ strategy of the population $p$.
-
-Population games (or large games) capture some properties of the interactions of many economic agents:
-
-\begin{enumerate}
-\item large number of agents.
-\item Continuity: The actions of an agent has small impact on the payoff of other agents.
-\item Anonymity: means that the utility of each agent only depends on the aggregated actions of the other agents.
-\end{enumerate}
-
-
-
-An agent decides whether to modify or not its strategy according to the available information. In this respect,  population behavior is considered to accomplish with both inertia and myopia properties. On the one hand, inertia 
-is the tendency to remain at the status-quo, unless there exists motives to do that.
-Also, this implies that the strategy adjustment events are rare events.
-On the other hand, myopia limits the information used to make decisions to the current state of the population, i.e., agents do not estimate future actions in
-order to make decisions. These two properties are based on the population games theoretical framework \cite{sandholm_book}
-and behavioral economics \cite{gal}.
-
-To accomplish the inertia property, the time between two successive updates of one 
-agent's strategy is modeled with an exponential distribution (this distribution is used to model the occurrence of rare events). 
-Thus, strategy actualization events could be characterized by means of stochastic alarm clocks.
-Particularly, a rate $R_i$ Poisson alarm clock produces time among rings described by
-a rate $R_i$ exponential distribution.
-%These probabilities distributions are widely used by their memory-less property in stochastic analysis \cite{boyd, acemoglu2010, sandholm_book}. Thus, when all the agents of the population are provided with a rate $R_i$ Poisson alarm clock,
-the whole actualization events in the population can be considered as a rate $R=\sum_{j\in \mathcal{V}} R_j$ Poisson alarm clock.
-Therefore, the average number of events in a given time interval is $R$ and the probability of selecting the $i^{th}$
-agent in a given time instant is
- $\frac{R_i}{R}$ \cite{sandholm_book}.
-
-Each agent might have an opportunity to update its strategy (revision opportunity). The $i\th$ agent might compare the average profit of its strategy with the profit of other strategy. Then, might change its strategy with rate $\rho_{ij}$.
+\input{introduction}
  
- A revision protocol defines the procedure used by each user to decide whether to change or not its strategy. The scalar $\rho_{ij} (\pi^p, x^p)$ is the \emph{conditional switch rate} from strategy $i$ to strategy $j$ in function of a given payoff vector $\pi$ and a population state $x^p$.
- 
- Using the law of large numbers we can approximate the evolution of the society's state to a dynamical equation defined by
- \begin{equation}\label{eq:mean_dynamic}
-  \dot{x}_i^p = \sum_{j\in S^p} x_j^p \rho_{ij} (\pi^p, x^p) - x_i^p \sum_{j\in S^p} \rho(\pi^p, x^p)
- \end{equation}
+\input{evolutionary_dynamics} 
+
+\input{implementation} 
+
+\input{combined_dynamics}
+
+\input{multipopulation}
+
+\input{maximization}
+
+\input{example_dr}
 
 
- 
- 
- \section{Revision Protocols and Evolutionary Dynamics}\label{sec:protocols}
- 
- 
-We implement four evolutionary dynamics, namely \emph{logit dynamics} (Logit), \emph{replicator dynamics} (RD), \emph{Brown-von Neumann-Nash dynamics} (BNN), and \emph{Smith dynamics} (Smith) that belong to the families of \emph{perturbed optimization}, \emph{imitative dynamics}, \emph{excess payoff dynamics}, and \emph{pairwise comparison dynamics}, respectively \cite{hofbauer2001nash, sandholm_book}. 
- 
- \subsection{Pairwise Proportional Imitation (Replicator Dynamics)}
 
-The $i\th$ agent observes an opponent $j$ at random. Then might change its strategy if  its opponent has a greater fitness. The rate change is 
+ \FloatBarrier
+\section{Running Time Analysis}
+
+
+In this section we investigate the running time of the evolutionary dynamics as a function of either the number of populations or the number of strategies per population. We use the demand response example from Section \ref{sec:dr_example} to make the experiments.
+Our interest is to observe the time that takes to simulate the evolution of the dynamics during 10 seconds.
+
+\subsection{Running time as a function of the number of populations}
+
+Note that the time complexity of the algorithms, with respect to number of populations $P$, is $O(P \cdot T_f(n,P))$. The fitness function in the example satisfies $T_f(n,P)=O(nP)$. Hence, the complexity of the dynamics with respect to $P$ is $O(P^2)$. 
+
+Although the dynamics have the same time complexity, the running time of the dynamics has substantial differences. 
+Fig. \ref{fig:run_time_pop} shows the running time of the game for multiple number of populations. In this case each population has $24$ strategies and all populations have the same set of fitness functions. 
+From the simulations we observe that the 
+%running time increases roughly linearly for all dynamics. The 
+fastest simulations are made with replicator dynamics. 
+Moreover, there is a large difference between the running time of Replicator and the other dynamics.
+%On the other hand, Smith and Logit dynamics have almost the same running time. 
 %
-\begin{equation}
-\rho_{ij}(\pi, x) = \frac{1}{m} [\pi_j - \pi_i]_+
-\end{equation}
-
-%In this case, $x_j$ need not be observed. 
-This protocol lead to the replicator dynamics defined as
-\begin{equation}\label{eq:replicator}
-\dot{x}_i^p = x_i^p \, \hat{F}_i^p \left( \bs{x} \right),
-\end{equation}
-where $\hat{F}_i^p$ is the excess payoff to strategy $i\in S^p$, which is defined as   
-\begin{equation}
-\hat{F}_i^p =  F_i^p(\bs{q}^i) - \bar{F}^p(\bs{q}^p),
-\end{equation}
-where $\bar{F}^p(\bs{q}^i)$ is the average payoff the population $p$, i.e., 
-\begin{equation}
- \bar{F}^p(x) = \frac{1}{m^p} \sum_{j \in S^p} x_j^p F_j^p(x).
-\end{equation}
+One reason is that the ODE solver run less iterations with Replicator dynamics, and consequently, it makes less calls to the dynamic's algorithm. 
 
 
 
-\subsection{Comparison to the Average Payoff (Brown-von Neumann-Nash Dynamics (BNN))}
+\subsection{Running time as a function of the number of strategies}
 
-The $i\th$ agent selects a strategy at random and might switch to it if that strategy has payoff above the average. The agent switch strategy with probability proportional to the excess payoff
-%
-\begin{equation}
-\rho_{ij}(\pi, x) = \left[ \pi_j - \frac{1}{m} \sum_{k\in S} x_k \pi_k \right]_+
-\end{equation}
 
-This protocol lead to BNN dynamics, defined as 
-\begin{equation}\label{eq:bnn}
- \dot{x}_i^p = \left[ \hat{F}_i^p \left( \bs{x} \right) \right]_+ - x_i^p  \sum_{\gamma \in S^p} \left[ \hat{F}_\gamma^p \left( \bs{x} \right) \right]_+.
-\end{equation}
+Fig. \ref{fig:run_time_str} shows the running time of the game for different number of strategies per population. In this case we  define $25$ populations. Note that the time complexity of the dynamics with respect to the number of strategies is $O(n)$ (or $O(n \log n)$ in the case of the Smith dynamics). In this case Replicator has the lowest running time, while smith have the largest running time. The large difference between Smith and the other dynamics is that the ODE solver makes much more iterations.
 
-\subsection{Pairwise Comparison (Smith Dynamics)}
 
-The $i\th$ agent selects a strategy at random. If the opponent has a higher fitness, the the agent switch strategy with probability proportional to
-\begin{equation}
-\rho_{ij}(\pi, x) = \left[ \pi_j - \pi_i \right]_+
-\end{equation}
-
-This protocol leads to Smith dynamics that are defined as 
-%
-\begin{multline} 
-\dot{x}_i^p  = \sum_{\gamma \in S^p} x_\gamma^p  \left[ F_i^p \left( \bs{x} \right) - F_\gamma^p \left( \bs{x} \right) \right]_+ 
-%%\\
-- x_i^p  \sum_{\gamma \in S^p} \left[ F_\gamma^p ( \bs{x}) - F_i^p( \bs{x} ) \right]_+.
-\label{eq:smith}
-\end{multline}
+Note that, except for Smith dynamics, the running time is lower when we implement games with large number of strategies. Hence, the maximization problem in Section \ref{sec:maximization} might be solved faster using the single population case.
 
 
 
-\subsection{Logit Choice}
-
-The $i\th$ agent selects a strategy at random and change its strategy with a probability proportional to 
-
-\begin{equation}
-\rho_{ij}(\pi) = \frac{ \exp(\pi_j \eta^{-1} ) }{ \sum_{k \in S} \exp(\pi_k \eta^{-1} ) }
-\end{equation}
-
-This protocol belong to target dynamics and result in the following dynamics
-\begin{equation}\label{eq:logit}
- \dot{x}_i^p = \frac{ \exp\left(\eta^{-1} F_i^p (\bs{x}) \right) }{ \sum_{\gamma \in S^p} \exp\left(\eta^{-1} F_\gamma^p (\bs{x}) \right) }, \, \, \eta>0,
-\end{equation}
-known ad Logit dynamics. 
-
-
-
-\subsection{Maynard Smith Replicator}
-
-\begin{equation}
-\dot{x}_i = \frac{ x_i F_i }{ \bar{F}(x) } - x_i
-\end{equation}
-
-
-
-
-
-\subsection{Examples}
-
-
-
-\begin{figure}[th]
-  \centering
-  \begin{subfigure}[b]{0.4\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_finite_proportional_imitation.eps}
-	  \caption{Small population.}
-	  \label{fig:finite1_protocol}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.4\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_rd.eps}
-	  \caption{Large popultion.}
-	  \label{fig:finite1_dynamics}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with a) proportional imitation revision protocol and b) replicator dynamics.}
-  \label{fig:finite1}
+\begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=1\textwidth]{./images/running_time_pop.eps}
+                \caption{Run time for different population numbers and constant number of strategies.}
+                \label{fig:run_time_pop}
+        \end{subfigure}
+        ~ 
+        \begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=1\textwidth]{./images/running_time_str.eps}
+		%\includegraphics[width=1\textwidth]{./images/running_time_strategies.eps}
+                \caption{Run time for different number  of strategies and constant number of populations.}
+                \label{fig:run_time_str}
+        \end{subfigure}
+        \caption{Run time of four evolutionary dynamics: `rd', `bnn', `smith', and `logit'.}
+        \label{fig:run_time}
 \end{figure}
 
-
-\begin{figure}[th]
-  \centering
-  \begin{subfigure}[b]{0.4\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_finite_comparison2average.eps}
-	  \caption{Small population.}
-	  \label{fig:finite2_protocol}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.4\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_bnn.eps}
-	  \caption{Large popultion.}
-	  \label{fig:finite2_dynamics}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with a) comparison to average revision protocol and b) BNN dynamics.}
-  \label{fig:finite2}
-\end{figure}
+%Which case gives the largest simulation time?
 
 
-\begin{figure}[tbh]
-  \centering
-  \begin{subfigure}[b]{0.4\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_finite_pairwise_comparison.eps}
-	  \caption{Small population.}
-	  \label{fig:finite3_protocol}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.4\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_smith.eps}
-	  \caption{Large popultion.}
-	  \label{fig:finite3_dynamics}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with a) pairwise comparison revision protocol and b) Smith dynamics.}
-  \label{fig:finite3}
-\end{figure}
+In the toolbox we include two algorithms for the Smith dynamics. One of them relies on matrix multiplications and has running time $O(P(T_f(n,P) + n^2))$. Even though the time complexity is higher than the algorithm presented above, this algorithm is faster under certain conditions. The reason is that Matlab is optimized to work with matrices. Particularly, the algorithm is faster for large number of strategies. Otherwise, the $O(n^2)$ implementation is faster (see Fig. \ref{fig:smith_run_time}).
 
+\begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.45\textwidth}
+                \includegraphics[width=\textwidth]{./images/running_time_smith_pop.eps}
+                \caption{Run time for different population numbers and constant number of strategies.}
+                \label{fig:smith_run_time_pop}
+        \end{subfigure}%
+        ~ 
+        \begin{subfigure}[b]{0.45\textwidth}
+                \includegraphics[width=\textwidth]{./images/running_time_smith_str.eps}
+                \caption{Run time for different number  of strategies and constant number of populations.}
+                \label{fig:smith_run_time_str}
+        \end{subfigure}%
 
-\begin{figure}[tbh]
-  \centering
-  \begin{subfigure}[b]{0.4\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_finite_logit_choice.eps}
-	  \caption{Small population.}
-	  \label{fig:finite4_protocol}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.4\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_logit.eps}
-	  \caption{Large popultion.}
-	  \label{fig:finite4_dynamics}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with a) logit choice revision protocol and b) Logit dynamics with $\eta=0.02$.}
-  \label{fig:finite4}
+        \caption{Run time of two implementations of the Smith dynamics, namely `smith' and `smith\_b'.}
+        \label{fig:smith_run_time}
 \end{figure}
 
 
 
 
 
-In this section, we implement rock-paper-scissors game with both revision protocols and evolutionary dynamics presented above, to observe the behavioral differences between a society with small number of agents and its approximation to a dynamical system.
-The game has only one population with three strategies, denoted $x = [x_1, x_2, x_3]^\top$. The fitness function is defined as $F(x)=Ax$, where A is equal to 
-\begin{equation}
-  A = \begin{pmatrix}
-  2  & 1 &  3 \\
-  3  & 2 &  1 \\
-  1 &  3 &  2
-  \end{pmatrix}
-\end{equation}
-Note that we modify the payoff matrix proposed in the literature to ensure positive payoffs.
-Fig. \ref{fig:finite1} to \ref{fig:finite4} show the evolution of the society with each revision protocol and its approximation to differential equations. We set the initial condition $x_0 = [0.2 .7 0.1 ]^\top$. The small population cases are made with $200$ agents and $10000$ iterations. The dynamical cases are run during 
-30 time units.
-
-
-%The evolution might take place in days, months, years.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%\input{revision_protocols}
-
-%\input{small_population}
-
-%\input{evolutionary_dynamics}
 
 
 \iffalse
 
-\subsection{Examples}
-We show examples of two games that have different number of populations and strategies per population.
-
-\subsubsection{Rock-paper-scissors game}
-We implement the rock-paper-scissors game. This game has only one population with three strategies, denoted $x = [x_1, x_2, x_3]^\top$. The fitness function is defined as $F(x)=Ax$.
-
-Fig.\ref{fig:rpc_game_rd} to \ref{fig:rpc_game_logit} show the evolution of the social state. Note that the evolution of the dynamical approximation resembles the behavior of the system with small number of agents.
-
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_rd.eps}
-	  \caption{Simplex.}
-	  \label{fig:test1_simplex_rd}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_ev_rd.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test1_ev_rd}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with replicator dynamics.}
-  \label{fig:rpc_game_rd}
-\end{figure}
-
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_bnn.eps}
-	  \caption{Simplex.}
-	  \label{fig:test1_simplex_bnn}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_ev_bnn.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test1_ev_bnn}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with BNN dynamics.}
-  \label{fig:rpc_game_bnn}
-\end{figure}
-
-
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_smith.eps}
-	  \caption{Simplex.}
-	  \label{fig:test1_simplex_smith}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_ev_smith.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test1_ev_smith}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with Smith dynamics.}
-  \label{fig:rpc_game_smith}
-\end{figure}
-
-
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_simplex_logit.eps}
-	  \caption{Simplex.}
-	  \label{fig:test1_simplex_logit}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test1_ev_logit.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test1_ev_logit}
-  \end{subfigure}
-  \caption{Rock-paper-scissors game with logit dynamics.}
-  \label{fig:rpc_game_logit}
-\end{figure}
-
-\fi
-
-
-
-
-
-
-\section{Combined Dynamics}
-
-It is possible to define a set of dynamics to run a combination of the dynamics. The dynamics should be defined in a cell array, e.g., 
-\begin{lstlisting}
-dynamics = {'bnn', 'rd'};
-\end{lstlisting}
-The combination is made making a linear combination between each dynamic listed in the cell array. The weight assigned to each dynamic is defined in the vector \verb|gamma|. In this case we assign 
-\begin{lstlisting}
-gamma = [.25, .75]; 
-\end{lstlisting}
-
-Fig. \ref{fig:rps_combined} shows an example of the combined dynamics for the rock-paper-scissors game. Note that the evolution of the system is not confined to a limit cycle, as happened with the replicator dynamics in \ref{fig:finite1}.
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.4\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_combined.eps}
-	  \caption{Simplex.}
-	  \label{fig:test_combined_simplex}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_combined_ev.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test_combined_ev}
-  \end{subfigure}
-  \caption{Evolution of the combination of replicator dynamics and BNN dynamics.}
-  \label{fig:rps_combined}
-\end{figure}
-
-
-
-\begin{equation}
-\dot{ \bs{x} } = V_d( \bs{x} ),
-\end{equation}
-where $d\in \mathcal{D}=\{ Logit, RD, Smith, BNN \}$ denotes the dynamic used
-
-
-
-
-
-
-
-\newpage
-
-\section{Multi-population Games}
-
-
-
-\subsection{Examples}
-
-\subsubsection{Matching pennies}
-
-We implement a matching pennies game defining a society $\pop = \{p_1, p_2\}$ with two populations and two strategies per population, namely \emph{heads} and \emph{tails}. First, note that the payoff of the game in normal form is
-%
-\begin{table}[h]
-\centering
- \begin{tabular}{|c|c|} \hline
-  2, 1 & 1, 2 \\ \hline
-  1, 2 & 2, 1 \\ \hline
- \end{tabular}
-\end{table}
-%
-%In this case, the state of populations $1$ and $2$ are denoted by x^1 and x^2, respectively. .
-Now, the fitness vector of the  population $p_j$ can be expressed as $F^{p_j}(x^{p_k}) = A^{p_j} x^{p_k}$, for $p_j, p_k \in \pop$ and $p_j \neq p_k$. That is, the payoff of a population is affected only by the state of the opponent population.
-%$x^p \in $  $p=\{x_h^p, x_t^p\}$. 
-The payoff matrices are defines as follows
-%
-\begin{equation}
-  A^1 = \begin{pmatrix}
-2 & 1 \\
-1 & 2 
-  \end{pmatrix}
-\end{equation}
-%
-\begin{equation}
-  A^2 = \begin{pmatrix}
-  1 & 2 \\
-  2 & 1 
-  \end{pmatrix}
-\end{equation}
-%
-Fig. \ref{fig:mp_game_rd} to \ref{fig:mp_game_logit} show the evolution of the social state with the evolutionary dynamics presented in Section \ref{sec:protocols}. 
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_simplex_rd.eps}
-	  \caption{Simplex.}
-	  \label{fig:test2_simplex_rd}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_ev_rd.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test2_ev_rd}
-  \end{subfigure}
-  \caption{Matching pennies game with replicator dynamics.}
-  \label{fig:mp_game_rd}
-\end{figure}
-
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_simplex_maynard_rd.eps}
-	  \caption{Simplex.}
-	  \label{fig:test2_simplex_maynard_rd}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_ev_maynard_rd.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test2_ev_maynard_rd}
-  \end{subfigure}
-  \caption{Matching pennies game with Maynard replicator dynamics.}
-  \label{fig:mp_game_maynard_rd}
-\end{figure}
-
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_simplex_bnn.eps}
-	  \caption{Simplex.}
-	  \label{fig:test2_simplex_bnn}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_ev_bnn.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test2_ev_bnn}
-  \end{subfigure}
-  \caption{Matching pennies game with BNN dynamics.}
-  \label{fig:mp_game_bnn}
-\end{figure}
-
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_simplex_smith.eps}
-	  \caption{Simplex.}
-	  \label{fig:test2_simplex_smith}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_ev_smith.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test2_ev_smith}
-  \end{subfigure}
-  \caption{Matching pennies game with Smith dynamics.}
-  \label{fig:mp_game_smith}
-\end{figure}
-
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_simplex_logit.eps}
-	  \caption{Simplex.}
-	  \label{fig:test2_simplex_logit}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_ev_logit.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test2_ev_logit}
-  \end{subfigure}
-  \caption{Matching pennies game with Logit dynamics with $\eta=0.02$.}
-  \label{fig:mp_game_logit}
-\end{figure}
-
-
-
-
-
-
-
-
-
-
+ \FloatBarrier
+ 
 \section{Designing games}
 
 In the previous section we show some examples of strategical situations that can be analyzed with game theory. In these cases, the structure of the game is given by the problem. However, we can modify the fitness function of each player in order to solve an optimization problem.
@@ -625,45 +204,19 @@ define fitness functions as
 f_i(x_1, x_2) = \frac{\alpha_i}{1+x_i} - 2 \beta |x| - b 
 \end{equation}
 
+\fi
+
+
+--
 
 
 
+\bibliographystyle{plain}
+\bibliography{references}
 
 
 
-
-
-
-
-
-
-
-------------
-
-With a finite population the time specifies the number of iterations.
-
-There might be different populations!!!
-
-How do we define the state vector???
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\end{document}
 
 
 
@@ -679,13 +232,4 @@ How do we define the state vector???
 
 
 
-
-test1_ev_bnn.eps         test1_simplex_rd.eps     test2_simplex_bnn.eps
-test1_ev_logit.eps       test1_simplex_smith.eps  test2_simplex_logit.eps
-test1_ev_rd.eps          test2_ev_bnn.eps         test2_simplex_rd.eps
-test1_ev_smith.eps       test2_ev_logit.eps       test2_simplex_smith.eps
-test1_simplex_bnn.eps    test2_ev_rd.eps
-test1_simplex_logit.eps  test2_ev_smith.eps
 \fi
-
-\end{document}

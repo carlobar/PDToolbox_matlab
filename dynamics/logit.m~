@@ -21,19 +21,14 @@ x_dot_v = zeros(G.P* n, 1);
 
 
 for p = 1 : G.P
-    F(p, s) = G.f(x, p, s);
-     
-    F_(p, :) = exp( F(p, 1:G.S(p) ) / eta );
-    F_mean(p) = sum(F_(p,:));
-end
+    F(p, :) = G.f(x, p);
+    F_(p, :) = exp( F(p, : ) / eta );
+    F_mean(p) = F_(p, :) * ones(n, 1);
+
 
 % calculate update in the strategy
+    x_dot_v( (p-1)*n + 1 : p*n) = F_(p, :) / F_mean(p) - x_n(p, :);
 
-
-for p = 1 : G.P
-    for s = 1 : G.S(p)
-        x_dot_v( (p-1)*n + s) = F_(p, s) / F_mean(p) - x_n(p, s);
-    end
 end
 
 dz = [x_dot_v];

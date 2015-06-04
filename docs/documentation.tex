@@ -44,7 +44,7 @@
 \author{Carlos Barreto}
 
 \begin{document}
-
+\lstset{language=Matlab} 
 \maketitle
 
 
@@ -64,648 +64,110 @@
 
 
 
-\section{Introduction} \label{sec:introduction}
-
-
-% notation
-
-Let us define a society of $\pop = \{ 1, \ldots, P\}$ composed by $P \geq 1$ populations. Each population consist of a large number of agents, which conform a mass $m^p > 0$, with $p \in \pop$. 
-Let $S^p = \{ 1, \ldots, n^p \}$ be the set of actions (or pure strategies) available for each agent of the $p\th$ population. 
-Each agent selects a pure strategy and the resulting state of the population is the usage proportion of each strategy. The set of population states is defined as $X^p = \{ x^p \in \mathbb{R}_+^{n^p} : \sum_{i \in S^p} x_i^p = m^p \}$, where the $i\th$ component of the state, denoted by $x_i^p \in \mathbb{R}_+$, is the mass of players that select the $i\th$ strategy of the population $p$.
-
-Population games (or large games) capture some properties of the interactions of many economic agents, e.g., 
-
-\begin{enumerate}
-\item large number of agents.
-\item Continuity: The actions of an agent has small impact on the payoff of other agents.
-\item Anonymity: means that the utility of each agent only depends on the aggregated actions of the other agents.
-\end{enumerate}
-
-
-
-In particular, an economic agent decides whether to modify or not its strategy according to the available information. In this respect, we assume that the agent's behavior satisfies both inertia and myopia properties. On the one hand, inertia 
-is the tendency to remain at the status-quo, unless there exist motives to do that.
-Also, this implies that the strategy adjustment events are rare events.
-On the other hand, myopia means that the information used to make decisions is limited, e.g., each user makes decisions based on the current state of the population and do not estimate future actions. These two properties are based on the population games theoretical framework \cite{sandholm_book}
-and behavioral economics \cite{gal}.
-
-To accomplish the inertia property, the time between two successive updates of one 
-agent's strategy is modeled with an exponential distribution (this distribution is used to model the occurrence of rare events). 
-Thus, strategy actualization events could be characterized by means of stochastic alarm clocks.
-Particularly, a rate $R_i$ Poisson alarm clock produces time among rings described by
-a rate $R_i$ exponential distribution.
-The whole actualization events in the population can be considered as a rate $R=\sum_{j\in \mathcal{V}} R_j$ Poisson alarm clock.
-Therefore, the average number of events in a given time interval is $R$ and the probability of selecting the $i^{th}$
-agent in a given time instant is
- $\frac{R_i}{R}$ \cite{sandholm_book}.
-
-At each update opportunity (revision opportunity), the $i\th$ agent might compare the average profit of its strategy with the average profit of other strategies. Particularly, an agent might change its strategy with rate $\rho_{ij}$.
+\input{introduction}
  
- The rate of change $\rho_{ij}$ is determined by a revision protocol, which defines the procedure used by each user to decide whether to change or not its strategy. The scalar $\rho_{ij} (\pi^p, x^p)$ is the \emph{conditional switch rate} from strategy $i$ to strategy $j$ in function of a given payoff vector $\pi$ and a population state $x^p$.
- 
- Using the law of large numbers we can approximate the evolution of the society's state to a dynamical equation defined by
- \begin{equation}\label{eq:mean_dynamic}
-  \dot{x}_i^p = \sum_{j\in S^p} x_j^p \rho_{ij} (\pi^p, x^p) - x_i^p \sum_{j\in S^p} \rho(\pi^p, x^p).
- \end{equation}
-The previous equation is known as the \emph{mean dynamic}, which is used to define  some of the dynamics in the next section.
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
-\section{Revision Protocols and Evolutionary Dynamics}\label{sec:protocols}
- 
- 
-In this section we introduce four revision protocols, that lead to the evolutionary dynamics \emph{logit dynamics} (Logit), \emph{replicator dynamics} (RD), \emph{Brown-von Neumann-Nash dynamics} (BNN), and \emph{Smith dynamics} (Smith). These dynamics belong to the families of \emph{perturbed optimization}, \emph{imitative dynamics}, \emph{excess payoff dynamics}, and \emph{pairwise comparison dynamics}, respectively \cite{hofbauer2001nash, sandholm_book}. 
- 
- 
- 
- 
- 
- 
- \subsection{Pairwise Proportional Imitation (Replicator Dynamics)}
-
-With a revision opportunity the $i\th$ agent observes an opponent $j$ at random. Then it might change its strategy if  its opponent has a greater fitness. The rate change is 
-%
-\begin{equation}
-\rho_{ij}^p(\pi^p, x^p) = \frac{1}{m^p} [\pi_j^p - \pi_i^p]_+,
-\end{equation}
-where the $[\cdot]_+:\Re \leftarrow \Re_{\geq0}$ represents the positive part, defined as $[ x ]_+ \equiv \max\{ 0, x \}$.
-This protocol leads to the \emph{replicator dynamics} defined as
-\begin{equation}\label{eq:replicator}
-\dot{x}_i^p = x_i^p \, \hat{F}_i^p \left( x \right),
-\end{equation}
-where $\hat{F}_i^p$ is the excess payoff to strategy $i\in S^p$, which is defined as   
-\begin{equation}
-\hat{F}_i^p (x) =  F_i^p(x) - \bar{F}^p(x),
-\end{equation}
-and $\bar{F}^p(x)$ is the average payoff the population $p$, i.e., 
-\begin{equation}
- \bar{F}^p(x) = \frac{1}{m^p} \sum_{j \in S^p} x_j^p F_j^p(x).
-\end{equation}
-
-
-
-\subsubsection*{Algorithm}
-
-\begin{algorithm}[H]
-\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-
- \Input{Society's state $x$}
- \Output{State update $\dot{x}$}
- \BlankLine
- 
- \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
-  $ F^p \leftarrow fitness(x, p)$\;
-  $ \bar{F}^p \leftarrow \frac{1}{m^p} (F^p)^\top x^p$\;
-  $ \hat{F}^p \leftarrow F^p - \boldsymbol{1} \bar{F}^p$\;
-  $ \dot{x}^p \leftarrow \text{diag}(\hat{F}^p) x^p $\;
- }
-\end{algorithm}
-%
-The running time of the algorithm is $T_{rd}(n, P) = O( P (  T_{f}(n,P) + n) ) $, where $T_{f}(n,P)$ is the time required to calculate the fitness vector of the $p\th$ population.
-
-
-
-
-
-
-
-
-\subsection{Comparison to the Average Payoff (Brown-von Neumann-Nash Dynamics (BNN))}
-
-With a revision opportunity the $i\th$ agent selects a strategy at random and might switch to it if that strategy has a payoff above the average. The agent switch strategy with probability proportional to the excess payoff
-%
-\begin{equation}
-\rho_{ij}^p(\pi^p, x^p) = \left[ \pi_j^p - \frac{1}{m^p} \sum_{k\in S^p} x_k^p \pi_k^p \right]_+,
-\end{equation}
-
-This protocol leads to \emph{Brown-von Neumann-Nash dynamics}, defined as 
-\begin{equation}\label{eq:bnn}
- \dot{x}_i^p = \left[ \hat{F}_i^p \left( \bs{x} \right) \right]_+ - x_i^p  \sum_{j \in S^p} \left[ \hat{F}_j^p \left( \bs{x} \right) \right]_+.
-\end{equation}
-
-
-
-\subsubsection*{Algorithm}
-
-\begin{algorithm}[H]
-\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-
- \Input{Society's state $x$}
- \Output{State update $\dot{x}$}
- \BlankLine
- 
- \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
-  $ F^p \leftarrow fitness(x, p)$\;
-  $ \bar{F}^p \leftarrow \frac{1}{m^p} (F^p)^\top x^p$\;
-  $ \hat{F}^p \leftarrow \max\{F^p - \boldsymbol{1} \bar{F}^p, \boldsymbol{0}\}$\;
-  $ \dot{x}^p \leftarrow \hat{F}^p - (\boldsymbol{1}^\top \hat{F}^p) x^p $\;
- }
-\end{algorithm}
-%
-The running time is $T_{BNN}(n,P) = O( P (  T_{f}(n,P) + n) ) $.
-
-
-
-
-
-
-\subsection{Pairwise Comparison (Smith Dynamics)}
-
-With a revision opportunity the $i\th$ agent selects a strategy at random. If the opponent has a higher fitness, the the agent switch strategy with probability proportional to
-\begin{equation}
-\rho_{ij}(\pi, x) = \left[ \pi_j - \pi_i \right]_+
-\end{equation}
-This protocol leads to \emph{Smith dynamics} that are defined as 
-%
-\begin{multline} 
-\dot{x}_i^p  = \sum_{\gamma \in S^p} x_\gamma^p  \left[ F_i^p \left( \bs{x} \right) - F_\gamma^p \left( \bs{x} \right) \right]_+ 
-%%\\
-- x_i^p  \sum_{\gamma \in S^p} \left[ F_\gamma^p ( \bs{x}) - F_i^p( \bs{x} ) \right]_+.
-\label{eq:smith}
-\end{multline}
-
-
-\subsubsection*{Algorithm}
-
-In this case we need to order the strategies first and the calculate the difference between fitness functions in a matrix $\Delta_{ij} = [F_i^p(x) - F_j^p(x)]_+$. The running time of this algorithm is $T_{smith}(n,p) = O(P(T_f(n, P)+n^2 ))$.
-
-
-\begin{algorithm}[H]
-\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-
- \Input{Society's state $x$}
- \Output{State update $\dot{x}$}
- \BlankLine
- \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
-  $ F^p \leftarrow fitness(x, p)$\;
-  $B \leftarrow$ Strategies ordered in ascending order by their fitness  \;
-  
-  \For{ $i \leftarrow 2$ \KwTo $n^p$ }{
-    \For{ $j \leftarrow 1$ \KwTo $i-1$ }{
-      $\alpha \leftarrow B[i]$\;
-      $\beta \leftarrow B[j]$\;
-      $\Delta_{ij} \leftarrow F_\alpha^p - F_\beta^p $\;
-    }
-  }
-  \For{ $i \leftarrow 1$ \KwTo $n^p$ }{
-    $\alpha \leftarrow B[i]$\;
-    \For{ $j \leftarrow 1 $ \KwTo $i-1$ }{
-      $\beta \leftarrow B[j]$\;
-      $\Gamma_a^p[\alpha] \leftarrow \Gamma_a^p[\alpha] + x_\beta^p \Delta_{ij}^p$\;
-    } 
-    
-    \For{ $j \leftarrow i+1$ \KwTo $n^p$ }{
-      %$\beta = B[j]$\;
-      $\Gamma_b^p[\alpha] \leftarrow \Gamma_b^p[\alpha] + \Delta_{ij}^p$\;
-    } 
-  }
-  $ \dot{x}^p \leftarrow \Gamma_a^p - \text{diag}(\Gamma_b^p) x^p $\;
- }
-\end{algorithm}
-
-
-
-
-
-\subsection{Logit Choice}
-
-With a revision opportunity the $i\th$ agent selects a strategy at random and change its strategy with a probability proportional to 
-
-\begin{equation}
-\rho_{ij}(\pi) = \frac{ \exp(\pi_j \eta^{-1} ) }{ \sum_{k \in S} \exp(\pi_k \eta^{-1} ) }
-\end{equation}
-
-This protocol belong to target dynamics and with a large population results in the following dynamics
-\begin{equation}\label{eq:logit}
- \dot{x}_i^p = \frac{ \exp\left(\eta^{-1} F_i^p (\bs{x}) \right) }{ \sum_{\gamma \in S^p} \exp\left(\eta^{-1} F_\gamma^p (\bs{x}) \right) }, \, \, \eta>0,
-\end{equation}
-known ad \emph{Logit dynamics}. 
-
-
-
-\subsubsection*{Algorithm}
-
-\begin{algorithm}[H]
-\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-
- \Input{Society's state $x$}
- \Output{State update $\dot{x}$}
- \BlankLine
- 
- \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
-  $ F^p \leftarrow fitness(x, p)$\;
-  $ \bar{F}^p \leftarrow \frac{1}{m^p} (F^p)^\top x^p$\;
-  $ \tilde{F}^p \leftarrow \exp( F^p \eta^{-1} )$\;
-  $ \Gamma \leftarrow \boldsymbol{1}^\top \tilde{F}^p $\;
-  $ \dot{x}^p \leftarrow \frac{\tilde{F}^p}{\Gamma} - x^p $\;
- }
-\end{algorithm}
-
-The running time is $T_{logit}(n,P) = O( P (  T_{f}(n,P) + n) ) $.
-
-
-
-\iffalse
-\subsection{Maynard Smith Replicator}
-
-\begin{equation}
-\dot{x}_i = \frac{ x_i F_i }{ \bar{F}(x) } - x_i
-\end{equation}
-\fi
-
-
-
-
+\input{evolutionary_dynamics} 
 
 \input{implementation} 
 
+\input{combined_dynamics}
 
+\input{multipopulation}
 
+\input{maximization}
 
-
-
-
-
- \FloatBarrier
-
-\section{Combined Dynamics} \label{sec:combined}
-
-It is possible to define a set of dynamics to run a combination of the dynamics. 
-The resulting dynamic is defined as 
-\begin{equation}
-\dot{ x } = \sum_{d\in \mathcal{D}} \gamma_d V_d( x ),
-\end{equation}
-where $\mathcal{D}=\{ Logit, RD, Smith, BNN \}$ denotes the set of available dynamics, $V_d()$ is the differential equation of the $d\th$ dynamic and $\gamma_d$ is the weight assigned to it.
-The dynamics should be defined in a cell array, e.g., 
-\begin{lstlisting}
-dynamics = {'bnn', 'rd'};
-\end{lstlisting}
-The combination is made making a linear combination between each dynamic listed in the cell array. The weight assigned to each dynamic is defined in the vector \verb|gamma|. In this case we assign 
-\begin{lstlisting}
-gamma = [.25, .75]; 
-\end{lstlisting}
-
-Fig. \ref{fig:rps_combined} shows an example of the combined dynamics for the rock-paper-scissors game. Note that the evolution of the system is not confined to a limit cycle, as happened with the replicator dynamics in Fig.  \ref{fig:finite1}.
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.4\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_combined.eps}
-	  \caption{Simplex.}
-	  \label{fig:test_combined_simplex}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test_combined_ev.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test_combined_ev}
-  \end{subfigure}
-  \caption{Evolution of the combination of replicator dynamics and BNN dynamics.}
-  \label{fig:rps_combined}
-\end{figure}
-
-
-
-
+\input{example_dr}
 
 
 
  \FloatBarrier
-\section{Multi-population Games}\label{sec:multi-pop}
+\section{Running Time Analysis}\label{sec:running_time}
 
 
+In this section we investigate the running time of the evolutionary dynamics as a function of either the number of populations or the number of strategies per population. We use the demand response example from Section \ref{sec:dr_example} to make the experiments.
+Our interest is to observe the time that takes to simulate the evolution of the dynamics during 10 seconds.
 
+\subsection{Running Time as a Function of the Number of Populations}
 
-\subsection{Matching pennies}
+Note that the time complexity of the algorithms, with respect to number of populations $P$, is $O(P \cdot T_f(n,P))$. The fitness function in the example satisfies $T_f(n,P)=O(nP)$. Hence, the complexity of the dynamics with respect to $P$ is $O(P^2)$. 
 
-We implement a matching pennies game defining a society $\pop = \{p_1, p_2\}$ with two populations and two strategies per population, namely \emph{heads} and \emph{tails}. First, note that the payoff of the game in normal form is
+Although the dynamics have the same time complexity, the running time of the dynamics has substantial differences. 
+Fig. \ref{fig:run_time_pop} shows the running time of the game for multiple number of populations. In this case each population has $24$ strategies and all populations have the same set of fitness functions. 
+From the simulations we observe that the 
+%running time increases roughly linearly for all dynamics. The 
+fastest simulations are made with replicator dynamics. 
+Moreover, there is a large difference between the running time of Replicator and the other dynamics.
+%On the other hand, Smith and Logit dynamics have almost the same running time. 
 %
-\begin{table}[H]
-\centering
- \begin{tabular}{|c|c|} \hline
-  2, 1 & 1, 2 \\ \hline
-  1, 2 & 2, 1 \\ \hline
- \end{tabular}
-\end{table}
-%
-Now, the fitness vector of the  population $p_j$ can be expressed as $F^{p_j}(x^{p_k}) = A^{p_j} x^{p_k}$, for $p_j, p_k \in \pop$ and $p_j \neq p_k$. That is, the payoff of a population is affected only by the state of the opponent population.
-The payoff matrices are defines as follows
-%
-\begin{equation}
-  A^1 = \begin{pmatrix}
-2 & 1 \\
-1 & 2 
-  \end{pmatrix}
-\end{equation}
-%
-\begin{equation}
-  A^2 = \begin{pmatrix}
-  1 & 2 \\
-  2 & 1 
-  \end{pmatrix}
-\end{equation}
-%
-Fig. \ref{fig:mp_game_rd} to \ref{fig:mp_game_logit} show the evolution of the social state with the evolutionary dynamics presented in Section \ref{sec:protocols}. 
+One reason is that the ODE solver run less iterations with Replicator dynamics, and consequently, it makes less calls to the dynamic's algorithm. 
 
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_simplex_rd.eps}
-	  \caption{Simplex.}
-	  \label{fig:test2_simplex_rd}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_ev_rd.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test2_ev_rd}
-  \end{subfigure}
-  \caption{Matching pennies game with replicator dynamics.}
-  \label{fig:mp_game_rd}
+
+
+\subsection{Running Time as a Function of the Number of Strategies}
+
+
+Fig. \ref{fig:run_time_str} shows the running time of the game for different number of strategies per population. In this case we  define $25$ populations. Note that the time complexity of the dynamics with respect to the number of strategies is $O(n)$ (or $O(n \log n)$ in the case of the Smith dynamics). In this case Replicator has the lowest running time, while smith have the largest running time. The large difference between Smith and the other dynamics is that the ODE solver makes much more iterations.
+
+
+Note that, except for Smith dynamics, the running time is lower when we implement games with large number of strategies. Hence, the maximization problem in Section \ref{sec:maximization} might be solved faster using the single population case.
+
+
+
+\begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=1\textwidth]{./images/running_time_pop.eps}
+                \caption{Run time for different population numbers and constant number of strategies.}
+                \label{fig:run_time_pop}
+        \end{subfigure}
+        ~ 
+        \begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=1\textwidth]{./images/running_time_str.eps}
+		%\includegraphics[width=1\textwidth]{./images/running_time_strategies.eps}
+                \caption{Run time for different number  of strategies and constant number of populations.}
+                \label{fig:run_time_str}
+        \end{subfigure}
+        \caption{Run time of four evolutionary dynamics: `rd', `bnn', `smith', and `logit'.}
+        \label{fig:run_time}
 \end{figure}
 
+%Which case gives the largest simulation time?
 
 
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_simplex_maynard_rd.eps}
-	  \caption{Simplex.}
-	  \label{fig:test2_simplex_maynard_rd}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_ev_maynard_rd.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test2_ev_maynard_rd}
-  \end{subfigure}
-  \caption{Matching pennies game with Maynard replicator dynamics.}
-  \label{fig:mp_game_maynard_rd}
+
+\subsection{Running Time of Smith Dynamics }
+
+In the toolbox we include two algorithms for the Smith dynamics. One of them relies on matrix multiplications and has running time $O(P(T_f(n,P) + n^2))$ (`smith.m'), while the other has time complexity $O(P(T_f(n,P) + n \log n))$ (`smith\_b.m'). Even though the time complexity of the first algorithm is higher, its simulation are faster under certain conditions. The reason is that Matlab is optimized to work with matrices. From the experiments we see that  `smith\_b.m' is faster only for large number strategies (see Fig. \ref{fig:smith_run_time}).
+
+\begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.45\textwidth}
+                \includegraphics[width=\textwidth]{./images/running_time_smith_pop.eps}
+                \caption{Run time for different population numbers and constant number of strategies.}
+                \label{fig:smith_run_time_pop}
+        \end{subfigure}%
+        ~ 
+        \begin{subfigure}[b]{0.45\textwidth}
+                \includegraphics[width=\textwidth]{./images/running_time_smith_str.eps}
+                \caption{Run time for different number  of strategies and constant number of populations.}
+                \label{fig:smith_run_time_str}
+        \end{subfigure}%
+
+        \caption{Run time of two implementations of the Smith dynamics, namely `smith' and `smith\_b'.}
+        \label{fig:smith_run_time}
 \end{figure}
-
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_simplex_bnn.eps}
-	  \caption{Simplex.}
-	  \label{fig:test2_simplex_bnn}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_ev_bnn.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test2_ev_bnn}
-  \end{subfigure}
-  \caption{Matching pennies game with BNN dynamics.}
-  \label{fig:mp_game_bnn}
-\end{figure}
-
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_simplex_smith.eps}
-	  \caption{Simplex.}
-	  \label{fig:test2_simplex_smith}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_ev_smith.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test2_ev_smith}
-  \end{subfigure}
-  \caption{Matching pennies game with Smith dynamics.}
-  \label{fig:mp_game_smith}
-\end{figure}
-
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_simplex_logit.eps}
-	  \caption{Simplex.}
-	  \label{fig:test2_simplex_logit}
-  \end{subfigure}
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-	  \includegraphics[width=\textwidth]{./images/test2_ev_logit.eps}
-	  \caption{Evolution of the strategies in time.}
-	  \label{fig:test2_ev_logit}
-  \end{subfigure}
-  \caption{Matching pennies game with Logit dynamics with $\eta=0.02$.}
-  \label{fig:mp_game_logit}
-\end{figure}
-
 
 
  \FloatBarrier
 
-\subsection{Demand response programs}
-
-This is an example of multiple populations used to implement demand response programs in smart grids \cite{barreto2013design, barreto2014incentives}. In this case, we assume that each user must decide how to distribute its electricity usage along a day. Particularly, 
-agents might have conflicting interests because they might impose externalities on the society through the price signals, i.e., the aggregated demand might affect the profit of agents. This conflict can be seen as a game between agents, in which each agent is selfish and  endeavors to maximize independently its own welfare. 
-
-In this problem we model the daily electricity allocation problem as a multi-population game with nonlinear fitness functions. Particularly, each agent can implement an evolutionary dynamic to find the best distribution of resources. Note that when implemented locally by each user, the evolutionary dynamics lead to the global efficient equilibrium (In this case the fitness is equal to the marginal utility of each agent). 
-
-A particular feature of this problem is that the Nash equilibrium of the system is inefficient. Hence, 
-we introduce an incentives scheme (indirect revelation mechanism) to maximize the aggregated surplus of the population.
-The main feature of this mechanism is that it does not require private information from users, and employs a one dimensional message space to coordinate the demand profile of agents. These properties facilitate the distributed implementation of the mechanism. The mechanism entrusts the computation tasks among users, who should maximize its own utility function based the aggregated demand (that is calculated and broadcasted by a central agent). Thus, users avoid revelation of private information (e.g., preferences), but are required to report the aggregated consumption of their appliances during some time periods.
 
 
-
-
-
-
-
-\subsubsection{Problem Formulation}
-
-
-
-We consider a population composed by $N$ consumers defined as $\mathcal{V} = {1,\ldots.N}$. Also, let us divide a period of 24 hours in a set of $T$ time intervals denoted $\tau = \{\tau_1,\ldots,\tau_T\}$.
-Formally, we define the set $\tau$ as a partition of $[0,24)$, where 
- $\cup_{t\in\{1,\ldots,T\}} \tau_t = \tau$ and $\cap_{t\in\{1,\ldots,T\}} \tau_t = \varnothing$.
-%
-Let $q_i^t$ be the electricity consumption of the $i\th$ user in the $t\th$ time interval. 
-The daily electricity consumption of the $i\th$ user is represented by the vector $\bs{q}_i=[q_i^1,\ldots,q_i^T]^\top\in \Re_{\geq 0}^{T}$.
-The population consumption at a given time $t$ is defined by the vector $\bs{q}^t = [q_1^t,, q_2^t\ldots,q_N^t]^\top\in \Re_{\geq 0}^{N}$.
-On the other hand, the joint electricity consumption of the whole population is denoted by $\bs{q} = [\bs{q}_1^\top,
-\ldots, \bs{q}_N^\top]^\top$. 
-Without loss of generality, we assume that the electricity consumption of the $i\th$ user  satisfies $q_i^t\geq 0$,  in each time instant $t$.
-A \emph{valuation function} $v_i^t(q_i^t)$ models the \emph{valuation} that the $i\th$ user gives to an electricity consumption of $q_i^t$ units in the $t\th$ time interval. Finally, let $p(\cdot):\Re\rightarrow\Re$ be the price of electricity charged to consumers. The aggregated consumption at a given time $t$ is defined as $||\bs{q}^t||_1 = \sum_{j=1}^N q_j^t$.
-Moreover, a daily valuation is 
-$v_i(\bs{q}_i)=\sum_{t=1}^T v_i^t(q_i^t),$
- where $t\in\{1,\ldots,T\}$.
-
-
- 
- 
- 
-Now, assuming  that the electricity generation cost is  the same for all $t$, we can express the profit function of each individual as
-%
-\begin{equation}\label{eq:u_i_}
- U_i(\bs{q}) = v_i(\bs{q}_i) - \sum_{t=1}^T q_i^t p\Big( \norm{\bs{q}^t}_1 \Big),
-\end{equation}
-%
-where 
-$p:\Re_+ \to \Re_+$ is the unitary price function.
-The consumers welfare function is maximized by solving \cite{Johari09}
-%
-\begin{equation}\label{eq:opt_problem}
-\begin{aligned}
-& \underset{\bs{q}}{\text{maximize}}
-& &  \sum_{i=1}^N U_i(\bs{q}) =  \sum_{i=1}^N\left( v_i(\bs{q}_i) - \sum_{t=1}^T q_i^t p\left( \norm{\bs{q}^t}_1 \right) \right) \\
-& \text{subject to}
-& & q_i^t \geq 0,  i =\{1,\ldots,N\}, t =\{1,\ldots,T\}.
-\end{aligned}
-\end{equation}
-
-
-
-\subsubsection{Incentives}
-
-The solution of the optimization problem in Eq.~(\ref{eq:opt_problem}) is inefficient in a strategic environment, i.e., when individuals are rational and selfish \cite{barreto2013design, Johari09}. In such cases, the analysis of strategic interactions among rational agents is made using game theory \cite{fudenberg98}.
-In particular, the Nash equilibrium (a solution concept in game theory)  is sub-optimal, however, we can show that if we consider an added incentive to the individual cost function of each player, the Nash equilibrium of the game with incentives can be made efficient in the sense of Pareto \cite{barreto2013design, barreto2014incentives}. 
-
-In particular, our DR scheme with incentives models the case when all agents keep their valuation of electricity to themselves, and have autonomous control their consumption. However, in order to incentive the agents to modify their behavior for the good of the population, the central entity sends them an incentive (e.g., a price signal or reward) to indirectly control their load.
-
-Consider the new cost function for the $i^{th}$ agent:
-\begin{equation}\label{eq:game2}
-W_i(q_i,\bs{q}_{-i}) 
-= v_i(q_i) -  q_i p\left( \norm{\bs{q}^t}_1 \right) + I_i(\bs{q}) .
-\end{equation}
-where incentives are of the form:
-\begin{equation}\label{eq:I_i}
-I_i(\bs{q}) = \left( \norm{\bs{q}_{-i}^t}_1\right) \left( h_i(\norm{\bs{q}_{-i}})  - p\left( \norm{\bs{q}^t}_1 \right) \right).
-\end{equation}
-
-
-The form of this incentive is inspired in the 
-Vickrey-Clarke-Groves mechanism and the  Clarke pivot rule \cite{AlgorithmicG}.
-%
-We assign incentives according to the contribution made by an agent 
-to the society. In particular, the function $h_i:\Re \to \Re$ is a design parameter that estimates the externalities introduced by each individual.
-It can be shown that these incentives can lead to an optimal equilibrium in a strategic environment.
-In this DR approach we consider that the utility sends a two dimensional signal to each customer, namely $(q,I_i)$ and each customer responds with some consumption $q_i$. 
-Note that the incentives modify the price paid by each user according to their relative consumption. However, two different users receive different incentives as long as their consumption are different.
-
-
-
-
-
-\subsubsection{Simulations}
-
-In this section, we illustrate some ideas of efficiency and the decentralized implementation of the incentives mechanism. We select some functions used previously in the literature. On the one hand, we define the family of valuation functions as 
-\begin{equation}\label{eq:valuation_sim}
- v(\bs{q}^k,\alpha_i^k) = v_i^k (q_i^k) = \alpha_i^k \log(1+q_i^k)
-\end{equation}
-where $\alpha_i^k>0$ is the parameter that characterizes the valuation of the  $i\th$ agent at the $k\th$ time instant.
-On the other hand, the generation cost function is defined as 
-%
-\begin{equation}\label{eq:cost_sim}
- C(\|\bs{q}\|_1) = \beta ({\|\bs{q}\|_1})^2 + b {\|\bs{q}\|_1},
-\end{equation}
-and the unitary price function is
-%
-\begin{equation}\label{eq:p_sim}
- p(\|\bs{q}\|_1) = \frac{C(\|\bs{q}\|_1)}{\|\bs{q}\|_1} = \beta \|\bs{q}\|_1 + b.
-\end{equation}
-%
-Note that the generation cost only depends on the aggregated consumption, not on the time of the day. Furthermore, 
-%
-the fitness function of the system with incentives is
-%
-\begin{equation}\label{eq:fitness_without_i_sim}
-F_i^k( \bs{q}^k)  =  \frac{\alpha_i^k }{1+q_i^k}
- - 2\beta \left( \sum_{j=1}^N q_j^k  \right).
- \end{equation}
-
-
-The evolution of utility, demand, and incentives for different dynamics is shown in Figs.~\ref{fig:dynamics_u} and \ref{fig:dynamics_i}. Note that despite using the same initial condition, the evolution of the system is different with each dynamical model. In particular, BNN and Smith dynamics converge faster to the  optimum, in contrast with the Logit and replicator dynamics. 
-This is achieved by means of a fast decrease in the power consumption. 
-
-\begin{figure}[hbt]
- \centering
- \includegraphics[width=.75\textwidth]{./images/evolution_u.eps}
- \caption{Evolution of profit and costs for four different dynamics.}
- \label{fig:dynamics_u}
-\end{figure}
-
-
-\begin{figure}[hbt]
- \centering
- \includegraphics[width=.75\textwidth]{./images/evolution_i.eps}
- \caption{Evolution of the incentives with four different dynamics.}
- \label{fig:dynamics_i}
-\end{figure}
-
-
-
-Incentives in Fig.~\ref{fig:dynamics_i} show that, in the long run, all dynamics converge to the same level of incentives. Particularly, Smith dynamics requires more incentives during all time, except for logit dynamics, which has a sudden increase in the incentives close to the equilibrium point. 
-
-In Fig.~\ref{fig:dynamics_i} it is not clear which dynamical model moves the state of the system to the optimal equilibrium using less resources. To answer this question, we simulate the total amount of incentives used by each model.
-Thus, let us define the aggregated incentives in a society in a particular time $t$ as
-\begin{equation}
- I_d (t) = \sum_{i\in\mathcal{P}} \frac{1}{|S|} \sum_{k\in S} I_i \left( \bs{q}^k (t) \right).
-\end{equation}
-Now, the total accumulated incentives from $t_0$ to $t$ is defined as 
-\begin{equation}
- \varPhi_d (t) = \int_{t_0}^t I_d (\tau) d\tau.
-\end{equation}
-Thus, $\varPhi_d (t)$ gives a measurement of the total amount subsidies required by the system with dynamic $d$, in the time interval  $[t_0, t]$.
-In this case we do not have a reference to compare the subsidies requirements of each evolutionary dynamic. Hence, we compare the subsidies requirements with the average requirements of all the dynamics implemented. 
-%
-In order to see which dynamic requires more resources, we plot the cumulative resources required by each dynamic relative to the average.
-Hence, we define the cumulative incentives as 
-%
-\begin{equation}
-CI_d = \frac{ \varPhi_d (t) }{ \sum_{d\in \mathcal{D}} \varPhi_d (t) }.
-\end{equation}
-%
-Fig.~\ref{fig:integral} shows the results of the simulation of the relative subsidies required by each model of evolutionary dynamics.
-%
-
-
-
-Smith dynamics requires much more resources during all the time stamp, but is particularly high during the first stages, while logit has the lower incentives requirements. However, BNN has the lower incentives in long run.
-
-\begin{figure}[hbt]
- \centering
- \includegraphics[width=.75\textwidth]{./images/accumulated_i.eps}
- \caption{Accumulated incentives during the evolution of the algorithm.}
- \label{fig:integral}
-\end{figure}
-
-
-
-Fig. \ref{fig:final_state} shows the final demand profile of each agent. Note that the final state corresponds to the state of each population at the equilibrium.
-
-\begin{figure}[hbt]
- \centering
- \includegraphics[width=.75\textwidth]{./images/final_state.eps}
- \caption{Final demand profile of each agent.}
- \label{fig:final_state}
-\end{figure}
-
-
-
- \FloatBarrier
- 
- 
 
 
 \iffalse
 
+ \FloatBarrier
+ 
 \section{Designing games}
 
 In the previous section we show some examples of strategical situations that can be analyzed with game theory. In these cases, the structure of the game is given by the problem. However, we can modify the fitness function of each player in order to solve an optimization problem.
@@ -749,7 +211,7 @@ f_i(x_1, x_2) = \frac{\alpha_i}{1+x_i} - 2 \beta |x| - b
 \fi
 
 
-
+--
 
 
 

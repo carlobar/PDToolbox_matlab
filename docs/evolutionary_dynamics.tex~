@@ -1,60 +1,204 @@
+ 
+ 
+\section{Revision Protocols and Evolutionary Dynamics}\label{sec:protocols}
+ 
+ 
+In this section we introduce four revision protocols, that lead to the evolutionary dynamics \emph{logit dynamics} (Logit), \emph{replicator dynamics} (RD), \emph{Brown-von Neumann-Nash dynamics} (BNN), and \emph{Smith dynamics} (Smith). These dynamics belong to the families of \emph{perturbed optimization}, \emph{imitative dynamics}, \emph{excess payoff dynamics}, and \emph{pairwise comparison dynamics}, respectively \cite{hofbauer2001nash, sandholm_book}. 
+ 
+ 
+ 
+ 
+ 
+ 
+ \subsection{Pairwise Proportional Imitation (Replicator Dynamics)}
 
-
-
-
-
-\section{Evolutionary Dynamics} \label{sec:dynamics}
-
-We implement four evolutionary dynamics, namely \emph{logit dynamics} (Logit), \emph{replicator dynamics} (RD), \emph{Brown-von Neumann-Nash dynamics} (BNN), and \emph{Smith dynamics} (Smith) that belong to the families of \emph{perturbed optimization}, \emph{imitative dynamics}, \emph{excess payoff dynamics}, and \emph{pairwise comparison dynamics}, respectively \cite{hofbauer2001nash, sandholm_book}. 
-%
-%
-Each family uses different agent behavior models. A priori, it is difficult to know which dynamic is most convenient for a particular problem. 
-Now, let us denote the dynamics of a society by means of 
+With a revision opportunity the $i\th$ agent observes an opponent $j$ at random. Then it might change its strategy if  its opponent has a greater fitness. The rate change is 
 %
 \begin{equation}
-\dot{ \bs{x} } = V_d( \bs{x} ),
+\rho_{ij}^p(\pi^p, x^p) = \frac{1}{m^p} [\pi_j^p - \pi_i^p]_+,
 \end{equation}
-where $d\in \mathcal{D}=\{ Logit, RD, Smith, BNN \}$ denotes the dynamic used.
-The following differential equations describe the evolution in time of each strategy according to each evolutionary dynamic:
-%
-\subsection{Logit Dynamics}
-\begin{equation}\label{eq:logit}
- \dot{x}_i^p = \frac{ \exp\left(\eta^{-1} F_i^p (\bs{x}) \right) }{ \sum_{\gamma \in S^p} \exp\left(\eta^{-1} F_\gamma^p (\bs{x}) \right) }, \, \, \eta>0,
-\end{equation}
-
-\subsection{Replicator Dynamics}
+where the $[\cdot]_+:\Re \leftarrow \Re_{\geq0}$ represents the positive part, defined as $[ x ]_+ \equiv \max\{ 0, x \}$.
+This protocol leads to the \emph{replicator dynamics} defined as
 \begin{equation}\label{eq:replicator}
-\dot{x}_i^p = x_i^p \, \hat{F}_i^p \left( \bs{x} \right).
+\dot{x}_i^p = x_i^p \, \hat{F}_i^p \left( x \right),
+\end{equation}
+where $\hat{F}_i^p$ is the excess payoff to strategy $i\in S^p$, which is defined as   
+\begin{equation}
+\hat{F}_i^p (x) =  F_i^p(x) - \bar{F}^p(x),
+\end{equation}
+and $\bar{F}^p(x)$ is the average payoff the population $p$, i.e., 
+\begin{equation}
+ \bar{F}^p(x) = \frac{1}{m^p} \sum_{j \in S^p} x_j^p F_j^p(x).
 \end{equation}
 
-\subsection{Brown-von Neumann-Nash Dynamics (BNN)}
+
+
+\subsubsection*{Algorithm}
+
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+
+ \Input{Society's state $x$}
+ \Output{State update $\dot{x}$}
+ \BlankLine
+ 
+ \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
+  $ F^p \leftarrow fitness(x, p)$\;
+  $ \bar{F}^p \leftarrow \frac{1}{m^p} (F^p)^\top x^p$\;
+  $ \hat{F}^p \leftarrow F^p - \boldsymbol{1} \bar{F}^p$\;
+  $ \dot{x}^p \leftarrow \hat{F}^p \odot x^p \frac{1}{m^p} $\; 
+ }
+\end{algorithm}
+%
+The running time of the algorithm is $T_{rd}(n, P) = O( P (  T_{f}(n,P) + n) ) $, where $T_{f}(n,P)$ is the time required to calculate the fitness vector of a population.
+
+
+
+
+
+
+
+
+\subsection{Comparison to the Average Payoff (Brown-von Neumann-Nash Dynamics (BNN))}
+
+With a revision opportunity the $i\th$ agent selects a strategy at random and might switch to it if that strategy has a payoff above the average. The agent switch strategy with probability proportional to the excess payoff
+%
+\begin{equation}
+\rho_{ij}^p(\pi^p, x^p) = \left[ \pi_j^p - \frac{1}{m^p} \sum_{k\in S^p} x_k^p \pi_k^p \right]_+,
+\end{equation}
+
+This protocol leads to \emph{Brown-von Neumann-Nash dynamics}, defined as 
 \begin{equation}\label{eq:bnn}
- \dot{x}_i^p = \left[ \hat{F}_i^p \left( \bs{x} \right) \right]_+ - x_i^p  \sum_{\gamma \in S^p} \left[ \hat{F}_\gamma^p \left( \bs{x} \right) \right]_+
+ \dot{x}_i^p = \left[ \hat{F}_i^p \left( \bs{x} \right) \right]_+ - x_i^p  \sum_{j \in S^p} \left[ \hat{F}_j^p \left( \bs{x} \right) \right]_+.
 \end{equation}
 
-\subsection{Smith Dynamics}
+
+
+\subsubsection*{Algorithm}
+
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+
+ \Input{Society's state $x$}
+ \Output{State update $\dot{x}$}
+ \BlankLine
+ 
+ \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
+  $ F^p \leftarrow fitness(x, p)$\;
+  $ \bar{F}^p \leftarrow \frac{1}{m^p} (F^p)^\top x^p$\;
+  $ \hat{F}^p \leftarrow \max\{F^p - \boldsymbol{1} \bar{F}^p, \boldsymbol{0}\}$\;
+  $ \dot{x}^p \leftarrow \hat{F}^p - (\boldsymbol{1}^\top \hat{F}^p) \odot x^p \frac{1}{m^p} $\;
+ }
+\end{algorithm}
+%
+The running time is $T_{BNN}(n,P) = O( P (  T_{f}(n,p) + n) ) $.
+
+
+
+
+
+
+\subsection{Pairwise Comparison (Smith Dynamics)}
+
+With a revision opportunity the $i\th$ agent selects a strategy at random. If the opponent has a higher fitness, the the agent switch strategy with probability proportional to
+\begin{equation}
+\rho_{ij}(\pi, x) = \left[ \pi_j - \pi_i \right]_+
+\end{equation}
+This protocol leads to \emph{Smith dynamics} that are defined as 
+%
 \begin{multline} 
 \dot{x}_i^p  = \sum_{\gamma \in S^p} x_\gamma^p  \left[ F_i^p \left( \bs{x} \right) - F_\gamma^p \left( \bs{x} \right) \right]_+ 
-\\
+%%\\
 - x_i^p  \sum_{\gamma \in S^p} \left[ F_\gamma^p ( \bs{x}) - F_i^p( \bs{x} ) \right]_+.
 \label{eq:smith}
 \end{multline}
 
 
+\subsubsection*{Algorithm}
 
-These dynamics are defined in function of the excess payoff to strategy $i$ as $\hat{F}_i^p =  F_i^p(\bs{q}^i) - \bar{F}_i^p(\bs{q}^p)$,
-where $\bar{F}_i^p(\bs{q}^i)$ is the average payoff the population $p$.
-
-
+In this case we order the strategies in increasing order of fitness and then calculate the strategy's fitness difference (only the ones that are positive). This allow us to reduce the number of operations. The running time of this algorithm is $T_{smith}(n,p) = O(P(T_f(n, p)+n \log(n) ))$.
 
 
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+
+ \Input{Society's state $x$}
+ \Output{State update $\dot{x}$}
+ \BlankLine
+ \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
+  $ F^p \leftarrow fitness(x, p)$\;
+  $A \leftarrow$ Fitness functions ordered in ascending order\;
+  $B \leftarrow$ Strategies ordered in ascending order by their fitness  \;
+  
+  $A_{sum} \leftarrow \boldsymbol{1}^\top A$\;
+  $A_{avg} \leftarrow 0$\;
+  $x_{ord} \leftarrow x(B)\frac{1}{m^p} $\;
+  $x_{cum} \leftarrow 0$\;
+  
+  \For{ $i \leftarrow 1$ \KwTo $n^p$ }{
+    $k \leftarrow B(i)$\;
+    $A_{sum} \leftarrow A_{sum} - A(i)$\:
+   
+    
+    $\Gamma_a^p[k] \leftarrow A(i) x_{cum} - A_{avg}$\;
+    $\Gamma_b^p[k] \leftarrow A_{sum} - A(i) (n-i) $\;
+    
+    $A_{avg} \leftarrow A_{avg} + A(i) x_{ord}(i)$\;
+    $x_{cum} \leftarrow x_{cum} + x_{ord}(i)$\;
+ 
+  }
+  $ \dot{x}^p \leftarrow \Gamma_a^p - \Gamma_b^p \odot x^p \frac{1}{m^p}$\;
+ }
+\end{algorithm}
 
 
 
+
+
+\subsection{Logit Choice}
+
+With a revision opportunity the $i\th$ agent selects a strategy at random and change its strategy with a probability proportional to 
+
+\begin{equation}
+\rho_{ij}(\pi) = \frac{ \exp(\pi_j \eta^{-1} ) }{ \sum_{k \in S} \exp(\pi_k \eta^{-1} ) }
+\end{equation}
+
+This protocol belong to target dynamics and with a large population results in the following dynamics
+\begin{equation}\label{eq:logit}
+ \dot{x}_i^p = \frac{ \exp\left(\eta^{-1} F_i^p (\bs{x}) \right) }{ \sum_{\gamma \in S^p} \exp\left(\eta^{-1} F_\gamma^p (\bs{x}) \right) }, \, \, \eta>0,
+\end{equation}
+known ad \emph{Logit dynamics}. 
+
+
+
+\subsubsection*{Algorithm}
+
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+
+ \Input{Society's state $x$}
+ \Output{State update $\dot{x}$}
+ \BlankLine
+ 
+ \For{ $ p \leftarrow 1 $ \KwTo $P$ } {
+  $ F^p \leftarrow fitness(x, p)$\;
+  $ \bar{F}^p \leftarrow \frac{1}{m^p} (F^p)^\top x^p$\;
+  $ \tilde{F}^p \leftarrow \exp( F^p \eta^{-1} )$\;
+  $ \Gamma \leftarrow \boldsymbol{1}^\top \tilde{F}^p $\;
+  $ \dot{x}^p \leftarrow \frac{\tilde{F}^p}{\Gamma} - x^p $\;
+ }
+\end{algorithm}
+
+The running time is $T_{logit}(n,P) = O( P (  T_{f}(n,p) + n) ) $.
+
+
+
+\iffalse
 \subsection{Maynard Smith Replicator}
 
 \begin{equation}
 \dot{x}_i = \frac{ x_i F_i }{ \bar{F}(x) } - x_i
 \end{equation}
+\fi
 
 

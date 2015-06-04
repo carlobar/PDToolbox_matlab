@@ -22,8 +22,8 @@ x_dot_v = zeros(G.P* n, 1);
 
 for p = 1 : G.P
     F(p, :) = G.f(x, p);
-    F_(p, :) = exp( F(p, 1:G.S(p) ) / eta );
-    F_mean(p) = sum(F_(p,:));
+    F_(p, :) = exp( F(p, : ) / eta );
+    F_mean(p) = F_(p, :) * ones(n, 1);
 
 
 % calculate update in the strategy

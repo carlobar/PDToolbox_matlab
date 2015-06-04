@@ -17,7 +17,7 @@ for index=1:N
         %sum_q_i = sum(power(:,l)) - q_t;
         
         val = v_x(q_t,index,l);
-        F(index,l) = alpha_ef(index,l)/(1+q_t) - 2*beta_ef*(sum_q) ;            
+        %F(index,l) = alpha_ef(index,l)/(1+q_t) - 2*beta_ef*(sum_q) ;            
         %inc(index,l) = sum_q_i*( - price + h_i(sum_q_i) );
         
         U(index,l) = val - q_t*price;% + inc(index,l);

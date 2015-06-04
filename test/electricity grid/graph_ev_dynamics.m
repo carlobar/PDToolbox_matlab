@@ -15,10 +15,10 @@ plot(T,U_avg_s, 'k')
 plot(T, U_avg_bnn, 'r-.')
 
 
-title('Average Profit, Power Consumption of the Society')
+title('Society`s Surplus')
 ylim([min(U_avg_s)-lim_*.1 max(U_avg_s)+lim_*.2])
 xlim([T(1) T(end)])
-ylabel('Utility')
+ylabel('Social Surplus')
 xlabel('Time')
 
 
@@ -42,9 +42,9 @@ pa=plot(T,P_avg_s, 'k');
 pc = plot(T, P_avg_bnn, 'r-.');
 hold off
 
-%title('Average Consumption of the Population')
+title('Electricity Demand')
 ylim([min(P_avg_s)-lim_*.1 max(P_avg_s)+lim_*.2])
-ylabel('Power')
+ylabel('Power Comsumption')
 %h = legend( 'Logit Dynamics', 'Replicator Dynamics', 'Smith Dynamics', 'BNN Dynamics',1);
 %set(h,'Interpreter','none')
 xlabel('Time')
@@ -139,8 +139,8 @@ for i=2:length(T)
     int_replicator(i) = int_replicator(i-1) + I_avg_rd(i) * T_ * G.step;
     int_bnn(i) = int_bnn(i-1) + I_avg_bnn(i) * T_ * G.step;
     int_logit(i) = int_logit(i-1) + I_avg(i) * T_ * G.step;
-    int_avg(i) = (int_smith(i) + int_replicator(i) + int_bnn(i) + int_logit(i))/4;
-    %int_avg(i) = int_smith(i);
+    %int_avg(i) = (int_smith(i) + int_replicator(i) + int_bnn(i) + int_logit(i))/4;
+    int_avg(i) = int_smith(i);
 end
 
 

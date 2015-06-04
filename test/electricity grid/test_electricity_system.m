@@ -69,11 +69,11 @@ dyn = {'rd'};
 %gamma = [0, 1.0];
 gamma = [1, 0];
 % simulation parameters
-time = 30;
+time = 20;
 
-pot_r = ones(N,T_+1)*mp/(T_+1);
-zz = pot_r'/mp;
-x0 = zz(:);
+pot_r = ones(N,T_+1)/(T_+1);
+x0 = pot_r';
+%x0 = zz(:);
 %x0 = pot_r/mp;
 %pause
 
@@ -119,7 +119,7 @@ U = utility(x);
 figure(3); plot(1:1:24, U(:, 1:24))
 figure(4); plot(1:1:24, x(:, 1:24))
 
-pause
+%pause
 
 G.dynamics = {'bnn'};
 G.run()
@@ -134,7 +134,18 @@ G.run()
 T_smith = G.T;
 X_smith = G.X;
 
+% extract matrix of strategies
+%n = max(G.S);
+x_n = vec2mat(X_dyn(end, :), n);
+x = zeros(G.P, n);
 
+for p = 1 : G.P
+    x(p, :) = x_n(p, :) * G.m(p);
+end
+
+U = utility(x);
+
+%pause
 
 G.dynamics = {'logit'};
 G.run()

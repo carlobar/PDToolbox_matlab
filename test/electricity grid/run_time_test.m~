@@ -1,0 +1,114 @@
+% example of a game with one population, three strategies per population, and combined dynamics.
+
+% population games tool box
+clear
+
+global G
+
+
+global beta_ef alpha_ef time_on time_off mp N T_ hybrid
+
+
+
+pop = 2:10:1000;
+run_time=zeros(17, 4);
+run_time_std=zeros(17, 4);
+run_time_complete=zeros(100, 4, 17);
+
+fib = zeros(17, 1);
+fib(1) = 0;
+fib(2) = 1;
+fib(3) = 1;
+
+for it = 3 : 17
+
+fib(it+1) =  fib(it-1) + fib(it);
+
+N = fib(it+1)
+
+
+for rep = 1:10
+
+
+% Definition of the electricity variables
+Dt = 15*[51.8743   50.0011   48.6104    48.6384    51.1276    58.7756 ...
+    61.0654   65.0167   69.6593    71.6363    75.3904    76.2807 ...
+    73.4635   73.3627   74.6492    75.1194    74.8689    74.1951 ...
+    78.2569   85.8935   83.5392    77.9073    68.6800   60.5177];
+pt = Dt./max(Dt)*8;
+
+T_ = length(Dt);
+
+alpha_ef = zeros(N,T_);
+% valuation parameters of all agents
+for i=1:N
+    alpha_ef(i,:) = pt(1:T_)*(1+.5*i/N) + 0. *rand(1,T_);
+end
+
+% parametros de la func. de costo agregado
+beta_ef = 1;
+
+% Time of the activation of either incentives or attacks
+time_on = 2;
+time_off = 4;
+
+% number of populations
+P = N;
+
+% number of pure strategies per population
+n = 25;
+
+mp = 30;
+m = ones(P, 1) * mp;
+
+time = 10;
+
+pot_r = ones(N,T_+1)/(T_+1);
+x0 = pot_r';
+
+% structure with the parameters of the game
+% G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode113', 'time', time, 'step', 0.00001, 'x0', x0, 'm', m);
+
+% random initial condition
+G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode113s', 'time', time, 'step', 0.00001);
+
+% verify data of the game
+G = definition(G);
+
+G.step = .01;
+
+G.eta = .02;
+
+tic 
+    G.dynamics = {'rd'};
+    G.run()
+t_rd = toc;
+
+tic 
+    G.dynamics = {'bnn'};
+    G.run()
+t_bnn = toc;
+
+tic 
+    G.dynamics = {'smith'};
+    G.run()
+t_smith = toc;
+
+tic 
+    G.dynamics = {'logit'};
+    G.run()
+t_logit = toc;
+
+
+
+run_time_complete(rep, :, it) = [t_rd t_bnn t_smith t_logit];
+
+end
+
+run_time (it, :) = mean( run_time_complete(;, :, it) );
+run_time_std (it, :) = std( run_time_complete(;, :, it) );
+
+end
+
+
+plot_running_time

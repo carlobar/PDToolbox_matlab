@@ -7,15 +7,29 @@
 \begin{center}
 \begin{tabular}{l | p{.55 \textwidth} | l}\hline
 Field & Description & Default value\\ \hline
-P & Number of populations & 1 \\
-n & Number of pure strategies per population & - \\
-S & Vector of pure strategies in each population & ones(G.P, 1) * G.n \\
-m & Vector with the mass of each population & ones(G.P, 1) \\
-x0 & Initial state of the society & random \\
-f & Function that returns a vector with the fitness of each strategy of a population & - \\
+$P\in\mathbb{Z}$ & Number of populations & 1 \\
+$n\in\mathbb{Z}$ & Maximum number of pure strategies per population. & - \\
+$S\in\mathbb{Z}^{P}$ & Vector of pure strategies in each population, such that $1<S(i)\leq n$. & ones(G.P, 1) * G.n \\
+$m\in\mathbb{R}^P$ & Vector with the mass of each population. & ones(G.P, 1) \\
+$x0\in\mathbb{R}^{P\times n}$ & Initial state of the society (normalized). & random \\
+f & Function that returns a vector with the fitness of each strategy of a population. & - \\ \hline
+\end{tabular}
+\end{center}
+\caption{Parameters of the game.}
+\label{tab:game}
+\end{table}
+
+
+
+\begin{table}[tbh]
+\begin{center}
+\begin{tabular}{l | p{.55 \textwidth} | l}\hline
+Field & Description & Default value\\ \hline
 ode & ODE solver for the evolutionary dynamics & `ode45' \\
 dynamics & Evolutionary dynamic. Current version support combinations of {`rd', `maynard\_rd',  `bnn', `smith',  `logit'} & `rd' \\
-gamma & Defines the weight given to each dynamic when using combined dynamics &  $\sum \gamma(i) = 1$ \\ \hline
+gamma & Defines the weight given to each dynamic when using combined dynamics &  $\sum \gamma(i) = 1$ \\
+step & Simulations are made using the time spam: step:step:time+step & $0.01$ \\
+\hline
 \end{tabular}
 \end{center}
 \caption{Parameters of the dynamical implementation.}
@@ -29,9 +43,10 @@ gamma & Defines the weight given to each dynamic when using combined dynamics & 
 \begin{center}
 \begin{tabular}{l| p{.5 \textwidth} |l}\hline
 Field & Description & Default value \\ \hline
-N & Number of agents & 100 \\
-R & Rate of the Poisson clock & 1 \\
-revision\_protocol & Revision protocol. The current version support one of the following: comparison2average, pairwise\_comparison, logit\_choice, proportional\_imitation. & 'proportional\_imitation' \\ \hline
+$N\in\mathbb{Z}$ & Number of agents & 100 \\
+$R\in\mathbb{R}$ & Rate of the Poisson clock & 1 \\
+time & Run time of the simulation (number of iterations in the discrete case). & 30 \\
+revision\_protocol & Revision protocol. The current version support one of the following: `comparison2average', `pairwise\_comparison', `logit\_choice', `proportional\_imitation'. & `proportional\_imitation' \\ \hline
 \end{tabular}
 \end{center}
 \caption{Parameters of the revision protocol.}
@@ -41,10 +56,10 @@ revision\_protocol & Revision protocol. The current version support one of the f
 
 
 
-The toolbox uses a structure that contains all the parameters required to run the simulations. The parameters of a population game are defined in Table \ref{tab:req_a}. The following is an example to define a game with one population and three strategies per population:
+The toolbox uses a structure that contains all the parameters required to run the simulations. The parameters of a population game are defined in Table \ref{tab:game}. On the other hand, the parameters to run simulations with large or small number of agents are specified in Tables \ref{tab:req_a} and \ref{tab:req_b}, respectively.  In this case the behavior of a population with large and small number of agents is simulated using differential equations and revision protocols, respectively. The following is an example to define a game with one population and three strategies per population:
 %
 \begin{lstlisting}
-G = struct('n', 3, 'f', @fitness1, 'dynamics', {rd} ,  'ode', 'ode113', 'x0',  [0.2 .7 0.1 ]', 'time', 60);
+G = struct('n', 3, 'f', @fitness1, 'dynamics', {rd},  'ode', 'ode113', 'x0',  [0.2 .7 0.1]', 'time', 60);
 \end{lstlisting}
 %
 $n$ defines the number of strategies per population, $f$ is a function handler that calculates the fitness of the strategies in each population, and $dynamics$ defines the name of the evolutionary dynamics that we want to use. The simulations are run using the ordinal differential equation (ODE) solver called $ode113$, with initial condition $x0 = [0.2, \, 0.7, \, 0.1 ]^\top$ during $60$ time units.
@@ -60,7 +75,7 @@ Note that the number of populations and the mass of each population are defined 
 On the other hand, the following structure is used to define a population game with small number of agents per population:
 %
 \begin{lstlisting}
-G = struct('N', 200, 'n', 3, 'f', @fitness1, 'x0',  [0.2 .7 0.1 ]', 'ode', 'ode113', 'time', 10000, 'eta', 0.02, 'revision_protocol', @proportional_imitation); 
+G = struct('N', 200, 'n', 3, 'f', @fitness1, 'x0',  [0.2 .7 0.1]', 'ode', 'ode113', 'time', 10000, 'eta', 0.02, 'revision_protocol', @proportional_imitation); 
 \end{lstlisting}
 %
 The finite population case uses the same parameters than the dynamical implementation, except for the dynamical model. However, it is necessary to define the revision protocol  and the number of agents $N$ per population.
