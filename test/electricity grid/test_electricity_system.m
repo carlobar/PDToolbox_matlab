@@ -1,24 +1,16 @@
 % example of a game with one population, three strategies per population, and combined dynamics.
 
-path(path, '../../revision_protocols')
-path(path, '../../graphs')
-path(path, '../../dynamics')
-path(path, '../../')
-
-
 % TODO:
 % review how are the transitions between dynamics
 % review why rd and logit are so similar in aggregated evolution, but
 % differents in incentives
 
-
 % population games tool box
 clear
 
-global G
+global G beta_ef alpha_ef time_on time_off mp N T_ hybrid b q_min
 
-
-global beta_ef alpha_ef time_on time_off mp N T_ hybrid
+q_min=0;
 
 N = 5;
 
@@ -29,122 +21,84 @@ Dt = 15*[51.8743   50.0011   48.6104    48.6384    51.1276    58.7756 ...
     78.2569   85.8935   83.5392    77.9073    68.6800   60.5177];
 pt = Dt./max(Dt)*8;
 
+% number of strategies
 T_ = length(Dt);
 
-alpha_ef = zeros(N,T_);
 % valuation parameters of all agents
+alpha_ef = zeros(N,T_);
 for i=1:N
-    alpha_ef(i,:) = pt(1:T_)*(1+.5*i/N) + 0. *rand(1,T_);
+    alpha_ef(i,:) = pt(1:T_)*(1+.5*i/N*0) + 0. *rand(1,T_);
 end
 
 % parametros de la func. de costo agregado
 beta_ef = 1;
+b = 0;
 
 % Time of the activation of either incentives or attacks
 time_on = 2;
 time_off = 4;
 
 
-
-
-
-
-
-
-
 % number of populations
-P = 5;
+P =N;
 
 % number of pure strategies per population
 n = 25;
 
-mp = 30;
+% mass of the populations
+mp = 25;
 m = ones(P, 1) * mp;
-%x0 = [0.1 0.9;  0.2 0.8]'; 
-%x0 = [.2 .6 .2];
 
-dyn = {'rd'};
-%dyn = {'smith', 'logit'};
-%gamma = [.5, .5];
-%gamma = [0, 1.0];
-gamma = [1, 0];
 % simulation parameters
-time = 20;
+time = 60;
 
-pot_r = ones(N,T_+1)/(T_+1);
-x0 = pot_r';
-%x0 = zz(:);
-%x0 = pot_r/mp;
-%pause
+% initial condition
+pot = ones(N,T_+1)/(T_+1);
+x0 = pot';
 
 % structure with the parameters of the game
-G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode113', 'time', time, 'step', 0.00001, 'x0', x0, 'm', m);
+%G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode113', 'time', time, 'tol', 0.00001, 'x0', x0, 'm', m);
 
 % random initial condition
-%G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode23s', 'time', time, 'step', 0.00001);
+G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode45', 'time', time, 'tol', 0.000001, 'm', m);
 
 % verify data of the game
 G = definition(G);
 
-
 G.step = .01;
-
 G.eta = .02;
+
 % run different dynamics
 G.dynamics = {'rd'};
-%G.dynamics = {'rd', 'bnn', 'smith', 'logit'};
-%G.gamma = []
 G.run()
 T_rd = G.T;
 X_rd = G.X;
-%size(T_rd)
 
 
-X_dyn = G.X;
-
-% extract matrix of strategies
-%n = max(G.S);
-x_n = vec2mat(X_dyn(end, :), n);
-x = zeros(G.P, n);
-
-for p = 1 : G.P
-    x(p, :) = x_n(p, :) * G.m(p);
-end
-
-U = utility(x);
-
-
-
-
-figure(3); plot(1:1:24, U(:, 1:24))
-figure(4); plot(1:1:24, x(:, 1:24))
-
-%pause
 
 G.dynamics = {'bnn'};
 G.run()
 T_bnn = G.T;
 X_bnn = G.X;
 
-%T_rd = T_bnn;
-%X_rd = X_bnn;
 
 G.dynamics = {'smith'};
 G.run()
 T_smith = G.T;
 X_smith = G.X;
 
-% extract matrix of strategies
-%n = max(G.S);
-x_n = vec2mat(X_dyn(end, :), n);
-x = zeros(G.P, n);
 
-for p = 1 : G.P
-    x(p, :) = x_n(p, :) * G.m(p);
-end
-
-U = utility(x);
-
+% % extract matrix of strategies
+% %n = max(G.S);
+% x_n = vec2mat(X_dyn(end, :), n);
+% x = zeros(G.P, n);
+% 
+% for p = 1 : G.P
+%     x(p, :) = x_n(p, :) * G.m(p);
+% end
+% 
+% U = utility(x);
+% 
 %pause
 
 G.dynamics = {'logit'};
@@ -152,15 +106,28 @@ G.run()
 T_logit = G.T;
 X_logit = G.X;
 
-%pause
+
+
+% extract matrix of strategies
+x_n = vec2mat(G.X(end, :), n);
+x = zeros(G.P, n);
+for p = 1 : G.P
+    x(p, :) = x_n(p, :) * G.m(p);
+end
+U = utility(x);
+
+figure(3); plot(1:1:24, U(:, 1:24))
+figure(4); plot(1:1:24, x(:, 1:24))
+
+
+
+
+
+%if min(X_logit == )
+
+%min(X_logit)
+
 graph_incentives_evolution
-
-%G.dynamics = dyn;
-%G.gamma = gamma;
-
-%G.graph()
 G.graph_state()
-%G.graph_evolution()
-%pause
 
-
+%sum(G.x0(1:24, :))

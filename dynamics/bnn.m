@@ -1,6 +1,6 @@
 function dz = bnn(t,z)
 
-global G
+global G norm_dx
 
 
 
@@ -21,9 +21,15 @@ F_gamma = zeros(G.P, 1);
 
 x_dot_v = zeros(G.P* n, 1);
 
+if G.pop_wise == 0
+	F(:, :) = G.f(x);
+else
+	for p = 1 : G.P
+   		F(p, :) = G.f(x, p);
+	end
+end
 
 for p = 1 : G.P
-    F(p, :) = G.f(x, p);
     F_mean(p) = F(p, :) * x_n(p, :)';
 
     F_excess(p,:) = max( F(p, :) - F_mean(p), 0 );
@@ -34,5 +40,6 @@ for p = 1 : G.P
 end
 
 dz = [x_dot_v];
-
-
+if G.stop_c == true
+    norm_dx = norm(dz);
+end

@@ -82,7 +82,7 @@ hold off
 %ylim([min(I_avg_s)-lim_*.1 max(I_avg_s)+lim_*.1])
 ylabel('Incentives')
 xlabel('Time')
-h = legend( 'Logit Dynamics', 'Replicator Dynamics', 'Smith Dynamics', 'BNN Dynamics',2);
+h = legend( 'Logit Dynamics', 'Replicator Dynamics', 'Smith Dynamics', 'BNN Dynamics',1);
 set(h,'Interpreter','none')
 title('Average Incentives of the Society')
 %set(h, 'FontSize', 20)
@@ -139,8 +139,8 @@ for i=2:length(T)
     int_replicator(i) = int_replicator(i-1) + I_avg_rd(i) * T_ * G.step;
     int_bnn(i) = int_bnn(i-1) + I_avg_bnn(i) * T_ * G.step;
     int_logit(i) = int_logit(i-1) + I_avg(i) * T_ * G.step;
-    %int_avg(i) = (int_smith(i) + int_replicator(i) + int_bnn(i) + int_logit(i))/4;
-    int_avg(i) = int_smith(i);
+    int_avg(i) = (int_smith(i) + int_replicator(i) + int_bnn(i) + int_logit(i))/4;
+    %int_avg(i) = int_smith(i);
 end
 
 

@@ -1,6 +1,7 @@
-%function z = graph_final_state()
+function graph_final_state(name)
 
-%global G
+% load the structure of the game that calls the function
+G = evalin('base', name);
 
 cc=hsv(G.P);
 n = max(G.S);

@@ -1,3 +1,7 @@
+function graph_simplex(name)
+
+% load the structure of the game that calls the function
+G = evalin('base', name);
 
 figure(1)
 clf

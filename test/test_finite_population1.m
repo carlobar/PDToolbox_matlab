@@ -1,15 +1,6 @@
 % test finite population
 
-path(path, '../revision_protocols')
-path(path, '../graphs')
-path(path, '../dynamics')
-path(path, '../')
-
-% run game with a finite population
-% population games tool box
 clear
-
-global G
 
 % number of populations
 P = 1;
@@ -27,7 +18,7 @@ m = 1;
 x0 = [0.2 .7 0.1]'; 
 
 % simulation parameters
-iterations = 100000;
+iterations = 10000;
 
 
 % structure with the parameters of the game
@@ -39,34 +30,34 @@ G.R = 1;
 G = definition(G);
 
 
-% G.revision_protocol = @proportional_imitation;
-% G.run_finite();
-% G.graph()
-% G.graph_evolution()
-% graph_utility
-% 
-% disp (['Press any key to continue... ', sprintf('\n') ] );
-% pause
-% 
-% 
-% G.revision_protocol = @comparison2average;
-% G.run_finite();
-% G.graph()
-% G.graph_evolution()
-% graph_utility
-% 
-% disp (['Press any key to continue...', sprintf('\n') ]);
-% pause
-% 
-% 
-% G.revision_protocol = @pairwise_comparison;
-% G.run_finite();
-% G.graph()
-% G.graph_evolution()
-% graph_utility
-% 
-% disp (['Press any key to continue...', sprintf('\n') ]);
-% pause
+G.revision_protocol = @proportional_imitation;
+G.run_finite();
+G.graph()
+G.graph_evolution()
+graph_utility
+
+disp (['Press any key to continue... ', sprintf('\n') ] );
+pause
+
+
+G.revision_protocol = @comparison2average;
+G.run_finite();
+G.graph()
+G.graph_evolution()
+graph_utility
+
+disp (['Press any key to continue...', sprintf('\n') ]);
+pause
+
+
+G.revision_protocol = @pairwise_comparison;
+G.run_finite();
+G.graph()
+G.graph_evolution()
+graph_utility
+
+disp (['Press any key to continue...', sprintf('\n') ]);
+pause
 
 
 G.eta = 0.02;
