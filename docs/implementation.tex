@@ -5,14 +5,16 @@
 
 \begin{table}[tbh]
 \begin{center}
-\begin{tabular}{l | p{.55 \textwidth} | l}\hline
+\begin{tabular}{p{.2 \textwidth} | p{.6 \textwidth} | p{.2 \textwidth}}\hline
 Field & Description & Default value\\ \hline
-$P\in\mathbb{Z}$ & Number of populations & 1 \\
+$P\in\mathbb{Z}$ & Number of populations. & 1 \\
 $n\in\mathbb{Z}$ & Maximum number of pure strategies per population. & - \\
 $S\in\mathbb{Z}^{P}$ & Vector of pure strategies in each population, such that $1<S(i)\leq n$. & ones(G.P, 1) * G.n \\
 $m\in\mathbb{R}^P$ & Vector with the mass of each population. & ones(G.P, 1) \\
 $x0\in\mathbb{R}^{P\times n}$ & Initial state of the society (normalized). & random \\
-f & Function that returns a vector with the fitness of each strategy of a population. & - \\ \hline
+$f:\mathbb{R}^{P\times n} \rightarrow \mathbb{R}^{1\times n}$ or $f:\mathbb{R}^{P\times n} \rightarrow \mathbb{R}^{P\times n}$ & Function that returns the fitness the population's strategies. It might return a vector with the fitness of a single population or the fitness of the whole society. & - \\ 
+pop\_wise & If true, the fitness function $f$ returns the fitness of a single population. Otherwise, $f$ returns the fitness of the whole society. & True \\
+\hline
 \end{tabular}
 \end{center}
 \caption{Parameters of the game.}
@@ -23,12 +25,16 @@ f & Function that returns a vector with the fitness of each strategy of a popula
 
 \begin{table}[tbh]
 \begin{center}
-\begin{tabular}{l | p{.55 \textwidth} | l}\hline
+\begin{tabular}{p{.2 \textwidth} | p{.6 \textwidth} | p{.2 \textwidth}}\hline
 Field & Description & Default value\\ \hline
-ode & ODE solver for the evolutionary dynamics & `ode45' \\
-dynamics & Evolutionary dynamic. Current version support combinations of {`rd', `maynard\_rd',  `bnn', `smith',  `logit'} & `rd' \\
-gamma & Defines the weight given to each dynamic when using combined dynamics &  $\sum \gamma(i) = 1$ \\
-step & Simulations are made using the time spam: step:step:time+step & $0.01$ \\
+ode & ODE solver for the evolutionary dynamics. & `ode45' \\
+dynamics & Evolutionary dynamic. Current version support combinations of {`rd', `maynard\_rd',  `bnn', `smith',  `logit'}. & `rd' \\
+gamma & Defines the weight given to each dynamic when using combined dynamics. &  $\sum \gamma(i) = 1$ \\
+step & Simulations are made using the time spam: step:step:time+step. & $0.01$ \\
+tol & Defines the error tolerance of the ODE solver, namely, RelTol and AbsTol. If it is not defined, then RelTol and AbsTol can be assigned independently. &  RelTol=AbsTol=$10^{-4}$\\
+stop\_c  & Enables the interruption of the simulations if the norm of the state's change is less than the parameter c\_error. & False \\
+c\_error &  Convergence error used to stop the simulations. & $10^{-5}$ \\
+verb & Allows the display of information, such as the dynamics used and the time spent running the game. & True \\
 \hline
 \end{tabular}
 \end{center}
@@ -41,7 +47,7 @@ step & Simulations are made using the time spam: step:step:time+step & $0.01$ \\
 
 \begin{table}[tbh]
 \begin{center}
-\begin{tabular}{l| p{.5 \textwidth} |l}\hline
+\begin{tabular}{p{.2 \textwidth} | p{.6 \textwidth} | p{.2 \textwidth}}\hline
 Field & Description & Default value \\ \hline
 $N\in\mathbb{Z}$ & Number of agents & 100 \\
 $R\in\mathbb{R}$ & Rate of the Poisson clock & 1 \\

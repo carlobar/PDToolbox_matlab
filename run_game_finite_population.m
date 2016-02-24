@@ -1,7 +1,17 @@
+function run_game_finite_population(name)
+
+global G
+
+% load the structure of the game that calls the function
+G = evalin('base', name);
+
 % set initial strategy of each agent to satisfy the initial condition
 protocol = func2str(G.revision_protocol);
-disp (['Running the ', protocol, ' revision protocol']);
-tic
+
+if G.verb == true
+    disp (['Running the ', protocol, ' revision protocol']);
+    tic
+end
 
 s = zeros(G.N, G.P);
 
@@ -20,7 +30,6 @@ end
 if h ~= G.N
 	s(h + 1: G.N ) = unidrnd(G.S(1), 1, G.N - h);
 end
-
 
 % set the number of iterations
 t_max = floor(G.time);
@@ -66,9 +75,17 @@ for t = 1: t_max
 
 end
 
-toc
 
-disp([' '])
+if G.verb == true
+    toc
+    disp([' '])
+end
+
 
 G.X = X;
 G.T = T;
+
+
+% save changes on the structure in the workspace
+assignin('base', name, G);
+clear G

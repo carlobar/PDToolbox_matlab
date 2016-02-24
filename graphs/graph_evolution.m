@@ -1,3 +1,9 @@
+function graph_evolution(name)
+
+% load the structure of the game that calls the function
+G = evalin('base', name);
+
+
 cc=hsv(max(G.S));
 n = max(G.S);
 
@@ -13,7 +19,7 @@ for p = 1 : G.P
 	labels(s) = cellstr([num2str(s), '-th strategy']);
     end
     ylim([0 1])
-    xlim([0 G.time])
+    xlim([0 G.T(end)])
     hold off
 
     title_i = ['Evolution of the ', num2str(p), '-th Population'];

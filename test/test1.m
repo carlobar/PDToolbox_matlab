@@ -1,14 +1,6 @@
 % example of a game with one population and three strategies per population.
 
-path(path, '../revision_protocols')
-path(path, '../graphs')
-path(path, '../dynamics')
-path(path, '../')
-
-% population games tool box
 clear
-
-global G
 
 % number of populations
 P = 1;
@@ -26,61 +18,50 @@ x0 = [0.2 .7 0.1 ]';
 time = 30;
 
 % structure with the parameters of the game
-G = struct('n', n, 'f', @fitness1, 'x0', x0, 'ode', 'ode113', 'time', time);
+G1 = struct('n', n, 'f', @fitness1, 'x0', x0, 'ode', 'ode113', 'time', time,  'tol', 0.000001, 'step', .01);
 
 % verify data of the game
-G = definition(G);
-%G_ = definition(G);
+G1 = definition(G1);
 
 
-G.dynamics = {'rd'};
-G.run()
-G.graph()
-G.graph_evolution()
-
-disp (['Press any key to continue...', sprintf('\n') ]);
-pause
-
-
-
-G.dynamics = {'maynard_rd'};
-G.ode = 'ode23s';
-G.run()
-G.graph()
-G.graph_evolution()
+G1.dynamics = {'rd'};
+G1.run()
+G1.graph()
+G1.graph_evolution()
 
 disp (['Press any key to continue...', sprintf('\n') ]);
 pause
 
 
-G.ode = 'ode113';
-G.dynamics = {'bnn'};
-G.run()
-G.graph()
-G.graph_evolution()
+G1.dynamics = {'maynard_rd'};
+G1.run()
+G1.graph()
+G1.graph_evolution()
 
 disp (['Press any key to continue...', sprintf('\n') ]);
 pause
 
 
-
-G.dynamics = {'smith'};
-G.run()
-G.graph()
-G.graph_evolution()
+G1.dynamics = {'bnn'};
+G1.run()
+G1.graph()
+G1.graph_evolution()
 
 disp (['Press any key to continue...', sprintf('\n') ]);
 pause
 
 
+G1.dynamics = {'smith'};
+G1.run()
+G1.graph()
+G1.graph_evolution()
 
-G.dynamics = {'logit'};
-G.eta = .02;
-G.run()
-G.graph()
-G.graph_evolution()
-
-
-
+disp (['Press any key to continue...', sprintf('\n') ]);
+pause
 
 
+G1.dynamics = {'logit'};
+G1.eta = .02;
+G1.run()
+G1.graph()
+G1.graph_evolution()

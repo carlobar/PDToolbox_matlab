@@ -1,9 +1,6 @@
 % example of a maximization problem.
 
-% population games tool box
 clear
-
-global G
 
 % number of populations
 P = 1;
@@ -18,12 +15,12 @@ m = [10; 10];
 x0 = [0.1 .8 0.1 ]'; 
 
 % simulation parameters
-time = .4;
+time = 20;
 
 fitness_f = @(x,p) - [2*(x(1) - 5); 2*(x(2) - 5); 0];
 
 % structure with the parameters of the game
-G = struct('P', P, 'n', n, 'm', m, 'f', fitness_f, 'x0', x0, 'ode', 'ode113', 'time', time);
+G = struct('P', P, 'n', n, 'm', m, 'f', fitness_f, 'x0', x0, 'ode', 'ode113', 'time', time, 'stop_c', true);
 
 % verify data of the game
 G = definition(G);

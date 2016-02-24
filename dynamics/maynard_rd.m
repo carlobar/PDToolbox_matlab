@@ -1,6 +1,6 @@
 function dz = maynard_rd(t, z)
 
-global G
+global G norm_dx
 
 n = max(G.S); 
 
@@ -16,9 +16,15 @@ for p = 1 : G.P
     x(p, :) = x_n(p, :) * G.m(p);
 end
 
+if G.pop_wise == 0
+	F(:, :) = G.f(x);
+else
+	for p = 1 : G.P
+   		F(p, :) = G.f(x, p);
+	end
+end
 
 for p = 1 : G.P
-    F(p, :) = G.f(x, p);
     F_mean(p) = F(p, :) * x_n(p, :)';
 
     % calculate update in the strategy
@@ -27,5 +33,6 @@ for p = 1 : G.P
 end
 
 dz = [x_dot_v];
-
-
+if G.stop_c == true
+    norm_dx = norm(dz);
+end
