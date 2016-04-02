@@ -100,6 +100,9 @@ if isfield(G, 'stop_c') == 0
 else
 	if isfield(G, 'c_error') == 0
 		c_error = 1e-5;
+		G.c_error = c_error;
+    	else
+        	c_error = G.c_error;
 	end
 end
 
