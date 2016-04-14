@@ -56,7 +56,7 @@ G.T = T;
 G.X = X;
 
 if any( isnan( X(:) ) )
-    warning("The solution of the game has NaN values. ")
+    warning('The solution of the game has NaN values.')
 end 
 
 % save changes on the structure in the workspace

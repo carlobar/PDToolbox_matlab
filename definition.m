@@ -172,5 +172,7 @@ G.graph = @() graph_simplex(G.name);
 G.graph2p = @() graph_multi_pop(G.name);
 G.graph_evolution = @() graph_evolution(G.name);
 
+% define a function that returns the matrix of the state at time T
+G.state = @(T) strategy(G.name, T);
 
     
