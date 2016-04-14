@@ -1,5 +1,24 @@
-% funcion para simular la ecuacion diferencial
 function dz = smith(t,z)
+% SMITH Computes the differential equation that describes the update of the
+%       populations' state following the Smith dynamics
+% 
+% SYNOPSIS: DZ = SMITH(T, Z)
+% 
+% INPUT T: Time. Although the dynamics are time invariant, this parameter 
+%          might be used to calculate the fitness function
+%       Z: Vector of the populations' state
+% 
+% OUTPUT DZ: Vector with the value of the differential equation given T and Z
+% 
+% REMARKS Its better to execute first <a href="matlab: help definition">definition</a> and run the game using
+%         G.run(). This function uses the global variables 'G' and 'norm_dx'
+%         to define the game
+%
+% SEE ALSO definition, bnn, logit, rd, maynard_rd, smith_b, stopevent, combined_dynamics
+%
+% For more information see: <a href="https://github.com/carlobar/PDToolbox_matlab/">the GitHub's repository.</a>
+% 
+% Carlos Barreto, 04-11-16 
 
 global G norm_dx
 
@@ -26,8 +45,6 @@ else
    		F(p, :) = G.f(x, p);
 	end
 end
-
-
 
 for p = 1 : G.P
     A = ones(n,1)*F(p,:);

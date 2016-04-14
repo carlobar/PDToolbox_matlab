@@ -1,7 +1,19 @@
-% graph the state space evolution of a population game with 
-% two populations and two strategies
-
 function graph_multi_pop(name)
+% GRAPH_MULTI_POP Plots the evolution of games with two populations and two
+%                 strategies per population
+% 
+% SYNOPSIS: GRAPH_MULTI_POP(name)
+% 
+% INPUT name: Name of the structure that represents the game
+% 
+% REMARKS Its better to execute first <a href="matlab: help definition">definition</a> and plot the evolution of
+%         strategies running G.graph()
+%
+% SEE ALSO definition, run_game, graph_evolution, graph_simplex
+%
+% For more information see: <a href="https://github.com/carlobar/PDToolbox_matlab/">the GitHub's repository.</a>
+% 
+% Carlos Barreto, 04-11-16 
 
 % load the structure of the game that calls the function
 G = evalin('base', name);

@@ -12,12 +12,13 @@ n = 3;
 m = [10; 10];
 
 % initial condition
-x0 = [0.1 .8 0.1 ]'; 
+x0 = [0.1 0.8 0.1 ]'; 
 
 % simulation parameters
 time = 20;
 
-fitness_f = @(x,p) - [2*(x(1) - 5); 2*(x(2) - 5); 0];
+% fitness fucntion (not dependent on the population p)
+fitness_f = @(x, p) - [2*(x(1) - 5); 2*(x(2) - 5); 0];
 
 % structure with the parameters of the game
 G = struct('P', P, 'n', n, 'm', m, 'f', fitness_f, 'x0', x0, 'ode', 'ode113', 'time', time, 'stop_c', true);
@@ -31,11 +32,10 @@ G.graph()
 G.graph_evolution()
 
 
-% plot the evolution of the strategies
 % objective function
 f = @(x) -((x(1) - 5)^2 + (x(2) - 5)^2);
 
-% 
+% plot the evolution of the strategies 
 z = 0:0.1:10;
 M = zeros(length(z), length(z));
 for i=1:length(z)
@@ -50,8 +50,6 @@ contour(z,z,M)
 hold on
 plot(5,5,'ok')
 plot(G.X(:,1)*m(1), G.X(:,2)*m(2), 'k')
-
-
 
 
 

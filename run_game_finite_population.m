@@ -1,4 +1,21 @@
 function run_game_finite_population(name)
+% RUN_GAME_FINITE_POPULATION Solves the difference equation of a populaiton game  
+% 
+% SYNOPSIS: RUN_GAME_FINITE_POPULATION(name)
+% 
+% INPUT name: Name of the structure that represents the game
+% 
+% The solution of the game, namely the evolution of strategies X in time,
+% are attached to the game's structure 
+% 
+% REMARKS Its better to execute first <a href="matlab: help definition">definition</a> and run the game using G.run_finite(). 
+%         This function uses the global variable 'G' to define the game
+%
+% SEE ALSO add_path, definition, run_game
+%
+% For more information see: <a href="https://github.com/carlobar/PDToolbox_matlab/">the GitHub's repository.</a>
+% 
+% Carlos Barreto, 04-11-16 
 
 global G
 
@@ -15,7 +32,7 @@ end
 
 s = zeros(G.N, G.P);
 
-% calculate the intial strategy of each user given the proportions in x0
+% calculate the initial strategy of each user given the proportions in x0
 h = 0;
 for i = 1: max(G.S(1))
 	p = floor(G.N * G.x0(i, 1));
@@ -57,14 +74,6 @@ for t = 1: t_max
         i = update_agents(k);
         s_update = s;
         s_update(i) = G.revision_protocol(F, x, s, i, 1);
-
-        % update society state
-
-%         s = s_update;
-%         x = state(s);        
-%         F = G.f(x, 1);        
-        
-        
        
     end
     

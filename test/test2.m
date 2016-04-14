@@ -8,9 +8,11 @@ P = 2;
 % number of pure strategies per population
 n = 2;
 
+% mass of the population
 m = 1;
-x0 = [0.1 0.9;  0.2 0.8]'; 
 
+% initial condition
+x0 = [0.1 0.9;  0.2 0.8]'; 
 
 % simulation parameters
 time = 30;
@@ -24,9 +26,6 @@ G1 = struct('P', P, 'n', n, 'f', @fitness2, 'x0', x0, 'ode', 'ode45', 'time', ti
 % verify data of the game
 G1 = definition(G1);
 
-
-
-
 G1.dynamics = {'rd'};
 G1.run()
 G1.graph2p()
@@ -34,8 +33,6 @@ G1.graph_evolution()
 
 disp (['Press any key to continue...', sprintf('\n') ]);
 pause
-
-
 
 
 G1.dynamics = {'maynard_rd'};
@@ -47,7 +44,6 @@ disp (['Press any key to continue...', sprintf('\n') ]);
 pause
 
 
-
 G1.dynamics = {'bnn'};
 G1.run()
 G1.graph2p()
@@ -57,7 +53,6 @@ disp (['Press any key to continue...', sprintf('\n') ]);
 pause
 
 
-
 G1.dynamics = {'smith'};
 G1.run()
 G1.graph2p()
@@ -65,7 +60,6 @@ G1.graph_evolution()
 
 disp (['Press any key to continue...', sprintf('\n') ]);
 pause
-
 
 
 G1.dynamics = {'logit'};

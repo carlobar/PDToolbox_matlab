@@ -1,6 +1,27 @@
-% check if parameters where defined. If not defined, then assign default
-% values.
 function G = definition(G)
+% DEFINITION Checks the parameters of the game, assigns default values, and
+%            defines functions to run the game and to plot the evolution of
+%            the populations
+% 
+% SYNOPSIS: G2 = DEFINITION(G1)
+% 
+% INPUT G1: Structure with some parameters of the game
+% 
+% OUTPUT G2: Structure with all the parameters and functions required to run
+%            a the game 
+% 
+% REMARKS This function uses the global variables "norm_dx" and "c_error".
+%         Its recommended to avoid their use in other files because they 
+% 	      might be overwritten
+%
+% SEE ALSO add_path, run_game, run_game_finite_population, bnn, logit, rd, 
+%          maynard_rd, smith, smith_b, stopevent, combined_dynamics, 
+%          comparison2average, logit_choice, pairwise_comparison, 
+%          proportional_imitation
+%
+% For more information see: <a href="https://github.com/carlobar/PDToolbox_matlab/">the GitHub's repository.</a>
+% 
+% Carlos Barreto, 04-11-16 
 
 global norm_dx c_error
 
@@ -33,7 +54,7 @@ else
     end
 end
     
-% check mass of each population
+% check the mass of each population
 if isfield(G,'m') == 0
     G.m = ones(G.P, 1);
 elseif size(G.m, 1) < G.P
@@ -41,7 +62,7 @@ elseif size(G.m, 1) < G.P
     warning('Setting by the mass of all populations to 1.')
 end
 
-% check if initial conditions where defined.
+% check if the initial conditions where defined.
 if isfield(G, 'x0') == 0
     G.x0 = zeros( G.P, max(G.S) );
     for i=1:G.P
@@ -51,7 +72,7 @@ if isfield(G, 'x0') == 0
     G.x0 = G.x0';
 end
 
-% strategies used by default
+% dynamics used by default
 if isfield(G, 'dynamics') == 0
     G.dynamics = {'rd'};
 end
@@ -69,11 +90,12 @@ if length(G.dynamics) > 1
 	end
 end
 
-% check parameters of the ODE
+% check the ODE solver
 if isfield(G, 'ode') == 0
     G.ode = 'ode45';
 end
 
+% if 'tol' is defined, then RelTol and AbsTol take its value
 if isfield(G, 'tol') ~= 0
     G.RelTol = G.tol;
 	G.AbsTol = G.tol;
@@ -87,14 +109,17 @@ else
 	end
 end
 
-if isfield(G, 'step') == 0
-    G.step = .01;
-end
-
+% check the time to run the game
 if isfield(G, 'time') == 0
     G.time = 30;
 end
 
+% checck the step between time samples
+if isfield(G, 'step') == 0
+    G.step = .01;
+end
+
+% check fi the convergence stop criteria is enabled
 if isfield(G, 'stop_c') == 0
     G.stop_c = false;
 else
@@ -106,9 +131,10 @@ else
 	end
 end
 
+% define ODE solver options
 if isfield(G, 'options_ode') == 0 
     if (G.stop_c == true)
-        G.options_ode = odeset('RelTol', G.RelTol, 'AbsTol', G.AbsTol, 'Events',@stopevent);
+        G.options_ode = odeset('RelTol', G.RelTol, 'AbsTol', G.AbsTol, 'Events', @stopevent);
     else
         G.options_ode = odeset('RelTol', G.RelTol, 'AbsTol', G.AbsTol);
     end
@@ -120,7 +146,7 @@ if isfield(G,'f') == 0
 end
 
 % decide if the fitness function returns the fitness of a single population
-% of the fitness of the whole society
+% or the fitness of the whole society
 if isfield(G,'pop_wise') == 0
     G.pop_wise = true;
 end
@@ -137,12 +163,13 @@ if isfield(G, 'verb') == 0
     G.verb = true;
 end
 
-% define functions 
+% define functions to run the game
 G.run = @() run_game(G.name);
 G.run_finite = @() run_game_finite_population(G.name);
+
+% define functions to plot the evolution of the game
 G.graph = @() graph_simplex(G.name);
 G.graph2p = @() graph_multi_pop(G.name);
-G.graph_state = @() graph_final_state(G.name);
 G.graph_evolution = @() graph_evolution(G.name);
 
 

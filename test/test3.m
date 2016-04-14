@@ -14,6 +14,7 @@ m = 1;
 % intial condition
 x0 = [.1 .75 .15];
 
+% Dynamics that will be combined
 dyn = {'bnn', 'logit'};
 gamma = [.75, .25];
 % gamma = [0, 1];
@@ -32,6 +33,7 @@ G1.eta = .02;
 G1.run()
 
 
+% Dynamics that will be combined
 dyn = {'smith', 'rd'};
 gamma = [.75, .25];
 
@@ -44,14 +46,13 @@ G2.eta = .02;
 G2.run()
 
 
-
-
 % plot the evolution of the games
 G1.graph()
 G1.graph_evolution()
 
 disp (['Press any key to continue...', sprintf('\n') ]);
 pause
+
 
 G2.graph()
 G2.graph_evolution()

@@ -1,4 +1,20 @@
 function graph_simplex(name)
+% GRAPH_SIMPLEX Plots the evolution of games with one population and three
+%               strategies per population
+% 
+% SYNOPSIS: GRAPH_SIMPLEX(name)
+% 
+% INPUT name: Name of the structure that represents the game
+% 
+% REMARKS Its better to execute first <a href="matlab: help definition">definition</a> and plot the evolution of
+%         strategies running G.graph()
+%
+% SEE ALSO definition, run_game, graph_evolution, graph_multi_pop
+%
+% For more information see: <a href="https://github.com/carlobar/PDToolbox_matlab/">the GitHub's repository.</a>
+% 
+% Carlos Barreto, 04-11-16 
+
 
 % load the structure of the game that calls the function
 G = evalin('base', name);

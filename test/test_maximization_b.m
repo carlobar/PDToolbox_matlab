@@ -12,12 +12,13 @@ n = 2;
 m = [10; 10];
 
 % initial condition
-x0 = [0.1 .9; ...
+x0 = [0.1 0.9; ...
       0.8 0.2]'; 
 
 % simulation parameters
 time = 20;
 
+% fitness function (not dependent on the population p)
 fitness_f = @(x,p) - [2*(x(p,1) - 5); 0] ;
 
 % structure with the parameters of the game
@@ -32,11 +33,10 @@ G.graph2p()
 G.graph_evolution()
 
 
-% plot the evolution of the strategies
 % objective function
 f = @(x) -((x(1) - 5)^2 + (x(2) - 5)^2);
 
-% 
+% plot the evolution of the strategies
 z = 0:0.1:10;
 M = zeros(length(z), length(z));
 for i=1:length(z)

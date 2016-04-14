@@ -1,4 +1,4 @@
-% test finite population
+% test of a game with finite population
 
 clear
 
@@ -15,7 +15,7 @@ n = 3;
 m = 1;
 
 % initial condition
-x0 = [0.2 .7 0.1]'; 
+x0 = [0.2 0.7 0.1]'; 
 
 % simulation parameters
 iterations = 10000;
