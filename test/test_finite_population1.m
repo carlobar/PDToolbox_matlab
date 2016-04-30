@@ -15,7 +15,7 @@ n = 3;
 m = 1;
 
 % initial condition
-x0 = [0.2 0.7 0.1]'; 
+x0 = [0.2 0.7 0.1]; 
 
 % simulation parameters
 iterations = 10000;
@@ -34,7 +34,7 @@ G.revision_protocol = @proportional_imitation;
 G.run_finite();
 G.graph()
 G.graph_evolution()
-graph_utility
+G.graph_fitness()
 
 disp (['Press any key to continue... ', sprintf('\n') ] );
 pause
@@ -44,7 +44,7 @@ G.revision_protocol = @comparison2average;
 G.run_finite();
 G.graph()
 G.graph_evolution()
-graph_utility
+G.graph_fitness()
 
 disp (['Press any key to continue...', sprintf('\n') ]);
 pause
@@ -54,7 +54,7 @@ G.revision_protocol = @pairwise_comparison;
 G.run_finite();
 G.graph()
 G.graph_evolution()
-graph_utility
+G.graph_fitness()
 
 disp (['Press any key to continue...', sprintf('\n') ]);
 pause
@@ -65,4 +65,4 @@ G.revision_protocol = @logit_choice;
 G.run_finite();
 G.graph()
 G.graph_evolution()
-graph_utility
+G.graph_fitness()

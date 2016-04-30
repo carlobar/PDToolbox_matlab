@@ -7,10 +7,10 @@ function graph_evolution(name)
 % 
 % INPUT name: Name of the structure that represents the game
 % 
-% REMARKS Its better to execute first <a href="matlab: help definition">definition</a> and plot the evolution of
-%         strategies running G.graph()
+% REMARKS Its better to execute first <a href="matlab: help definition">definition</a> and <a href="matlab: help run_game">run_game</a> to plot the evolution
+%         of strategies with G.graph_evolution()
 %
-% SEE ALSO definition, run_game, graph_simplex, graph_multi_pop
+% SEE ALSO definition, run_game, graph_fitness, graph_simplex, graph_multi_pop
 %
 % For more information see: <a href="https://github.com/carlobar/PDToolbox_matlab/">the GitHub's repository.</a>
 % 

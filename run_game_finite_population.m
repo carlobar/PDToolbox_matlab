@@ -32,10 +32,10 @@ end
 
 s = zeros(G.N, G.P);
 
-% calculate the initial strategy of each user given the proportions in x0
+% calculate the initial strategy of each agent given the proportions in x0
 h = 0;
 for i = 1: max(G.S(1))
-	p = floor(G.N * G.x0(i, 1));
+	p = floor(G.N * G.x0(1, i));
 	if ((p + h) <= G.N) && (p ~= 0)
 		s(h + 1: h + p) = i;
 		h = h + p;

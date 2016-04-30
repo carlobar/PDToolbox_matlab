@@ -54,6 +54,28 @@ else
     end
 end
     
+
+% check if the initial conditions where defined (must be normalized)
+if isfield(G, 'x0') == 0
+    G.x0 = zeros( G.P, max(G.S) );
+    for i=1:G.P
+        x = rand(1, G.S(i));
+        G.x0( i, 1 : G.S(i) ) = x / sum(x);
+    end
+else
+    % check if the initial condition is well defined
+    n = size(G.x0, 1);
+    m = size(G.x0, 2);
+    if ~( (n == G.P) && (m == max(G.S)) ) 
+        if ( (m == G.P) && (n == max(G.S)) )
+            G.x0 = G.x0';
+        else      
+            exit('Invalid initial condition. Size of G.x0 do not match with G.P and G.S.')
+        end
+    end
+end
+
+
 % check the mass of each population
 if isfield(G,'m') == 0
     G.m = ones(G.P, 1);
@@ -62,15 +84,12 @@ elseif size(G.m, 1) < G.P
     warning('Setting by the mass of all populations to 1.')
 end
 
-% check if the initial conditions where defined.
-if isfield(G, 'x0') == 0
-    G.x0 = zeros( G.P, max(G.S) );
-    for i=1:G.P
-        x = rand(1, G.S(i));
-        G.x0( i, 1 : G.S(i) ) = x / sum(x);
-    end
-    G.x0 = G.x0';
+
+% check if the initial conditions match with the mass of the population
+if abs(sum(G.x0, 2) - ones(G.P, 1)) >= eps(ones(G.P, 1))
+    warning('Populations` initial state x0 does not match the mass m.')
 end
+
 
 % dynamics used by default
 if isfield(G, 'dynamics') == 0
@@ -171,6 +190,7 @@ G.run_finite = @() run_game_finite_population(G.name);
 G.graph = @() graph_simplex(G.name);
 G.graph2p = @() graph_multi_pop(G.name);
 G.graph_evolution = @() graph_evolution(G.name);
+G.graph_fitness = @() graph_fitness(G.name);
 
 % define a function that returns the matrix of the state at time T
 G.state = @(T) strategy(G.name, T);

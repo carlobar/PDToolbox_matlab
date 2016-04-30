@@ -28,7 +28,7 @@ if length(G.dynamics) == 1
     if G.verb == true
         disp (['Running ', G.dynamics{1}, ' dynamics']);
     end
-	command = strcat( G.ode, '( @', G.dynamics{1}, ',  G.step:G.step:G.time+G.step, G.x0, G.options_ode );');
+	command = strcat( G.ode, '( @', G.dynamics{1}, ',  G.step:G.step:G.time+G.step, transpose(G.x0), G.options_ode );');
 else
     if G.verb == true
         names = strcat(G.dynamics{1});
@@ -37,7 +37,7 @@ else
         end
         disp (['Running combination of ', names, ' dynamics']);
     end
-	command = strcat( G.ode, '( @combined_dynamics, G.step:G.step:G.time+G.step, G.x0, G.options_ode );');
+	command = strcat( G.ode, '( @combined_dynamics, G.step:G.step:G.time+G.step, transpose(G.x0), G.options_ode );');
 % 	command = strcat( G.ode, '( @heuristic_combined_dynamics, G.step:G.step:G.time+G.step, G.x0, G.options_ode );');
 end
 

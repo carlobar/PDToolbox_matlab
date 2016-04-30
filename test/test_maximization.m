@@ -12,10 +12,10 @@ n = 3;
 m = [10; 10];
 
 % initial condition
-x0 = [0.1 0.8 0.1 ]'; 
+x0 = [0.1 0.8 0.1 ]; 
 
 % simulation parameters
-time = 20;
+time = 1;
 
 % fitness fucntion (not dependent on the population p)
 fitness_f = @(x, p) - [2*(x(1) - 5); 2*(x(2) - 5); 0];

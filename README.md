@@ -1,7 +1,9 @@
 ## PDToolbox
 
 
-PDToolbox is a matlab implementation of some evolutionary dynamics from game theory. The current version supports the implementation of replicator dynamics, Maynard Smith's replicator dynamics, Smith dynamics, logit dynamics, and Brown-von Neumann-Nash dynamics. Also, it can be used to run revision protocols, that is, population games with small number of agents per population. This toolbox is designed to facilitate the implementation of any game, regardless of the number of populations, strategies per population, and fitness function. It has some pre-build methods to implement different dynamics, revision protocols, and to plot the evolution of the state of each population. This software is distributed under BSD license.
+PDToolbox is a matlab implementation of some evolutionary dynamics from game theory. The current version supports the implementation of replicator dynamics, Maynard Smith's replicator dynamics, Smith dynamics, logit dynamics, and Brown-von Neumann-Nash dynamics. Also, it can be used to run revision protocols, that is, population games with small number of agents per population. 
+
+This toolbox is designed to facilitate the implementation of any game, regardless of the number of populations, strategies per population, and fitness function. It has some pre-build methods to implement different dynamics, revision protocols, and to plot the evolution of the state of each population. This software is distributed under BSD license.
 
 
 ## Installation
@@ -34,6 +36,7 @@ The path can be verified with the command 'path'.
 The path can be added automatically by running 'add_path.m'.
 
 
+
 ## Running the toolbox
 
 In order to use the toolbox we must define the parameters of the game in a data structure. Some parameters that must be defined are: 
@@ -47,11 +50,20 @@ In order to use the toolbox we must define the parameters of the game in a data 
 
 The following examples are included in the 'test' directory:
 
-	'test1.m' contains an example of a game with one population and three strategies per population.
-	'test2.m' example of a game with two population and two strategies per population.
-	'test3.m' example of a game with one population, three strategies per population, and combined dynamics.
-	'test_finite_population1.m' is an example of the evolution of a game with small number of agents per population.
-	'electricity grid/test_electricity_system.m' example of an application of population dynamics to the implementation of demand response programs.
+	'test1.m': game with one population and three strategies per population.
+
+	'test2.m': game with two populations and two strategies per population.
+
+	'test3.m': game with one population, three strategies per population, and combined dynamics.
+
+	'test_finite_population1.m': a game with small number of agents per population.
+
+	'test_maximization.m': application to a maximization problem using one population.
+
+	'test_maximization_b.m': application to a maximization problem using multiple populations.
+
+	'electricity grid/test_electricity_system.m': application to demand response programs.
+
 
 
 ## Documentation

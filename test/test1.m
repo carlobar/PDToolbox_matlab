@@ -12,7 +12,7 @@ n = 3;
 m = 1;
 
 % initial condition
-x0 = [0.2 0.7 0.1 ]'; 
+x0 = [0.2 0.7 0.1 ]; 
 
 % simulation parameters
 time = 30;

@@ -54,7 +54,7 @@ time = 60;
 
 % initial condition
 pot = ones(N,T_+1)/(T_+1);
-x0 = pot';
+x0 = pot;
 
 % structure with the parameters of the game
 %G = struct('P', P, 'n', n, 'f', @fitness_user, 'ode', 'ode113', 'time', time, 'tol', 0.00001, 'x0', x0, 'm', m);
@@ -128,6 +128,6 @@ figure(4); plot(1:1:24, x(:, 1:24))
 %min(X_logit)
 
 graph_incentives_evolution
-G.graph_state()
+%G.graph_state()
 
 %sum(G.x0(1:24, :))
