@@ -1,4 +1,4 @@
-% example of a game with two population and two strategies per population.
+% example of a game with two populations and two strategies per population.
 
 clear
 
