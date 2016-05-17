@@ -48,7 +48,7 @@ for t = 1: length(G.T)
         for s=1:G.S(p)
             utility(t, k + s) = F(p, s);
         end
-        utility_mean(t, p) = F(p, :) * x(p, :)';
+        utility_mean(t, p) = F(p, :) * x(p, :)' / G.m(p) ;
     end
 
 end
