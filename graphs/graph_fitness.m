@@ -65,7 +65,7 @@ for p = 1 : G.P
         labels(s) = cellstr([num2str(s), '-th strategy']);
     end
     plot(G.T, utility_mean(:, p), 'k-.');
-    labels( G.S(p)+1 ) = cellstr(['Avg. Population']);
+    labels( G.S(p)+1 ) = cellstr(['Weighted Avg. Population']);
     xlim([0 G.time])
     hold off
 
