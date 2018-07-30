@@ -20,7 +20,9 @@ G = evalin('base', name);
 n = max(G.S);
 
 % find the index t of the time instant T
-if T >= G.T(end)
+if T < 0
+    t = length(G.T);	
+elseif T >= G.T(end)
     t = length(G.T);
 else
     t = floor( T / G.step + 1);

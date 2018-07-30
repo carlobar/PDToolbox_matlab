@@ -79,6 +79,9 @@ end
 % check the mass of each population
 if isfield(G,'m') == 0
     G.m = ones(G.P, 1);
+elseif size(G.m, 1) == 1
+    m = G.m;
+    G.m = ones(G.P, 1)*m;
 elseif size(G.m, 1) < G.P
     G.m = ones(G.P, 1);
     warning('Setting by the mass of all populations to 1.')
@@ -133,12 +136,12 @@ if isfield(G, 'time') == 0
     G.time = 30;
 end
 
-% checck the step between time samples
+% check the step between time samples
 if isfield(G, 'step') == 0
     G.step = .01;
 end
 
-% check fi the convergence stop criteria is enabled
+% check if the convergence stop criteria is enabled
 if isfield(G, 'stop_c') == 0
     G.stop_c = false;
 else
